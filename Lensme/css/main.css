@@ -18,7 +18,7 @@ body {
     object-fit: cover;
 }
 
-/* Figma 기준: 하단 중앙의 원형 페이지네이션 */
+/* Figma pagination.svg: 작은 원형 점, 활성 점은 채움 */
 .hero-sec .visual .swiper-pagination {
     position: absolute;
     left: 50%;
@@ -33,11 +33,13 @@ body {
 }
 
 .hero-sec .visual .swiper-pagination-bullet {
+    box-sizing: border-box;
     display: block;
+    flex: 0 0 10px;
     width: 10px;
     height: 10px;
     margin: 0 !important;
-    border: 2px solid #fefefc;
+    border: 2px solid #FEFEFC;
     border-radius: 50%;
     background: transparent;
     opacity: 1;
@@ -45,14 +47,15 @@ body {
 }
 
 .hero-sec .visual .swiper-pagination-bullet::before {
-    content: none;
+    content: none !important;
 }
 
 .hero-sec .visual .swiper-pagination-bullet-active {
-    background: #fefefc;
+    border-color: #F5F1FA;
+    background: #F5F1FA;
 }
 
-/* 참고 이미지에는 좌우 화살표와 스크롤바가 없어 숨김 */
+/* Figma 레퍼런스에는 좌우 화살표와 스크롤바가 없음 */
 .hero-sec .visual .swiper-button-prev,
 .hero-sec .visual .swiper-button-next,
 .hero-sec .visual .swiper-scrollbar {
@@ -78,11 +81,6 @@ body {
 
     .hero-sec .visual .swiper-pagination {
         bottom: 40px;
-        gap: 18px;
-    }
-
-    .hero-sec .visual .swiper-pagination-bullet {
-        width: 8px;
-        height: 8px;
+        gap: 25px;
     }
 }

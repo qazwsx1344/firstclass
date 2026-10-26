@@ -18,16 +18,17 @@ body {
     object-fit: cover;
 }
 
-/* Figma pagination.svg: 작은 원형 점, 활성 점은 채움 */
+/* pagination.svg 모양: 가로 148px 영역에 원형 인디케이터 배치 */
 .hero-sec .visual .swiper-pagination {
     position: absolute;
     left: 50%;
     bottom: 80px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 25px;
-    width: auto;
+    width: 148px;
+    height: 11px;
     transform: translateX(-50%);
     z-index: 5;
 }
@@ -46,6 +47,7 @@ body {
     cursor: pointer;
 }
 
+/* Swiper 기본 bullet 효과를 제거하고 SVG와 같은 원형으로 유지 */
 .hero-sec .visual .swiper-pagination-bullet::before {
     content: none !important;
 }
@@ -55,7 +57,12 @@ body {
     background: #F5F1FA;
 }
 
-/* Figma 레퍼런스에는 좌우 화살표와 스크롤바가 없음 */
+/* 마지막 점의 위치를 SVG의 간격에 맞춤 */
+.hero-sec .visual .swiper-pagination-bullet:last-child {
+    margin-left: -3px !important;
+}
+
+/* 참고 디자인에 없는 좌우 화살표와 스크롤바는 표시하지 않음 */
 .hero-sec .visual .swiper-button-prev,
 .hero-sec .visual .swiper-button-next,
 .hero-sec .visual .swiper-scrollbar {
@@ -81,6 +88,5 @@ body {
 
     .hero-sec .visual .swiper-pagination {
         bottom: 40px;
-        gap: 25px;
     }
 }

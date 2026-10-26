@@ -1,73 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>렌즈미리뉴얼포트폴리오</title>
+    <title>렌즈미 리뉴얼 포트폴리오</title>
     <link rel="stylesheet" href="../css/default.css">
     <link rel="stylesheet" href="../npm/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="../font/css/pretendardvariable.css">
     <link rel="stylesheet" href="css/main.css">
-    <script src="../npm/swiper/swiper-bundle.min.js">
-</script>
+    <script src="../npm/swiper/swiper-bundle.min.js"></script>
 </head>
 <body>
     <div id="wrap">
-       <header>제목공간</header>
-       <main>
-        <div class="hero-sec">
-                <!-- Slider main container -->
+        <header>제목공간</header>
+        <main>
+            <section class="hero-sec" aria-label="렌즈미 메인 배너">
                 <div class="swiper visual">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide">
-                        <img src="img/Hero.png" alt="고윤정 동영상" class="pc">
-                        <img src="img/m_visual201.png" alt="모바일 고윤정 동영상" class="mo">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="img/Hero.png" alt="렌즈미 메인 배너" class="pc">
+                            <img src="img/m_visual201.png" alt="렌즈미 메인 배너" class="mo">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="img/Hero_2.png" alt="렌즈미 프로모션 배너" class="pc">
+                            <img src="img/m_visual202.png" alt="렌즈미 프로모션 배너" class="mo">
+                        </div>
+                        <!-- 배너를 추가할 때는 swiper-slide 구조를 복사해 사용하세요. -->
                     </div>
-                    <div class="swiper-slide">
-                        <img src="img/Hero_2.png" alt="고윤정배너" class="pc">
-                        <img src="img/m_visual202.png" alt="고윤정배너모바일" class="mo">
-                    </div>
-                    ...
-                    
+
+                    <div class="swiper-pagination" aria-label="배너 선택"></div>
+                    <button class="swiper-button-prev" type="button" aria-label="이전 배너"></button>
+                    <button class="swiper-button-next" type="button" aria-label="다음 배너"></button>
+                    <div class="swiper-scrollbar" aria-label="배너 진행 상태"></div>
                 </div>
-                <!-- If we need pagination -->
-                <div class="swiper-pagination"></div>
-
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-
-                <!-- If we need scrollbar -->
-                <div class="swiper-scrollbar"></div>
-            </div>
-        </div>
-       </main>
-       <footer>&copy;</footer>
+            </section>
+        </main>
+        <footer>&copy;</footer>
     </div>
+
     <script>
-        const swiper = new Swiper('.hero-sec > .swiper', {
-            // Optional parameters
+        const swiper = new Swiper('.hero-sec .visual', {
             direction: 'horizontal',
             loop: true,
-
-            // If we need pagination
+            speed: 600,
             pagination: {
                 el: '.visual .swiper-pagination',
+                clickable: true
             },
-
-            // Navigation arrows
             navigation: {
                 nextEl: '.visual .swiper-button-next',
-                prevEl: '.visual .swiper-button-prev',
+                prevEl: '.visual .swiper-button-prev'
             },
-
-            // And if we need scrollbar
             scrollbar: {
                 el: '.visual .swiper-scrollbar',
-            },
-            });
+                draggable: true
+            }
+        });
     </script>
 </body>
 </html>

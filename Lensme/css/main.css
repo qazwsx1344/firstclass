@@ -1,35 +1,145 @@
 body {
-    background-color:
-    yellow;
-    font-family: 
-    "pretendard Variable",
-    sans-serif;
+    background-color: yellow;
+    font-family: "pretendard Variable", sans-serif;
 }
+
 .mo {
     display: none;
 }
+
 .hero-sec .swiper {
     width: 100%;
     height: 600px;
 }
+
 .hero-sec .swiper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
+/* HERO 슬라이드 페이지 표시: Figma의 작은 화살표형 인디케이터 */
+.hero-sec .visual .swiper-pagination {
+    position: absolute;
+    left: 50%;
+    bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    width: auto;
+    transform: translateX(-50%);
+    z-index: 5;
+}
+
+.hero-sec .visual .swiper-pagination-bullet {
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: 0 !important;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    opacity: 0.55;
+    position: relative;
+    cursor: pointer;
+}
+
+.hero-sec .visual .swiper-pagination-bullet::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 1px;
+    width: 6px;
+    height: 6px;
+    border-top: 1.5px solid #fefefc;
+    border-right: 1.5px solid #fefefc;
+    transform: rotate(45deg);
+}
+
+.hero-sec .visual .swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+/* 좌우 이동 버튼 */
+.hero-sec .visual .swiper-button-prev,
+.hero-sec .visual .swiper-button-next {
+    top: 50%;
+    width: 44px;
+    height: 44px;
+    margin-top: 0;
+    border: 1px solid rgba(254, 254, 252, 0.85);
+    border-radius: 50%;
+    background: rgba(98, 64, 177, 0.2);
+    color: #fefefc;
+    transform: translateY(-50%);
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.hero-sec .visual .swiper-button-prev {
+    left: 30px;
+}
+
+.hero-sec .visual .swiper-button-next {
+    right: 30px;
+}
+
+.hero-sec .visual .swiper-button-prev::after,
+.hero-sec .visual .swiper-button-next::after {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.hero-sec .visual .swiper-button-prev:hover,
+.hero-sec .visual .swiper-button-next:hover {
+    background: rgba(98, 64, 177, 0.65);
+}
+
+/* 하단 진행 막대 */
+.hero-sec .visual .swiper-scrollbar {
+    left: 50%;
+    bottom: 14px;
+    width: min(180px, 30%);
+    height: 2px;
+    border-radius: 0;
+    background: rgba(254, 254, 252, 0.35);
+    transform: translateX(-50%);
+    z-index: 6;
+}
+
+.hero-sec .visual .swiper-scrollbar-drag {
+    border-radius: 0;
+    background: #fefefc;
+}
+
 @media (max-width: 1024px) {
     .pc {
         display: none;
     }
+
     .mo {
         display: block;
     }
+
     header {
         position: fixed;
         width: 100%;
         height: 60px;
         background-color: blueviolet;
         z-index: 10;
+    }
+
+    .hero-sec .visual .swiper-button-prev,
+    .hero-sec .visual .swiper-button-next {
+        width: 36px;
+        height: 36px;
+    }
+
+    .hero-sec .visual .swiper-button-prev {
+        left: 12px;
+    }
+
+    .hero-sec .visual .swiper-button-next {
+        right: 12px;
     }
 }

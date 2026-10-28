@@ -1,6 +1,20 @@
+:root {
+    /* Figma Variables */
+    --color-background-brand: #ac97dc;
+    --color-text-primary: #292536;
+    --color-background-default: #fefefc;
+    --color-lavender-mist: #f5f1fa;
+    --color-text-on-brand: #fefefc;
+    --color-action-primary: #7863a8;
+    --color-action-secondary-hover: #7863a8;
+    --color-action-secondary: #ac97dc;
+    --color-soft-white: #fefefc;
+}
+
 body {
-    background-color: yellow;
-    font-family: "pretendard Variable", sans-serif;
+    background-color: var(--color-background-default);
+    color: var(--color-text-primary);
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
 }
 
 .mo {
@@ -42,7 +56,7 @@ body {
     width: 10px;
     height: 10px;
     margin: 0 !important;
-    border: 2px solid #FEFEFC;
+    border: 2px solid var(--color-text-on-brand);
     border-radius: 50%;
     background: transparent;
     opacity: 1;
@@ -54,8 +68,8 @@ body {
 }
 
 .hero-sec .visual .swiper-pagination-bullet-active {
-    border-color: #F5F1FA;
-    background: #F5F1FA;
+    border-color: var(--color-lavender-mist);
+    background: var(--color-lavender-mist);
 }
 
 .hero-sec .visual .swiper-pagination-bullet:last-child {
@@ -81,7 +95,7 @@ body {
         position: fixed;
         width: 100%;
         height: 60px;
-        background-color: blueviolet;
+        background-color: var(--color-background-brand);
         z-index: 10;
     }
 

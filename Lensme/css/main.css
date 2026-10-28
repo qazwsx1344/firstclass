@@ -45,7 +45,7 @@ body {
 .welcome {
     position: static;
     flex: 0 0 auto;
-    color: #AC97DC;
+    color: var(--color-text-on-brand);
     font-family: Pretendard Variable, sans-serif;
     font-size: 18px;
     font-weight: 700;

@@ -480,3 +480,72 @@ body {
         font-size: 16px;
     }
 }
+
+
+/* 전체보기 버튼: 기본 상태와 hover/focus 상태 */
+.benefits-more {
+    position: relative;
+    overflow: hidden;
+    border-radius: 999px;
+    transition: transform 180ms ease;
+}
+
+.benefits-more img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 180ms ease;
+}
+
+.benefits-more .benefits-more-normal {
+    opacity: 1;
+}
+
+.benefits-more .benefits-more-hover {
+    opacity: 0;
+}
+
+.benefits-more-hover-label {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 180ms ease;
+    pointer-events: none;
+}
+
+.benefits-more:hover .benefits-more-normal,
+.benefits-more:focus-visible .benefits-more-normal {
+    opacity: 0;
+}
+
+.benefits-more:hover .benefits-more-hover,
+.benefits-more:focus-visible .benefits-more-hover {
+    opacity: 1;
+}
+
+.benefits-more:hover .benefits-more-hover-label,
+.benefits-more:focus-visible .benefits-more-hover-label {
+    opacity: 1;
+}
+
+.benefits-more:active {
+    transform: scale(0.97);
+}
+
+.benefits-more:focus-visible {
+    outline: 2px solid #7863A8;
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .benefits-more,
+    .benefits-more img,
+    .benefits-more-hover-label {
+        transition: none;
+    }
+}

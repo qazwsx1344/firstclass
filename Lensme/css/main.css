@@ -712,3 +712,63 @@ body {
         transition: none;
     }
 }
+
+
+/* 렌즈 찾기 섹션: 배경을 영역 전체에 채우고 SVG 버튼 비율 유지 */
+.lens-finder-section {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 500px;
+    min-height: 500px;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.lens-finder-background {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.lens-finder-inner {
+    position: relative;
+    z-index: 1;
+    width: min(92%, 1780px);
+    height: 100%;
+    margin-inline: auto;
+}
+
+.lens-finder-button {
+    width: 100px;
+    height: 40px;
+    padding: 0;
+    background: transparent;
+}
+
+.lens-finder-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 640px) {
+    .lens-finder-section {
+        height: 500px;
+        min-height: 500px;
+    }
+
+    .lens-finder-inner {
+        width: calc(100% - 40px);
+    }
+
+    .lens-finder-button {
+        width: 100px;
+        height: 40px;
+    }
+}

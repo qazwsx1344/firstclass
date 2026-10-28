@@ -467,8 +467,14 @@ body {
     }
 
     .benefit-image {
-        aspect-ratio: 1.45 / 1;
         border-radius: 18px;
+    }
+
+    /* 모바일용 세로 이미지는 원본 비율을 유지해 잘리지 않게 표시 */
+    .benefit-image.mo {
+        aspect-ratio: auto;
+        height: auto;
+        object-fit: contain;
     }
 
     .benefit-card h3 {

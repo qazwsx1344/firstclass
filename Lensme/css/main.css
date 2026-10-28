@@ -70,6 +70,17 @@ body {
     opacity: .8;
 }
 
+/* Figma 15:533: welcome! needs higher specificity than the utility links */
+.header-utility a.welcome {
+    color: var(--color-background-brand);
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -.2px;
+    opacity: .8;
+}
+
 .header-logo {
     position: absolute;
     top: 0;

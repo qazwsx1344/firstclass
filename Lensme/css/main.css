@@ -43,8 +43,8 @@ body {
 }
 
 .welcome {
-    position: absolute;
-    left: 0;
+    position: static;
+    flex: 0 0 auto;
     color: var(--color-background-brand);
     font-family: Inter, sans-serif;
     font-size: 18px;

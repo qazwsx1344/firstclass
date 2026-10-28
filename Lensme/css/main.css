@@ -23,18 +23,27 @@ body {
 
 .hero-sec .swiper {
     width: 100%;
-    height: 740px;
+    max-width: 1920px;
+    height: min(740px, 38.5417vw);
+    min-height: 320px;
+    margin: 0 auto;
 }
 
-.hero-sec .swiper img,
-.hero-sec .swiper video {
+.hero-sec .swiper-wrapper,
+.hero-sec .swiper-slide {
+    width: 100%;
+    height: 100%;
+}
+
+.hero-sec .swiper-slide img,
+.hero-sec .swiper-slide video {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-/* pagination.svg 모양: 가로 148px 영역에 원형 인디케이터 배치 */
+/* Pagination: 5개 슬라이드에 맞춰 Swiper가 점 5개를 자동 생성 */
 .hero-sec .visual .swiper-pagination {
     position: absolute;
     left: 50%;
@@ -91,6 +100,11 @@ body {
         display: block;
     }
 
+    .hero-sec .swiper {
+        height: min(740px, 100vw);
+        min-height: 320px;
+    }
+
     header {
         position: fixed;
         width: 100%;
@@ -101,5 +115,12 @@ body {
 
     .hero-sec .visual .swiper-pagination {
         bottom: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-sec .swiper {
+        height: 100vh;
+        min-height: 320px;
     }
 }

@@ -1,5 +1,4 @@
 :root {
-    /* Figma Variables */
     --color-background-brand: #ac97dc;
     --color-text-primary: #292536;
     --color-background-default: #fefefc;
@@ -11,9 +10,7 @@
     --color-soft-white: #fefefc;
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -45,6 +42,34 @@ body {
     min-height: 48px;
 }
 
+.welcome {
+    position: absolute;
+    left: 0;
+    color: var(--color-background-brand);
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -.2px;
+    text-decoration: none;
+}
+
+.header-utility {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    white-space: nowrap;
+}
+
+.header-utility a {
+    color: var(--color-text-primary);
+    font-size: 14px;
+    line-height: 1;
+    text-decoration: none;
+    opacity: .8;
+}
+
 .header-logo {
     position: absolute;
     top: 0;
@@ -62,59 +87,28 @@ body {
     object-fit: contain;
 }
 
-.utility-nav {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 15px;
-    white-space: nowrap;
-}
-
-.utility-nav a {
-    color: var(--color-text-primary);
-    font-size: 14px;
-    line-height: 1;
-    text-decoration: none;
-    opacity: .8;
-}
-
-.utility-nav .welcome {
-    color: var(--color-background-brand);
-    font-family: Inter, sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.5;
-    letter-spacing: -.2px;
-}
-
-.header-bottom {
+.primary-navigation {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 48px;
-}
-
-.main-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     gap: clamp(24px, 3.65vw, 70px);
     white-space: nowrap;
 }
 
-.main-nav a {
+.primary-navigation a {
     color: var(--color-text-primary);
     font-size: 18px;
     line-height: 1;
     text-decoration: none;
 }
 
-.main-nav a.featured {
+.primary-navigation a.nav-highlight {
     color: var(--color-background-brand);
     font-weight: 700;
 }
 
-.mobile-menu-toggle {
+.mobile-menu-button {
     display: none;
     border: 0;
     padding: 8px;
@@ -123,9 +117,27 @@ body {
     cursor: pointer;
 }
 
-.mo {
-    display: none;
+.mobile-menu-button span:not(.sr-only) {
+    display: block;
+    width: 24px;
+    height: 2px;
+    margin: 5px 0;
+    background: currentColor;
 }
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.mo { display: none; }
 
 .hero-sec .swiper {
     width: 100%;
@@ -149,7 +161,6 @@ body {
     object-fit: cover;
 }
 
-/* Pagination: Swiper creates one bullet for each of the five slides. */
 .hero-sec .visual .swiper-pagination {
     position: absolute;
     left: 50%;
@@ -178,24 +189,18 @@ body {
     cursor: pointer;
 }
 
-.hero-sec .visual .swiper-pagination-bullet::before {
-    content: none !important;
-}
+.hero-sec .visual .swiper-pagination-bullet::before { content: none !important; }
 
 .hero-sec .visual .swiper-pagination-bullet-active {
     border-color: var(--color-lavender-mist);
     background: var(--color-lavender-mist);
 }
 
-.hero-sec .visual .swiper-pagination-bullet:last-child {
-    margin-left: -3px !important;
-}
+.hero-sec .visual .swiper-pagination-bullet:last-child { margin-left: -3px !important; }
 
 .hero-sec .visual .swiper-button-prev,
 .hero-sec .visual .swiper-button-next,
-.hero-sec .visual .swiper-scrollbar {
-    display: none;
-}
+.hero-sec .visual .swiper-scrollbar { display: none; }
 
 @media (max-width: 1024px) {
     .site-header {
@@ -208,6 +213,8 @@ body {
         justify-content: space-between;
     }
 
+    .welcome { display: none; }
+
     .header-logo {
         position: static;
         width: 150px;
@@ -215,65 +222,42 @@ body {
         transform: none;
     }
 
-    .utility-nav {
-        display: none;
-    }
+    .header-utility { display: none; }
 
-    .mobile-menu-toggle {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+    .mobile-menu-button {
+        display: block;
         width: 40px;
         height: 40px;
     }
 
-    .mobile-menu-toggle svg {
-        display: block;
-        width: 24px;
-        height: 24px;
-    }
-
-    .header-bottom {
+    .primary-navigation {
         display: none;
         min-height: 0;
         padding: 12px 0 4px;
-    }
-
-    .site-header.menu-open .header-bottom {
-        display: flex;
-    }
-
-    .main-nav {
-        width: 100%;
         flex-direction: column;
         align-items: flex-start;
         gap: 0;
         white-space: normal;
     }
 
-    .main-nav a {
+    .primary-navigation.is-open { display: flex; }
+
+    .primary-navigation a {
         display: block;
         width: 100%;
         padding: 12px 4px;
         font-size: 16px;
     }
 
-    .pc {
-        display: none !important;
-    }
-
-    .mo {
-        display: block;
-    }
+    .pc { display: none !important; }
+    .mo { display: block; }
 
     .hero-sec .swiper {
         height: min(740px, 100vw);
         min-height: 320px;
     }
 
-    .hero-sec .visual .swiper-pagination {
-        bottom: 40px;
-    }
+    .hero-sec .visual .swiper-pagination { bottom: 40px; }
 }
 
 @media (max-width: 480px) {

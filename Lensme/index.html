@@ -7,12 +7,40 @@
     <link rel="stylesheet" href="../css/default.css">
     <link rel="stylesheet" href="../npm/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="../font/css/pretendardvariable.css">
-    <link rel="stylesheet" href="css/main.css?v=20261028">
+    <link rel="stylesheet" href="css/main.css?v=20261028-header1">
     <script src="../npm/swiper/swiper-bundle.min.js"></script>
 </head>
 <body>
     <div id="wrap">
-        <header>제목공간</header>
+        <header class="site-header">
+            <div class="header-inner">
+                <div class="header-top">
+                    <a class="welcome" href="#" aria-label="렌즈미 홈">welcome!</a>
+                    <div class="header-utility">
+                        <a href="#" aria-label="검색">검색</a>
+                        <a href="#">고객센터</a>
+                        <a href="#">로그인/마이페이지</a>
+                        <a href="#">장바구니</a>
+                    </div>
+                    <a class="header-logo" href="#" aria-label="렌즈미 홈">
+                        <img src="img/logo_new%202.svg" alt="렌즈미">
+                    </a>
+                    <button class="mobile-menu-button" type="button" aria-expanded="false" aria-controls="primary-navigation">
+                        <span></span>
+                        <span></span>
+                        <span class="sr-only">메뉴 열기</span>
+                    </button>
+                </div>
+                <nav class="primary-navigation" id="primary-navigation" aria-label="주요 메뉴">
+                    <a href="#">렌즈</a>
+                    <a class="nav-highlight" href="#">나만의 렌즈 찾기</a>
+                    <a href="#">온라인 전용</a>
+                    <a href="#">매장찾기</a>
+                    <a href="#">EVENT</a>
+                    <a href="#">브랜드</a>
+                </nav>
+            </div>
+        </header>
         <main>
             <section class="hero-sec" aria-label="렌즈미 메인 배너">
                 <div class="swiper visual">
@@ -58,6 +86,15 @@
                 el: '.visual .swiper-pagination',
                 clickable: true
             }
+        });
+
+        const menuButton = document.querySelector('.mobile-menu-button');
+        const navigation = document.querySelector('.primary-navigation');
+
+        menuButton.addEventListener('click', () => {
+            const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+            menuButton.setAttribute('aria-expanded', String(!isExpanded));
+            navigation.classList.toggle('is-open', !isExpanded);
         });
     </script>
 </body>

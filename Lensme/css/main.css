@@ -45,8 +45,8 @@ body {
 .welcome {
     position: static;
     flex: 0 0 auto;
-    color: AC97DC;
-    font-family: Inter, sans-serif;
+    color: #AC97DC;
+    font-family: Pretendard Variable, sans-serif;
     font-size: 18px;
     font-weight: 700;
     line-height: 1.5;

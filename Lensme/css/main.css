@@ -383,9 +383,19 @@ body {
     object-position: center;
 }
 
-/* 혜택 카드의 모바일 이미지는 모바일 화면에서만 표시 */
-.benefit-image.mo {
-    display: none;
+/* 혜택 카드: PC에서는 PC 이미지만 표시 */
+.benefits-section .benefit-image.mo {
+    display: none !important;
+}
+
+@media (min-width: 641px) {
+    .benefits-section .benefit-image.pc {
+        display: block !important;
+    }
+
+    .benefits-section .benefit-image.mo {
+        display: none !important;
+    }
 }
 
 .benefit-card h3 {
@@ -475,16 +485,16 @@ body {
         border-radius: 18px;
     }
 
-    /* 모바일용 세로 이미지는 원본 비율을 유지해 잘리지 않게 표시 */
-    .benefit-image.mo {
-        display: block;
+    /* 모바일에서는 모바일용 세로 이미지만 표시 */
+    .benefits-section .benefit-image.mo {
+        display: block !important;
         aspect-ratio: auto;
         height: auto;
         object-fit: contain;
     }
 
-    .benefit-image.pc {
-        display: none;
+    .benefits-section .benefit-image.pc {
+        display: none !important;
     }
 
     .benefit-card h3 {

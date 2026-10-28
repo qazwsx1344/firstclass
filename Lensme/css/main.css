@@ -383,6 +383,11 @@ body {
     object-position: center;
 }
 
+/* 혜택 카드의 모바일 이미지는 모바일 화면에서만 표시 */
+.benefit-image.mo {
+    display: none;
+}
+
 .benefit-card h3 {
     margin: 24px 0 8px;
     color: #292536;
@@ -472,9 +477,14 @@ body {
 
     /* 모바일용 세로 이미지는 원본 비율을 유지해 잘리지 않게 표시 */
     .benefit-image.mo {
+        display: block;
         aspect-ratio: auto;
         height: auto;
         object-fit: contain;
+    }
+
+    .benefit-image.pc {
+        display: none;
     }
 
     .benefit-card h3 {

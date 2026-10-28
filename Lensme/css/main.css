@@ -663,17 +663,6 @@ body {
     opacity: 0;
 }
 
-.lens-finder-button span {
-    position: relative;
-    z-index: 1;
-    color: #292536;
-    font-family: "Pretendard Variable", Pretendard, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1;
-    pointer-events: none;
-}
-
 .lens-finder-button:hover .lens-finder-button-normal,
 .lens-finder-button:focus-visible .lens-finder-button-normal {
     opacity: 0;
@@ -682,11 +671,6 @@ body {
 .lens-finder-button:hover .lens-finder-button-hover,
 .lens-finder-button:focus-visible .lens-finder-button-hover {
     opacity: 1;
-}
-
-.lens-finder-button:hover span,
-.lens-finder-button:focus-visible span {
-    color: #FEFEFC;
 }
 
 .lens-finder-button:active {

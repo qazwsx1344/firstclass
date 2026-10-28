@@ -304,3 +304,179 @@ body {
         min-height: 320px;
     }
 }
+
+
+/* 현재 진행중인 혜택 섹션 */
+.benefits-section {
+    width: 100%;
+    padding: clamp(48px, 5vw, 96px) 0 clamp(64px, 7vw, 130px);
+    background: var(--color-background-default);
+    color: var(--color-text-primary);
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+}
+
+.benefits-inner {
+    width: min(92%, 1760px);
+    margin: 0 auto;
+}
+
+.benefits-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.benefits-heading h2 {
+    margin: 0;
+    color: #292536;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: clamp(28px, 2.19vw, 42px);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+}
+
+.benefits-heading h2 span {
+    color: #7863A8;
+}
+
+.benefits-more {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 40px;
+}
+
+.benefits-more img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.benefits-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.benefit-card {
+    min-width: 0;
+}
+
+.benefit-card-link {
+    display: block;
+    color: #292536;
+    text-decoration: none;
+}
+
+.benefit-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.18 / 1;
+    border-radius: 28px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.benefit-card h3 {
+    margin: 24px 0 8px;
+    color: #292536;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.025em;
+}
+
+.benefit-card p {
+    margin: 0;
+    color: #292536;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+}
+
+@media (max-width: 1024px) {
+    .benefits-section {
+        padding: 56px 0 80px;
+    }
+
+    .benefits-inner {
+        width: calc(100% - 40px);
+    }
+
+    .benefits-heading {
+        margin-bottom: 22px;
+    }
+
+    .benefits-heading h2 {
+        font-size: clamp(26px, 4vw, 36px);
+    }
+
+    .benefits-list {
+        gap: 16px;
+    }
+
+    .benefit-image {
+        border-radius: 20px;
+    }
+
+    .benefit-card h3 {
+        margin-top: 18px;
+        font-size: clamp(18px, 2.4vw, 23px);
+    }
+
+    .benefit-card p {
+        font-size: clamp(15px, 1.8vw, 18px);
+    }
+}
+
+@media (max-width: 640px) {
+    .benefits-section {
+        padding: 44px 0 64px;
+    }
+
+    .benefits-inner {
+        width: calc(100% - 32px);
+    }
+
+    .benefits-heading {
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .benefits-heading h2 {
+        font-size: clamp(23px, 6vw, 30px);
+    }
+
+    .benefits-more {
+        width: 78px;
+        height: 32px;
+    }
+
+    .benefits-list {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .benefit-image {
+        aspect-ratio: 1.45 / 1;
+        border-radius: 18px;
+    }
+
+    .benefit-card h3 {
+        margin: 14px 0 6px;
+        font-size: 21px;
+    }
+
+    .benefit-card p {
+        font-size: 16px;
+    }
+}

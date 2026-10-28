@@ -45,7 +45,7 @@ body {
 .welcome {
     position: static;
     flex: 0 0 auto;
-    color: var(--color-background-brand);
+    color: #AC97DC;
     font-family: Inter, sans-serif;
     font-size: 18px;
     font-weight: 700;

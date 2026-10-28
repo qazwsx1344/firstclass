@@ -172,6 +172,31 @@ body {
     object-fit: cover;
 }
 
+
+.hero-sec .hero-reservation-button {
+    position: absolute;
+    z-index: 6;
+    left: 50%;
+    bottom: 130px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 125px;
+    min-height: 44px;
+    padding: 12px 30px;
+    border: 1px solid var(--color-text-on-brand);
+    border-radius: 40px;
+    background: rgba(98, 64, 177, 0.2);
+    color: var(--color-text-on-brand);
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transform: translateX(-50%);
+}
+
 .hero-sec .visual .swiper-pagination {
     position: absolute;
     left: 50%;
@@ -267,6 +292,8 @@ body {
         height: min(740px, 100vw);
         min-height: 320px;
     }
+
+    .hero-sec .hero-reservation-button { bottom: 80px; }
 
     .hero-sec .visual .swiper-pagination { bottom: 40px; }
 }

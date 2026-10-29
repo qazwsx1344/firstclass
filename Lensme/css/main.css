@@ -811,7 +811,7 @@ body {
 }
 
 .best-new-inner {
-    width: min(95%, 1880px);
+    width: min(92%, 1760px);
     margin: 0 auto;
 }
 
@@ -837,9 +837,9 @@ body {
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    min-width: 80px;
-    min-height: 32px;
-    padding: 0 12px;
+    width: 100px;
+    height: 40px;
+    padding: 0;
     border: 1px solid #292536;
     border-radius: 999px;
     color: #292536;

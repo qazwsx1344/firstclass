@@ -1569,3 +1569,18 @@ body {
         transition: none;
     }
 }
+
+/* Shared responsive section spacing and heading scale */
+.benefits-section,
+.best-new-section,
+.review-section,
+.lens-me-section {
+    padding: clamp(48px, 6vw, 110px) 0 clamp(64px, 7vw, 130px);
+}
+
+.benefits-heading h2,
+.best-new-heading h2,
+.review-heading h2,
+.lens-me-copy h2 {
+    font-size: clamp(28px, 2.19vw, 36px);
+}

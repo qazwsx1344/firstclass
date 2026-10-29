@@ -123,6 +123,67 @@
                     </a>
                 </div>
             </section>
+
+            <section class="best-new-section" aria-labelledby="best-new-title">
+                <div class="best-new-inner">
+                    <div class="best-new-heading">
+                        <h2 id="best-new-title">BEST/NEW</h2>
+                        <a class="best-new-more" href="#" aria-label="BEST/NEW 전체보기">전체보기</a>
+                    </div>
+                    <div class="swiper best-new-swiper">
+                        <div class="swiper-wrapper">
+                            <article class="swiper-slide best-new-card">
+                                <a class="best-new-product" href="#" aria-label="포그베일 원데이 브라운 상세 보기">
+                                    <div class="best-new-image-wrap">
+                                        <img class="best-new-image" src="img/new_01.png" alt="포그베일 원데이 브라운 렌즈 제품 이미지">
+                                        <img class="best-new-badge" src="img/Text__new.svg" alt="NEW">
+                                        <span class="best-new-heart is-liked" aria-hidden="true">♥</span>
+                                    </div>
+                                    <h3>포그베일 원데이 브라운</h3>
+                                    <p class="best-new-price">19,000원</p>
+                                    <p class="best-new-detail">13.0mm / 하루 착용</p>
+                                </a>
+                            </article>
+                            <article class="swiper-slide best-new-card">
+                                <a class="best-new-product" href="#" aria-label="크림앤스윗 그릭그레이 상세 보기">
+                                    <div class="best-new-image-wrap">
+                                        <img class="best-new-image" src="img/new_02.png" alt="크림앤스윗 그릭그레이 렌즈 제품 이미지">
+                                        <img class="best-new-badge" src="img/Text_best.svg" alt="BEST">
+                                        <span class="best-new-heart" aria-hidden="true">♡</span>
+                                    </div>
+                                    <h3>크림앤스윗 그릭그레이</h3>
+                                    <p class="best-new-price">30,000원</p>
+                                    <p class="best-new-detail">13.4mm / 한 달 착용</p>
+                                </a>
+                            </article>
+                            <article class="swiper-slide best-new-card">
+                                <a class="best-new-product" href="#" aria-label="포그베일 그레이 상세 보기">
+                                    <div class="best-new-image-wrap">
+                                        <img class="best-new-image" src="img/new_03.png" alt="포그베일 그레이 렌즈 제품 이미지">
+                                        <img class="best-new-badge" src="img/Text_best.svg" alt="BEST">
+                                        <span class="best-new-heart is-liked" aria-hidden="true">♥</span>
+                                    </div>
+                                    <h3>포그베일 그레이</h3>
+                                    <p class="best-new-price">30,000원</p>
+                                    <p class="best-new-detail">13.0mm / 한 달 착용</p>
+                                </a>
+                            </article>
+                            <article class="swiper-slide best-new-card">
+                                <a class="best-new-product" href="#" aria-label="악마 컨택트 아이유 미니 브라운 상세 보기">
+                                    <div class="best-new-image-wrap">
+                                        <img class="best-new-image" src="img/new_04.png" alt="악마 컨택트 아이유 미니 브라운 렌즈 제품 이미지">
+                                        <img class="best-new-badge" src="img/Text_best.svg" alt="BEST">
+                                        <span class="best-new-heart" aria-hidden="true">♡</span>
+                                    </div>
+                                    <h3>악마 컨택트 아이유 미니 브라운(30p)</h3>
+                                    <p class="best-new-price">59,000원</p>
+                                    <p class="best-new-detail">13.0mm / 한 달 착용</p>
+                                </a>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
         <footer>&copy;</footer>
     </div>
@@ -135,6 +196,24 @@
             pagination: {
                 el: '.visual .swiper-pagination',
                 clickable: true
+            }
+        });
+
+        const bestNewSwiper = new Swiper('.best-new-swiper', {
+            slidesPerView: 4,
+            spaceBetween: 20,
+            loop: true,
+            speed: 650,
+            autoplay: {
+                delay: 2600,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
+            breakpoints: {
+                0: { slidesPerView: 1.35, spaceBetween: 14 },
+                480: { slidesPerView: 2, spaceBetween: 16 },
+                768: { slidesPerView: 3, spaceBetween: 18 },
+                1200: { slidesPerView: 4, spaceBetween: 20 }
             }
         });
 

@@ -1404,3 +1404,168 @@ body {
         transition: none;
     }
 }
+
+
+/* LENS ME section */
+.lens-me-section {
+    width: 100%;
+    min-height: 870px;
+    background: #fff;
+    color: #292536;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+}
+
+.lens-me-inner {
+    position: relative;
+    display: flex;
+    width: min(86%, 1650px);
+    min-height: 870px;
+    margin: 0 auto;
+}
+
+.lens-me-copy {
+    padding-top: 120px;
+}
+
+.lens-me-copy h2 {
+    margin: 0 0 18px;
+    color: #292536;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -.025em;
+}
+
+.lens-me-copy p {
+    margin: 0;
+    color: #292536;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -.02em;
+}
+
+.lens-me-more {
+    position: absolute;
+    bottom: 110px;
+    left: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    height: 40px;
+    padding: 0 16px;
+    border: 1px solid #292536;
+    border-radius: 999px;
+    color: #292536;
+    background: #fff;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: color .2s ease, background-color .2s ease;
+}
+
+.lens-me-more:hover,
+.lens-me-more:focus-visible {
+    color: #fff;
+    background: #292536;
+}
+
+.lens-me-image {
+    position: absolute;
+    top: 120px;
+    right: 0;
+    display: block;
+    width: 650px;
+    height: 650px;
+    border-radius: 28px;
+    object-fit: cover;
+}
+
+@media (max-width: 1100px) {
+    .lens-me-section,
+    .lens-me-inner {
+        min-height: 720px;
+    }
+
+    .lens-me-inner {
+        width: calc(100% - 64px);
+    }
+
+    .lens-me-copy {
+        padding-top: 80px;
+    }
+
+    .lens-me-copy h2 {
+        font-size: clamp(30px, 3.8vw, 42px);
+    }
+
+    .lens-me-copy p {
+        max-width: 42vw;
+        font-size: clamp(17px, 2.2vw, 25px);
+    }
+
+    .lens-me-image {
+        top: 80px;
+        width: min(52vw, 520px);
+        height: min(52vw, 520px);
+        border-radius: 24px;
+    }
+
+    .lens-me-more {
+        bottom: 80px;
+    }
+}
+
+@media (max-width: 640px) {
+    .lens-me-section,
+    .lens-me-inner {
+        min-height: auto;
+    }
+
+    .lens-me-inner {
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 32px);
+        padding: 44px 0 52px;
+    }
+
+    .lens-me-copy {
+        padding-top: 0;
+    }
+
+    .lens-me-copy h2 {
+        margin-bottom: 10px;
+        font-size: 30px;
+    }
+
+    .lens-me-copy p {
+        max-width: none;
+        font-size: 17px;
+    }
+
+    .lens-me-image {
+        position: static;
+        width: min(100%, 420px);
+        height: auto;
+        aspect-ratio: 1 / 1;
+        margin: 28px auto 0;
+        border-radius: 20px;
+    }
+
+    .lens-me-more {
+        position: static;
+        align-self: flex-start;
+        order: 1;
+        margin-top: 28px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lens-me-more {
+        transition: none;
+    }
+}

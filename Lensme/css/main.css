@@ -739,7 +739,7 @@ body {
 .lens-finder-inner {
     position: relative;
     z-index: 1;
-    width: min(92%, 1780px);
+    width: min(92%, 1480px);
     height: 100%;
     margin-inline: auto;
 }

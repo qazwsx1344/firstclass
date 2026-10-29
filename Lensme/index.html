@@ -223,6 +223,59 @@
                     </div>
                 </div>
             </section>
+
+            <section class="review-section" aria-labelledby="review-title">
+                <div class="review-inner">
+                    <div class="review-heading">
+                        <h2 id="review-title">REVIEW</h2>
+                        <a class="benefits-more" href="#" aria-label="리뷰 더 찾아보기">
+                            <img class="benefits-more-normal" src="img/text_view.svg" alt="">
+                            <img class="benefits-more-hover" src="img/text_view-black.svg" alt="">
+                        </a>
+                    </div>
+
+                    <div class="swiper review-swiper">
+                        <div class="swiper-wrapper">
+                            <article class="swiper-slide review-card">
+                                <img class="review-image" src="img/revlew_01.png" alt="클로아 베리팝 렌즈 착용 후기">
+                                <img class="review-stars" src="img/Star_review_5.svg" alt="별점 5점">
+                                <h3>클로아 베리팝</h3>
+                                <p class="review-copy">핑크색이 섞인 렌즈라고 하면...</p>
+                                <p class="review-date">김** 2026-07-01</p>
+                            </article>
+                            <article class="swiper-slide review-card">
+                                <img class="review-image" src="img/revlew_02.png" alt="크림앤스윗 크림그레이 렌즈 착용 후기">
+                                <img class="review-stars" src="img/Star_review_5.svg" alt="별점 5점">
+                                <h3>크림앤스윗 크림그레이</h3>
+                                <p class="review-copy">렌즈의 크림앤스윗 크림그레이...</p>
+                                <p class="review-date">이** 2026-07-03</p>
+                            </article>
+                            <article class="swiper-slide review-card">
+                                <img class="review-image" src="img/revlew_03.png" alt="클로아 베이치팝 렌즈 후기">
+                                <img class="review-stars" src="img/Star_review_5.svg" alt="별점 5점">
+                                <h3>클로아 베이치팝</h3>
+                                <p class="review-copy">렌즈미는 축고정렌즈도 눈이 ...</p>
+                                <p class="review-date">박** 2026-06-17</p>
+                            </article>
+                            <article class="swiper-slide review-card">
+                                <img class="review-image" src="img/revlew_04.png" alt="노운 원데이 브라운 렌즈 착용 후기">
+                                <img class="review-stars" src="img/Star_review_5.svg" alt="별점 5점">
+                                <h3>노운 원데이 브라운 (10p)</h3>
+                                <p class="review-copy">넘 예뻐요 데일리렌즈로 추천합...</p>
+                                <p class="review-date">김** 2025-12-05</p>
+                            </article>
+                            <article class="swiper-slide review-card">
+                                <img class="review-image" src="img/revlew_05.png" alt="클로미온 원데이 미스그레이 렌즈 착용 후기">
+                                <img class="review-stars" src="img/Star_review_5.svg" alt="별점 5점">
+                                <h3>클로미온 원데이 미스그레이</h3>
+                                <p class="review-copy">색감 진짜 귀여운 차 13.2 정도...</p>
+                                <p class="review-date">박** 2026-10-09</p>
+                            </article>
+                        </div>
+                        <div class="review-pagination" aria-label="리뷰 슬라이드 선택"></div>
+                    </div>
+                </div>
+            </section>
         </main>
         <footer>&copy;</footer>
     </div>
@@ -257,6 +310,25 @@
                 480: { slidesPerView: 2, spaceBetween: 16 },
                 768: { slidesPerView: 3, spaceBetween: 18 },
                 1200: { slidesPerView: 4, spaceBetween: 20 }
+            }
+        });
+
+
+        const reviewSwiper = new Swiper('.review-swiper', {
+            slidesPerView: 5,
+            slidesPerGroup: 1,
+            spaceBetween: 24,
+            speed: 600,
+            loop: true,
+            pagination: {
+                el: '.review-pagination',
+                clickable: true
+            },
+            breakpoints: {
+                0: { slidesPerView: 1.65, spaceBetween: 14 },
+                480: { slidesPerView: 2.2, spaceBetween: 16 },
+                768: { slidesPerView: 3.4, spaceBetween: 20 },
+                1200: { slidesPerView: 5, spaceBetween: 24 }
             }
         });
 

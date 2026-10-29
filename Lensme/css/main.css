@@ -790,3 +790,11 @@ body {
 .lens-finder-button:focus-visible .lens-finder-button-label {
     color: #FEFEFC;
 }
+
+
+/* 모바일 반응형에서 검정색 버튼 위 글자가 보이도록 색상 지정 */
+@media (max-width: 640px) {
+    .lens-finder-button-label {
+        color: #FEFEFC;
+    }
+}

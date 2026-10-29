@@ -1324,7 +1324,7 @@ body {
     position: absolute;
     top: 0;
     right: calc((min(92vw, 1760px) - 100vw) / 2);
-    width: min(42%, 700px);
+    width: min(60%, 1000px);
     height: 100%;
     object-fit: contain;
     object-position: right center;
@@ -1352,7 +1352,7 @@ body {
     }
 
     .store-pickup-image {
-        width: 42%;
+        width: 55%;
     }
 }
 
@@ -1392,7 +1392,7 @@ body {
 
     .store-pickup-image {
         right: -16px;
-        width: 46%;
+        width: 58%;
         opacity: .95;
     }
 }

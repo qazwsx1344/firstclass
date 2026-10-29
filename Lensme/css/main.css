@@ -1328,6 +1328,8 @@ body {
     height: 100%;
     object-fit: cover;
     object-position: right center;
+    transform: scale(1.18);
+    transform-origin: right center;
 }
 
 @media (max-width: 1024px) {

@@ -1454,16 +1454,16 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 100px;
+    width: 94px;
     height: 40px;
-    padding: 0 16px;
-    border: 1px solid #292536;
+    padding: 0;
+    border: 2px solid #292536;
     border-radius: 999px;
     color: #292536;
-    background: #fff;
+    background: transparent;
     font-family: "Pretendard Variable", Pretendard, sans-serif;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
     text-decoration: none;
     transition: color .2s ease, background-color .2s ease;
 }

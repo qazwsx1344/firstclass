@@ -1020,3 +1020,228 @@ body {
         transition-timing-function: ease !important;
     }
 }
+
+
+/* REVIEW section */
+.review-section {
+    width: 100%;
+    min-height: 914px;
+    padding: 80px 0 100px;
+    overflow: hidden;
+    background: var(--color-background-default);
+    color: var(--color-text-primary);
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+}
+
+.review-inner {
+    width: min(92%, 1780px);
+    margin: 0 auto;
+}
+
+.review-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 104px;
+}
+
+.review-heading h2 {
+    margin: 0;
+    color: #292536;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: clamp(28px, 2.1vw, 40px);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -.03em;
+}
+
+.review-heading .benefits-more {
+    width: 100px;
+    height: 40px;
+}
+
+.review-swiper {
+    width: min(100%, 1320px);
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.review-card {
+    min-width: 0;
+    color: #292536;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+}
+
+.review-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 24px;
+    object-fit: cover;
+}
+
+.review-stars {
+    display: block;
+    width: 156px;
+    max-width: 74%;
+    height: 26px;
+    margin: 28px 0 8px;
+    object-fit: contain;
+    object-position: left center;
+}
+
+.review-card h3 {
+    margin: 0 0 6px;
+    overflow: hidden;
+    color: #292536;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -.02em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.review-copy {
+    margin: 0 0 8px;
+    overflow: hidden;
+    color: #292536;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: -.02em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.review-date {
+    margin: 0;
+    color: #625e6a;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.5;
+}
+
+.review-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 58px;
+}
+
+.review-pagination .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    margin: 0 !important;
+    border: 1px solid #8b849b;
+    border-radius: 50%;
+    background: transparent;
+    opacity: 1;
+}
+
+.review-pagination .swiper-pagination-bullet-active {
+    background: #8b849b;
+}
+
+@media (max-width: 1024px) {
+    .review-section {
+        min-height: 760px;
+        padding: 64px 0 80px;
+    }
+
+    .review-heading {
+        margin-bottom: 72px;
+    }
+
+    .review-swiper {
+        width: 100%;
+    }
+
+    .review-image {
+        border-radius: 20px;
+    }
+
+    .review-stars {
+        margin-top: 20px;
+    }
+
+    .review-card h3 {
+        font-size: clamp(16px, 2vw, 20px);
+    }
+
+    .review-copy {
+        font-size: clamp(13px, 1.6vw, 15px);
+    }
+
+    .review-pagination {
+        margin-top: 44px;
+    }
+}
+
+@media (max-width: 640px) {
+    .review-section {
+        min-height: auto;
+        padding: 44px 0 64px;
+    }
+
+    .review-inner {
+        width: calc(100% - 32px);
+    }
+
+    .review-heading {
+        margin-bottom: 36px;
+        gap: 12px;
+    }
+
+    .review-heading h2 {
+        font-size: 25px;
+    }
+
+    .review-heading .benefits-more {
+        width: 78px;
+        height: 32px;
+    }
+
+    .review-swiper {
+        overflow: visible;
+    }
+
+    .review-image {
+        border-radius: 16px;
+    }
+
+    .review-stars {
+        height: 22px;
+        margin: 14px 0 6px;
+    }
+
+    .review-card h3 {
+        font-size: 16px;
+    }
+
+    .review-copy {
+        font-size: 13px;
+    }
+
+    .review-date {
+        font-size: 12px;
+    }
+
+    .review-pagination {
+        gap: 12px;
+        margin-top: 32px;
+    }
+
+    .review-pagination .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .review-swiper .swiper-wrapper {
+        transition-duration: 0ms !important;
+    }
+}

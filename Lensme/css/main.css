@@ -1251,7 +1251,7 @@ body {
 .store-pickup-section {
     position: relative;
     width: 100%;
-    min-height: 400px;
+    min-height: 360px;
     overflow: hidden;
     background: #f5f5f5;
     color: #292536;

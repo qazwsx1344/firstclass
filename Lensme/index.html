@@ -137,7 +137,9 @@
                                     <div class="best-new-image-wrap">
                                         <img class="best-new-image" src="img/new_01.png" alt="포그베일 원데이 브라운 렌즈 제품 이미지">
                                         <img class="best-new-badge" src="img/Text__new.svg" alt="NEW">
-                                        <span class="best-new-heart is-liked" aria-hidden="true">♥</span>
+                                        <button class="best-new-heart is-liked" type="button" aria-label="좋아요 취소" aria-pressed="true">
+                                            <img src="img/ant_heart_in.svg" alt="">
+                                        </button>
                                     </div>
                                     <h3>포그베일 원데이 브라운</h3>
                                     <p class="best-new-price">19,000원</p>
@@ -149,7 +151,9 @@
                                     <div class="best-new-image-wrap">
                                         <img class="best-new-image" src="img/new_02.png" alt="크림앤스윗 그릭그레이 렌즈 제품 이미지">
                                         <img class="best-new-badge" src="img/Text_best.svg" alt="BEST">
-                                        <span class="best-new-heart" aria-hidden="true">♡</span>
+                                        <button class="best-new-heart" type="button" aria-label="좋아요" aria-pressed="false">
+                                            <img src="img/ant_heart_out.svg" alt="">
+                                        </button>
                                     </div>
                                     <h3>크림앤스윗 그릭그레이</h3>
                                     <p class="best-new-price">30,000원</p>
@@ -161,7 +165,9 @@
                                     <div class="best-new-image-wrap">
                                         <img class="best-new-image" src="img/new_03.png" alt="포그베일 그레이 렌즈 제품 이미지">
                                         <img class="best-new-badge" src="img/Text_best.svg" alt="BEST">
-                                        <span class="best-new-heart is-liked" aria-hidden="true">♥</span>
+                                        <button class="best-new-heart is-liked" type="button" aria-label="좋아요 취소" aria-pressed="true">
+                                            <img src="img/ant_heart_in.svg" alt="">
+                                        </button>
                                     </div>
                                     <h3>포그베일 그레이</h3>
                                     <p class="best-new-price">30,000원</p>
@@ -173,12 +179,36 @@
                                     <div class="best-new-image-wrap">
                                         <img class="best-new-image" src="img/new_04.png" alt="악마 컨택트 아이유 미니 브라운 렌즈 제품 이미지">
                                         <img class="best-new-badge" src="img/Text_best.svg" alt="BEST">
-                                        <span class="best-new-heart" aria-hidden="true">♡</span>
+                                        <button class="best-new-heart" type="button" aria-label="좋아요" aria-pressed="false">
+                                            <img src="img/ant_heart_out.svg" alt="">
+                                        </button>
                                     </div>
                                     <h3>악마 컨택트 아이유 미니 브라운(30p)</h3>
                                     <p class="best-new-price">59,000원</p>
                                     <p class="best-new-detail">13.0mm / 한 달 착용</p>
                                 </a>
+                            </article>
+                            <article class="swiper-slide best-new-card">
+                                <div class="best-new-product">
+                                    <div class="best-new-image-wrap">
+                                        <img class="best-new-image" src="img/new_05.png" alt="렌즈미 팩앤팩 1+1 프로모션 렌즈 이미지">
+                                        <button class="best-new-heart" type="button" aria-label="좋아요" aria-pressed="false">
+                                            <img src="img/ant_heart_out.svg" alt="">
+                                        </button>
+                                    </div>
+                                    <h3>팩앤팩 1+1 프로모션</h3>
+                                </div>
+                            </article>
+                            <article class="swiper-slide best-new-card">
+                                <div class="best-new-product">
+                                    <div class="best-new-image-wrap">
+                                        <img class="best-new-image" src="img/new_06.png" alt="렌즈미 팩앤팩 1+1 프로모션 렌즈 이미지">
+                                        <button class="best-new-heart" type="button" aria-label="좋아요" aria-pressed="false">
+                                            <img src="img/ant_heart_out.svg" alt="">
+                                        </button>
+                                    </div>
+                                    <h3>팩앤팩 1+1 프로모션</h3>
+                                </div>
                             </article>
                         </div>
                     </div>
@@ -203,9 +233,13 @@
             slidesPerView: 4,
             spaceBetween: 20,
             loop: true,
-            speed: 650,
+            speed: 4200,
+            freeMode: {
+                enabled: true,
+                momentum: false
+            },
             autoplay: {
-                delay: 2600,
+                delay: 0,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true
             },
@@ -215,6 +249,21 @@
                 768: { slidesPerView: 3, spaceBetween: 18 },
                 1200: { slidesPerView: 4, spaceBetween: 20 }
             }
+        });
+
+        document.querySelectorAll('.best-new-heart').forEach((heartButton) => {
+            heartButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                const isLiked = heartButton.getAttribute('aria-pressed') === 'true';
+                const nextLiked = !isLiked;
+                heartButton.setAttribute('aria-pressed', String(nextLiked));
+                heartButton.setAttribute('aria-label', nextLiked ? '좋아요 취소' : '좋아요');
+                heartButton.classList.toggle('is-liked', nextLiked);
+                heartButton.querySelector('img').src = nextLiked
+                    ? 'img/ant_heart_in.svg'
+                    : 'img/ant_heart_out.svg';
+            });
         });
 
         const menuButton = document.querySelector('.mobile-menu-button');

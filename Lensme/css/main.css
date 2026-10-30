@@ -1589,9 +1589,9 @@ body {
 /* Footer */
 .site-footer {
     width: 100%;
-    min-height: 760px;
+    min-height: 960px;
     box-sizing: border-box;
-    padding: clamp(120px, 15vh, 180px) 0 0;
+    padding: 240px 0 0;
     background: #AC97DC;
     color: #FEFEFC;
     font-family: "Pretendard Variable", Pretendard, sans-serif;
@@ -1600,7 +1600,7 @@ body {
 .site-footer-inner {
     width: 92%;
     max-width: none;
-    min-height: 580px;
+    min-height: 720px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -1610,7 +1610,7 @@ body {
 .site-footer-main {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: clamp(48px, 7vw, 120px);
+    column-gap: 30px;
 }
 
 .footer-company h2,
@@ -1681,21 +1681,21 @@ body {
 .footer-social-links {
     display: flex;
     align-items: center;
-    gap: clamp(18px, 1.8vw, 28px);
+    gap: 30px;
 }
 
 .footer-social-links a {
     display: inline-flex;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     align-items: center;
     justify-content: center;
 }
 
 .footer-social-links img {
     display: block;
-    width: 26px;
-    height: 26px;
+    width: 36px;
+    height: 36px;
     object-fit: contain;
 }
 
@@ -1710,8 +1710,8 @@ body {
 .footer-legal-links {
     display: flex;
     align-items: center;
-    gap: 28px;
-    min-height: 96px;
+    gap: 30px;
+    min-height: 110px;
     border-top: 1px solid rgba(254, 254, 252, .55);
 }
 
@@ -1762,7 +1762,7 @@ body {
         margin-top: 64px;
         min-height: 88px;
         flex-wrap: wrap;
-        gap: 22px;
+        gap: 30px;
     }
 }
 
@@ -1787,23 +1787,23 @@ body {
     .footer-brand { font-size: 36px; }
 
     .footer-social-links {
-        gap: 18px;
+        gap: 30px;
     }
 
     .footer-social-links a {
-        width: 34px;
-        height: 34px;
+        width: 42px;
+        height: 42px;
     }
 
     .footer-social-links img {
-        width: 28px;
-        height: 28px;
+        width: 36px;
+        height: 36px;
     }
 
     .footer-copyright { font-size: 13px; }
 
     .footer-legal-links {
-        gap: 20px;
+        gap: 30px;
         margin-top: 56px;
         min-height: 82px;
     }

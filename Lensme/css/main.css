@@ -1598,8 +1598,8 @@ body {
 }
 
 .site-footer-inner {
-    width: min(92%, 1422px);
-    max-width: 1422px;
+    width: 92%;
+    max-width: none;
     min-height: calc(92vh - 240px);
     margin: 0 auto;
     display: flex;

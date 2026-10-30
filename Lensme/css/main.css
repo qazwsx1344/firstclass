@@ -1588,8 +1588,9 @@ body {
 
 /* Footer */
 .site-footer {
-    width: 100%;
+    width: min(92%, 1360px);
     min-height: 92vh;
+    margin: 0 auto;
     box-sizing: border-box;
     padding: 240px 0 0;
     background: #AC97DC;
@@ -1598,8 +1599,8 @@ body {
 }
 
 .site-footer-inner {
-    width: min(92%, 1360px);
-    max-width: 1360px;
+    width: 92%;
+    max-width: none;
     min-height: calc(92vh - 240px);
     margin: 0 auto;
     display: flex;

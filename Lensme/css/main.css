@@ -1091,20 +1091,6 @@ body {
     object-position: left center;
 }
 
-.review-stars-placeholder {
-    display: flex;
-    align-items: center;
-    width: 156px;
-    max-width: 74%;
-    height: 26px;
-    margin: 28px 0 8px;
-    color: #8b849b;
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 1;
-    letter-spacing: 2px;
-}
-
 .review-card h3 {
     margin: 0 0 6px;
     overflow: hidden;

@@ -1584,3 +1584,236 @@ body {
 .lens-me-copy h2 {
     font-size: clamp(28px, 2.19vw, 36px);
 }
+
+
+/* Footer */
+.site-footer {
+    width: 100%;
+    min-height: 960px;
+    box-sizing: border-box;
+    padding: 240px 0 0;
+    background: #AC97DC;
+    color: #FEFEFC;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+}
+
+.site-footer-inner {
+    width: min(92%, 1600px);
+    min-height: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.site-footer-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 80px;
+}
+
+.footer-company h2,
+.footer-social h2 {
+    margin: 0 0 24px;
+    color: #FEFEFC;
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 600;
+}
+
+.footer-company-info {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    row-gap: 4px;
+    margin: 0;
+    color: rgba(254, 254, 252, .88);
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 300;
+}
+
+.footer-company-info div {
+    display: contents;
+}
+
+.footer-company-info dt,
+.footer-company-info dd {
+    margin: 0;
+    font-weight: 300;
+}
+
+.footer-notice {
+    margin: 28px 0 24px;
+    color: rgba(254, 254, 252, .88);
+    font-size: 13px;
+    line-height: 1.65;
+    font-weight: 300;
+}
+
+.footer-main-phone {
+    margin: 0 0 22px;
+    color: #FEFEFC;
+    font-size: 15px;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+.footer-contact {
+    color: rgba(254, 254, 252, .9);
+    font-size: 13px;
+    line-height: 1.55;
+    font-weight: 300;
+}
+
+.footer-contact p {
+    margin: 0;
+}
+
+.footer-brand {
+    display: inline-block;
+    margin: 0 0 42px;
+    color: #FEFEFC;
+    font-size: 40px;
+    line-height: 1;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.footer-social h2 {
+    margin-bottom: 28px;
+}
+
+.footer-social-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.footer-social-links a {
+    display: inline-flex;
+    width: 22px;
+    height: 22px;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-social-links img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.footer-copyright {
+    margin: 30px 0 0;
+    color: #FEFEFC;
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 300;
+}
+
+.footer-legal-links {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    min-height: 110px;
+    border-top: 1px solid rgba(254, 254, 252, .55);
+}
+
+.footer-legal-links a {
+    position: relative;
+    color: #FEFEFC;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.footer-legal-links a + a::before {
+    position: absolute;
+    top: 50%;
+    left: -14px;
+    width: 1px;
+    height: 14px;
+    background: rgba(254, 254, 252, .7);
+    content: "";
+    transform: translateY(-50%);
+}
+
+@media (max-width: 900px) {
+    .site-footer {
+        min-height: auto;
+        padding: 100px 0 0;
+    }
+
+    .site-footer-inner {
+        min-height: 0;
+    }
+
+    .site-footer-main {
+        grid-template-columns: 1fr;
+        row-gap: 64px;
+    }
+
+    .footer-company-info {
+        grid-template-columns: minmax(130px, 32%) minmax(0, 1fr);
+    }
+
+    .footer-brand {
+        margin-bottom: 28px;
+    }
+
+    .footer-legal-links {
+        margin-top: 72px;
+        min-height: 90px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .site-footer {
+        padding-top: 72px;
+    }
+
+    .site-footer-inner {
+        width: calc(100% - 40px);
+    }
+
+    .footer-company-info {
+        grid-template-columns: 125px minmax(0, 1fr);
+        font-size: 11px;
+    }
+
+    .footer-notice {
+        font-size: 11px;
+    }
+
+    .footer-main-phone {
+        font-size: 14px;
+    }
+
+    .footer-contact {
+        font-size: 11px;
+    }
+
+    .footer-brand {
+        font-size: 34px;
+    }
+
+    .footer-social-links {
+        gap: 18px;
+    }
+
+    .footer-legal-links {
+        gap: 18px;
+    }
+
+    .footer-legal-links a {
+        font-size: 14px;
+    }
+
+    .footer-legal-links a + a::before {
+        left: -10px;
+    }
+}

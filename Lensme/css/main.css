@@ -1598,7 +1598,7 @@ body {
 }
 
 .site-footer-inner {
-    width: 92%;
+    width: 86%;
     max-width: none;
     min-height: 720px;
     margin: 0 auto;
@@ -1684,18 +1684,18 @@ body {
     gap: 30px;
 }
 
-.footer-social-links a {
+ .footer-social-links a {
     display: inline-flex;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     align-items: center;
     justify-content: center;
 }
 
-.footer-social-links img {
+ .footer-social-links img {
     display: block;
-    width: 36px;
-    height: 36px;
+    width: 46px;
+    height: 46px;
     object-fit: contain;
 }
 
@@ -1790,14 +1790,14 @@ body {
         gap: 30px;
     }
 
-    .footer-social-links a {
-        width: 42px;
-        height: 42px;
+     .footer-social-links a {
+        width: 46px;
+        height: 46px;
     }
 
-    .footer-social-links img {
-        width: 36px;
-        height: 36px;
+     .footer-social-links img {
+        width: 42px;
+        height: 42px;
     }
 
     .footer-copyright { font-size: 13px; }

@@ -1588,7 +1588,8 @@ body {
 
 /* Footer */
 .site-footer {
-    width: 100%;
+    width: min(100%, 1422px);
+    margin: 0 auto;
     min-height: 92vh;
     box-sizing: border-box;
     padding: 240px 0 0;

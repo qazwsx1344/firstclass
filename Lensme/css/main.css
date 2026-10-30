@@ -1591,7 +1591,7 @@ body {
     width: 100%;
     min-height: 92vh;
     box-sizing: border-box;
-    padding: 240px 0 0;
+    padding: 240px 0 40px;
     background: #AC97DC;
     color: #FEFEFC;
     font-family: "Pretendard Variable", Pretendard, sans-serif;
@@ -1600,7 +1600,7 @@ body {
 .site-footer-inner {
     width: 92%;
     max-width: none;
-    min-height: calc(92vh - 240px);
+    min-height: calc(92vh - 280px);
     margin: 0 auto;
     display: flex;
     flex-direction: column;

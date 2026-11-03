@@ -1854,7 +1854,7 @@ body {
 }
 
 .primary-navigation .nav-item {
-    position: static;
+    position: relative;
     display: flex;
     align-items: center;
     min-height: 48px;
@@ -1887,7 +1887,7 @@ body {
     display: none;
     min-width: 150px;
     margin: 0;
-    padding: 8px 0 20px;
+    padding: 18px 0 20px;
     list-style: none;
 }
 
@@ -1927,12 +1927,10 @@ body {
     display: block;
 }
 
-/* 서브메뉴 열 위치: 상위 메뉴 아래에 정렬 */
-.primary-navigation .nav-item:nth-child(1) .nav-submenu { left: 6.2%; }
-.primary-navigation .nav-item:nth-child(2) .nav-submenu { left: 18.5%; }
-.primary-navigation .nav-item:nth-child(3) .nav-submenu { left: 40.3%; }
-.primary-navigation .nav-item:nth-child(5) .nav-submenu { left: 73.9%; }
-.primary-navigation .nav-item:nth-child(6) .nav-submenu { left: 85.9%; }
+/* 서브메뉴는 각 상위 메뉴의 왼쪽 끝에 맞춰 정렬 */
+.primary-navigation .nav-item .nav-submenu {
+    left: 0;
+}
 
 @media (max-width: 1024px) {
     .primary-navigation {

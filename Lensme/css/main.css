@@ -1589,18 +1589,18 @@ body {
 /* Footer */
 .site-footer {
     width: 100%;
-    min-height: 92vh;
+    min-height: 100vh;
     box-sizing: border-box;
-    padding: 240px 0 40px;
+    padding: 120px 0 40px;
     background: #AC97DC;
     color: #FEFEFC;
     font-family: "Pretendard Variable", Pretendard, sans-serif;
 }
 
 .site-footer-inner {
-    width: 92%;
+    width: 85%;
     max-width: none;
-    min-height: calc(92vh - 280px);
+    min-height: calc(100vh - 160px);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -1609,8 +1609,8 @@ body {
 
 .site-footer-main {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 30px;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    column-gap: 40px;
 }
 
 .footer-company h2,

@@ -1811,3 +1811,31 @@ body {
     .footer-legal-links a { font-size: 16px; }
     .footer-legal-links a + a::before { left: -11px; }
 }
+
+/* CTA 버튼 크기 통일: 전체보기 버튼 기준 */
+.benefits-more,
+.lens-finder-button,
+.store-pickup-button,
+.lens-me-more {
+    box-sizing: border-box;
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    height: 40px;
+    min-height: 40px;
+    padding: 0;
+}
+
+@media (max-width: 640px) {
+    .benefits-more,
+    .lens-finder-button,
+    .store-pickup-button,
+    .lens-me-more {
+        width: 78px;
+        min-width: 78px;
+        max-width: 78px;
+        height: 32px;
+        min-height: 32px;
+    }
+}
+

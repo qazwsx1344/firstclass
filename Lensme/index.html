@@ -32,12 +32,47 @@
                     </button>
                 </div>
                 <nav class="primary-navigation" id="primary-navigation" aria-label="주요 메뉴">
-                    <a href="#">렌즈</a>
-                    <a class="nav-highlight" href="https://www.lens-me.com/shop/find_lens.php">나만의 렌즈 찾기</a>
-                    <a href="#">온라인 전용</a>
-                    <a href="https://www.lens-me.com/shop/chain.php">매장찾기</a>
-                    <a href="#">EVENT</a>
-                    <a href="https://www.lens-me.com/shop/page.php?ps_code=PZZIFDCGLD">브랜드</a>
+                    <div class="nav-item">
+                        <a href="#" aria-expanded="false">렌즈</a>
+                        <ul class="nav-submenu">
+                            <li><a href="#">컬러별</a></li>
+                            <li><a href="#">직경별</a></li>
+                            <li><a href="#">신상품</a></li>
+                            <li><a href="#">유형별</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-item nav-highlight">
+                        <a href="https://www.lens-me.com/shop/find_lens.php" aria-expanded="false">나만의 렌즈 찾기</a>
+                        <ul class="nav-submenu">
+                            <li><a href="https://www.lens-me.com/shop/find_lens.php">온라인 전용 렌즈</a></li>
+                            <li><a href="https://www.lens-me.com/shop/find_lens.php">온라인 전용 혜택</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" aria-expanded="false">온라인 전용</a>
+                        <ul class="nav-submenu">
+                            <li><a href="#">온라인 전용 렌즈</a></li>
+                            <li><a href="#">온라인 전용 혜택</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-item">
+                        <a href="https://www.lens-me.com/shop/chain.php" aria-expanded="false">매장찾기</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" aria-expanded="false">EVENT</a>
+                        <ul class="nav-submenu">
+                            <li><a href="#">쿠폰</a></li>
+                            <li><a href="#">할인</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-item">
+                        <a href="https://www.lens-me.com/shop/page.php?ps_code=PZZIFDCGLD" aria-expanded="false">브랜드</a>
+                        <ul class="nav-submenu">
+                            <li><a href="https://www.lens-me.com/shop/page.php?ps_code=PZZIFDCGLD">렌즈미 소개</a></li>
+                            <li><a href="#">렌즈미 뉴스</a></li>
+                            <li><a href="#">Dr. 렌즈미</a></li>
+                        </ul>
+                    </div>
                 </nav>
             </div>
         </header>
@@ -601,6 +636,39 @@
             const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
             menuButton.setAttribute('aria-expanded', String(!isExpanded));
             navigation.classList.toggle('is-open', !isExpanded);
+        });
+
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach((item) => {
+            const link = item.querySelector(':scope > a');
+            const submenu = item.querySelector('.nav-submenu');
+            if (!submenu) return;
+
+            link.addEventListener('click', (event) => {
+                if (window.matchMedia('(max-width: 1024px)').matches) {
+                    event.preventDefault();
+                    const isExpanded = link.getAttribute('aria-expanded') === 'true';
+                    navItems.forEach((otherItem) => {
+                        const otherLink = otherItem.querySelector(':scope > a');
+                        if (otherLink && otherItem.querySelector('.nav-submenu')) {
+                            otherLink.setAttribute('aria-expanded', 'false');
+                            otherItem.classList.remove('is-expanded');
+                        }
+                    });
+                    link.setAttribute('aria-expanded', String(!isExpanded));
+                    item.classList.toggle('is-expanded', !isExpanded);
+                }
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.matchMedia('(min-width: 1025px)').matches) {
+                navItems.forEach((item) => {
+                    item.classList.remove('is-expanded');
+                    const link = item.querySelector(':scope > a');
+                    if (link) link.setAttribute('aria-expanded', 'false');
+                });
+            }
         });
     </script>
 </body>

@@ -1992,3 +1992,61 @@ body {
     }
 }
 
+
+
+/* Floating category buttons */
+.floating-category {
+    position: fixed;
+    z-index: 90;
+    right: 16px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.floating-category-button {
+    display: flex;
+    width: 64px;
+    height: 64px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    border-radius: 50%;
+    background: #B494E5;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .22);
+    color: #fff;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.15;
+    text-decoration: none;
+}
+
+.floating-category-button img {
+    display: block;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+@media (max-width: 640px) {
+    .floating-category {
+        right: 10px;
+        bottom: 14px;
+        gap: 7px;
+    }
+
+    .floating-category-button {
+        width: 54px;
+        height: 54px;
+        font-size: 9px;
+    }
+
+    .floating-category-button img {
+        width: 25px;
+        height: 25px;
+    }
+}

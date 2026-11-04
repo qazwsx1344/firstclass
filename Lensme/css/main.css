@@ -958,7 +958,7 @@ body {
 }
 
 .best-new-swiper-second {
-    margin-top: 48px;
+    margin-top: 30px;
 }
 
 @media (max-width: 640px) {
@@ -1021,7 +1021,7 @@ body {
     }
 
     .best-new-swiper-second {
-        margin-top: 32px;
+        margin-top: 30px;
     }
 }
 

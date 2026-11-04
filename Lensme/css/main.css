@@ -957,8 +957,8 @@ body {
     line-height: 1.5;
 }
 
-.best-new-swiper-second {
-    margin-top: 30px;
+.best-new-section .best-new-swiper-second {
+    margin-top: 60px;
 }
 
 @media (max-width: 640px) {
@@ -1020,8 +1020,8 @@ body {
         font-size: 11px;
     }
 
-    .best-new-swiper-second {
-        margin-top: 30px;
+    .best-new-section .best-new-swiper-second {
+        margin-top: 48px;
     }
 }
 

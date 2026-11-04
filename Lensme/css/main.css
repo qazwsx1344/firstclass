@@ -948,6 +948,19 @@ body {
     font-size: 12px;
 }
 
+.best-new-size,
+.best-new-date {
+    margin: 0;
+    color: #625e6a;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.best-new-swiper-second {
+    margin-top: 48px;
+}
+
 @media (max-width: 640px) {
     .best-new-section {
         padding: 36px 0 52px;
@@ -1000,6 +1013,15 @@ body {
 
     .best-new-detail {
         font-size: 11px;
+    }
+
+    .best-new-size,
+    .best-new-date {
+        font-size: 11px;
+    }
+
+    .best-new-swiper-second {
+        margin-top: 32px;
     }
 }
 

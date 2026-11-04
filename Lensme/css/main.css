@@ -2050,3 +2050,32 @@ body {
         height: 34px;
     }
 }
+
+
+/* Floating category buttons: Figma reference sizing */
+.floating-category-button {
+    width: 112px;
+    height: 112px;
+    gap: 0;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.floating-category-button img {
+    width: 66px;
+    height: 66px;
+}
+
+@media (max-width: 640px) {
+    .floating-category-button {
+        width: 82px;
+        height: 82px;
+        font-size: 13px;
+    }
+
+    .floating-category-button img {
+        width: 48px;
+        height: 48px;
+    }
+}

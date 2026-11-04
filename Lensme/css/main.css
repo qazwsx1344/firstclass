@@ -2003,7 +2003,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 0;
 }
 
 .floating-category-button {
@@ -2036,7 +2036,7 @@ body {
     .floating-category {
         right: 10px;
         bottom: 14px;
-        gap: 7px;
+        gap: 0;
     }
 
     .floating-category-button {
@@ -2054,8 +2054,8 @@ body {
 
 /* Floating category buttons: Figma reference sizing */
 .floating-category-button {
-    width: 112px;
-    height: 112px;
+    width: 96px;
+    height: 96px;
     padding: 0;
     gap: 0;
     background: transparent;
@@ -2070,7 +2070,7 @@ body {
 
 @media (max-width: 640px) {
     .floating-category-button {
-        width: 82px;
-        height: 82px;
+        width: 72px;
+        height: 72px;
     }
 }

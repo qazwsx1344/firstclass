@@ -2165,7 +2165,14 @@ body {
     white-space: nowrap;
 }
 
-.pick-price,
+.pick-price {
+    margin: 0;
+    color: #292536;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+}
+
 .pick-size,
 .pick-date {
     margin: 0;

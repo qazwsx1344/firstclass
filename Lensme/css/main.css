@@ -2056,26 +2056,21 @@ body {
 .floating-category-button {
     width: 112px;
     height: 112px;
+    padding: 0;
     gap: 0;
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 1.2;
+    background: transparent;
+    box-shadow: none;
 }
 
 .floating-category-button img {
-    width: 66px;
-    height: 66px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 @media (max-width: 640px) {
     .floating-category-button {
         width: 82px;
         height: 82px;
-        font-size: 13px;
-    }
-
-    .floating-category-button img {
-        width: 48px;
-        height: 48px;
     }
 }

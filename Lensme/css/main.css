@@ -2233,3 +2233,14 @@ body {
         font-size: 11px;
     }
 }
+
+
+/* PICK image heart button - same placement as BEST/NEW */
+.pick-image-wrap {
+    position: relative;
+}
+
+.pick-image-wrap .best-new-heart {
+    top: 8px;
+    right: 10px;
+}

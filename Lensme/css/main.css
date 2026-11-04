@@ -2029,70 +2029,64 @@ body {
 }
 
 .floating-category-button {
-    display: flex;
+    display: block;
     width: 64px;
     height: 64px;
+    text-decoration: none;
+}
+
+.floating-category-circle {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 3px;
     border-radius: 50%;
     background: #B494E5;
     box-shadow: 0 2px 5px rgba(0, 0, 0, .22);
     color: #fff;
     font-family: "Pretendard Variable", Pretendard, sans-serif;
+}
+
+.floating-category-circle img {
+    display: block;
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
+.floating-category-circle span {
+    display: block;
     font-size: 10px;
     font-weight: 500;
     line-height: 1.15;
-    text-decoration: none;
-}
-
-.floating-category-button img {
-    display: block;
-    width: 42px;
-    height: 42px;
-    object-fit: contain;
+    white-space: nowrap;
 }
 
 @media (max-width: 640px) {
     .floating-category {
         right: 10px;
         bottom: 14px;
-        gap: 0;
     }
 
     .floating-category-button {
-        width: 54px;
-        height: 54px;
+        width: 58px;
+        height: 58px;
+    }
+
+    .floating-category-circle {
+        gap: 2px;
+    }
+
+    .floating-category-circle img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .floating-category-circle span {
         font-size: 9px;
-    }
-
-    .floating-category-button img {
-        width: 34px;
-        height: 34px;
-    }
-}
-
-
-/* Floating category buttons: Figma reference sizing */
-.floating-category-button {
-    width: 96px;
-    height: 96px;
-    padding: 0;
-    gap: 0;
-    background: transparent;
-    box-shadow: none;
-}
-
-.floating-category-button img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-@media (max-width: 640px) {
-    .floating-category-button {
-        width: 72px;
-        height: 72px;
     }
 }

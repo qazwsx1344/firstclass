@@ -2025,17 +2025,18 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0;
+    gap: 10px;
 }
 
 .floating-category-button {
     display: block;
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     text-decoration: none;
 }
 
 .floating-category-circle {
+    position: relative;
     display: flex;
     width: 100%;
     height: 100%;
@@ -2044,6 +2045,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0;
+    overflow: hidden;
     border-radius: 50%;
     background: #B494E5;
     box-shadow: 0 2px 5px rgba(0, 0, 0, .22);
@@ -2052,21 +2054,29 @@ body {
 }
 
 .floating-category-circle img {
+    position: absolute;
+    top: 2px;
+    left: 50%;
     display: block;
-    width: 38px;
-    height: 38px;
+    width: 70px;
+    height: 70px;
     flex: 0 0 auto;
     object-fit: contain;
+    transform: translateX(-50%);
 }
 
 .floating-category-circle span {
+    position: absolute;
+    right: 0;
+    bottom: 7px;
+    left: 0;
     display: block;
     width: 100%;
     padding: 0 2px;
     box-sizing: border-box;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
-    line-height: 1.1;
+    line-height: 1;
     text-align: center;
     white-space: nowrap;
 }
@@ -2075,22 +2085,18 @@ body {
     .floating-category {
         right: 10px;
         bottom: 14px;
+        gap: 10px;
     }
 
     .floating-category-button {
-        width: 58px;
-        height: 58px;
-    }
-
-    .floating-category-circle {
-        gap: 0;
+        width: 80px;
+        height: 80px;
     }
 
     .floating-category-circle img {
-        width: 34px;
-        height: 34px;
+        width: 70px;
+        height: 70px;
     }
-
 }
 
 

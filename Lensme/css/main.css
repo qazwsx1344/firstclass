@@ -2013,8 +2013,8 @@ body {
 .floating-category {
     position: fixed;
     z-index: 90;
-    right: 16px;
-    bottom: 20px;
+    right: 26px;
+    bottom: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2041,7 +2041,7 @@ body {
     overflow: hidden;
     border-radius: 50%;
     background: #B494E5;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .22);
+    box-shadow: 0 0px 20px rgba(255, 255, 255, .22);
     color: #fff;
     font-family: "Pretendard Variable", Pretendard, sans-serif;
 }
@@ -2061,7 +2061,7 @@ body {
 .floating-category-circle span {
     position: absolute;
     right: 0;
-    bottom: 7px;
+    bottom: 13px;
     left: 0;
     display: block;
     width: 100%;
@@ -2076,8 +2076,8 @@ body {
 
 @media (max-width: 640px) {
     .floating-category {
-        right: 10px;
-        bottom: 14px;
+        right: 26px;
+        bottom: 40px;
         gap: 10px;
     }
 

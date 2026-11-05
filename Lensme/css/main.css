@@ -2055,14 +2055,14 @@ body {
 
 .floating-category-circle img {
     position: absolute;
-    top: 2px;
+    top: 50%;
     left: 50%;
     display: block;
-    width: 70px;
-    height: 70px;
+    width: 85px;
+    height: 85px;
     flex: 0 0 auto;
     object-fit: contain;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
 }
 
 .floating-category-circle span {
@@ -2094,8 +2094,8 @@ body {
     }
 
     .floating-category-circle img {
-        width: 70px;
-        height: 70px;
+        width: 85px;
+        height: 85px;
     }
 }
 

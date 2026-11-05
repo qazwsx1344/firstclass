@@ -22,7 +22,7 @@
                         <a href="#">로그인/마이페이지</a>
                         <a href="#">장바구니</a>
                     </div>
-                    <a class="header-logo" href="#" aria-label="렌즈미 홈">
+                    <a class="header-logo" href="#wrap" aria-label="렌즈미 홈">
                         <img src="img/logo_new%202.svg" alt="렌즈미">
                     </a>
                     <button class="mobile-menu-button" type="button" aria-expanded="false" aria-controls="primary-navigation">
@@ -716,6 +716,13 @@
     </div>
 
     <script>
+        // 상단 렌즈미 로고를 제외한 임시 링크는 페이지 맨 위로 이동하지 않도록 처리
+        document.addEventListener('click', (event) => {
+            const link = event.target.closest('a[href="#"]');
+            if (!link || link.classList.contains('header-logo')) return;
+            event.preventDefault();
+        });
+
         const swiper = new Swiper('.hero-sec .visual', {
             direction: 'horizontal',
             loop: true,

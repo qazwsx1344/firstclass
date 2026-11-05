@@ -2058,8 +2058,8 @@ body {
     top: 50%;
     left: 50%;
     display: block;
-    width: 85px;
-    height: 85px;
+    width: 90px;
+    height: 90px;
     flex: 0 0 auto;
     object-fit: contain;
     transform: translate(-50%, -50%);
@@ -2094,8 +2094,8 @@ body {
     }
 
     .floating-category-circle img {
-        width: 85px;
-        height: 85px;
+        width: 90px;
+        height: 90px;
     }
 }
 

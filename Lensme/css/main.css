@@ -2060,8 +2060,8 @@ body {
 
 .floating-category-circle span {
     display: block;
-    font-size: 10px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     line-height: 1.15;
     white-space: nowrap;
 }
@@ -2086,9 +2086,6 @@ body {
         height: 30px;
     }
 
-    .floating-category-circle span {
-        font-size: 9px;
-    }
 }
 
 

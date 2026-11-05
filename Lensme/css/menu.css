@@ -1,60 +1,397 @@
-/* 렌즈미 서브페이지: 기존 main.css의 컬러·폰트·Header·Footer 규칙을 재사용합니다. */
-.menu-page { width: 100%; background: var(--color-background-default); }
-.menu-inner { width: min(92%, 1480px); margin: 0 auto; }
-.menu-intro { padding: clamp(48px, 6vw, 88px) 0 clamp(36px, 4vw, 60px); text-align: center; background: var(--color-lavender-mist); }
-.menu-eyebrow, .panel-eyebrow, .feature-label { margin: 0 0 12px; color: var(--color-action-primary); font-size: 13px; font-weight: 700; letter-spacing: .12em; }
-.menu-intro h1 { margin: 0; color: var(--color-text-primary); font-size: clamp(32px, 4vw, 48px); font-weight: 700; line-height: 1.2; letter-spacing: -.035em; }
-.menu-intro-copy { margin: 18px 0 0; color: var(--color-text-primary); font-size: clamp(15px, 1.5vw, 18px); line-height: 1.65; }
-.menu-explorer { padding: clamp(36px, 4vw, 64px) 0 clamp(72px, 8vw, 120px); }
-.menu-tabs { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; padding: 8px; border: 1px solid #e8e2f0; border-radius: 18px; background: #fff; }
-.menu-tab { min-height: 54px; padding: 12px 10px; border: 0; border-radius: 12px; background: transparent; color: var(--color-text-primary); font: inherit; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color .18s ease, color .18s ease, font-weight .18s ease; }
-.menu-tab:hover { background: var(--color-lavender-mist); }
-.menu-tab.is-active { background: var(--color-background-brand); color: var(--color-text-on-brand); font-weight: 700; }
-.menu-tab:focus-visible, .menu-card-link:focus-visible { outline: 2px solid var(--color-action-primary); outline-offset: 3px; }
-.menu-panels { padding-top: clamp(36px, 4vw, 56px); }
-.menu-panel[hidden] { display: none; }
-.panel-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
-.panel-heading h2 { margin: 0; color: var(--color-text-primary); font-size: clamp(25px, 2.6vw, 36px); font-weight: 600; line-height: 1.25; letter-spacing: -.03em; }
-.panel-heading > div > p:last-child { margin: 12px 0 0; color: #625e6a; font-size: 16px; line-height: 1.6; }
-.menu-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-.menu-card { min-width: 0; overflow: hidden; border-radius: 20px; background: #fff; }
-.menu-image-placeholder { display: flex; min-height: 220px; aspect-ratio: 1.18 / 1; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-radius: 20px; background: #f5f3f5; color: #8b849b; text-align: center; }
-.menu-image-placeholder span { font-size: 12px; font-weight: 700; letter-spacing: .12em; }
-.menu-image-placeholder small { font-size: 14px; }
-.menu-card-copy { padding: 20px 4px 8px; }
-.menu-card-copy h3, .menu-feature-copy h3 { margin: 0; color: var(--color-text-primary); font-size: 21px; font-weight: 600; line-height: 1.35; }
-.menu-card-copy p, .menu-feature-copy > p:not(.feature-label) { margin: 9px 0 16px; color: #625e6a; font-size: 15px; line-height: 1.6; }
-.menu-card-link { display: inline-flex; align-items: center; gap: 8px; color: var(--color-action-primary); font-size: 15px; font-weight: 600; }
-.menu-card-link b { font-size: 18px; }
-.menu-feature { display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: clamp(28px, 5vw, 76px); }
-.menu-feature-image { min-height: 300px; aspect-ratio: 1.45 / 1; }
-.menu-feature-copy { padding: 24px 0; }
-.menu-feature-copy h3 { font-size: clamp(24px, 3vw, 36px); }
-.menu-feature-copy > p:not(.feature-label) { max-width: 480px; margin: 16px 0 22px; }
+/* MENU subpage
+   Design source: Lensme/Design.md + existing css/main.css
+   Main page shared Header, Footer, colors, typography and content width are reused. */
+
+.menu-page {
+    width: 100%;
+    background: var(--color-background-default);
+    color: var(--color-text-primary);
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+}
+
+.menu-inner {
+    width: min(92%, 1480px);
+    margin: 0 auto;
+}
+
+/* Page introduction */
+.menu-hero {
+    display: flex;
+    min-height: 250px;
+    align-items: center;
+    padding: clamp(52px, 6vw, 88px) 0;
+    background: var(--color-lavender-mist);
+}
+
+.menu-eyebrow,
+.panel-eyebrow,
+.card-kicker {
+    margin: 0 0 12px;
+    color: var(--color-action-primary);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .12em;
+}
+
+.menu-hero h1 {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -.035em;
+}
+
+.menu-hero h1 span {
+    color: var(--color-action-primary);
+}
+
+.menu-hero .menu-inner > p:last-child {
+    margin: 18px 0 0;
+    color: #625e6a;
+    font-size: clamp(15px, 1.5vw, 18px);
+    line-height: 1.6;
+}
+
+/* Tabs and content */
+.menu-content {
+    padding: clamp(40px, 5vw, 72px) 0 clamp(76px, 8vw, 120px);
+}
+
+.menu-tabs-wrap {
+    position: relative;
+    border-bottom: 1px solid #e8e2f0;
+}
+
+.menu-tabs {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.menu-tab {
+    position: relative;
+    min-width: 0;
+    min-height: 58px;
+    padding: 14px 10px;
+    border: 0;
+    border-radius: 14px 14px 0 0;
+    background: transparent;
+    color: #625e6a;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.35;
+    cursor: pointer;
+    transition: color .18s ease, background-color .18s ease;
+}
+
+.menu-tab:hover {
+    background: var(--color-lavender-mist);
+    color: var(--color-action-primary);
+}
+
+.menu-tab.is-active {
+    background: var(--color-background-brand);
+    color: var(--color-text-on-brand);
+    font-weight: 700;
+}
+
+.menu-tab:focus-visible {
+    z-index: 1;
+    outline: 2px solid var(--color-action-primary);
+    outline-offset: 3px;
+}
+
+.menu-panels {
+    padding-top: clamp(34px, 4vw, 54px);
+}
+
+.menu-panel[hidden] {
+    display: none !important;
+}
+
+.panel-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.panel-heading h2 {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: clamp(25px, 2.6vw, 36px);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -.03em;
+}
+
+.panel-heading > div > p:last-child {
+    margin: 12px 0 0;
+    color: #625e6a;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.panel-count {
+    flex: 0 0 auto;
+    padding-bottom: 4px;
+    color: #8b849b;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .08em;
+}
+
+/* Image placeholders: replace these blocks with real images later */
+.menu-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.menu-card-grid.two-column {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.menu-card {
+    min-width: 0;
+}
+
+.menu-image-placeholder {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 1.18 / 1;
+    min-height: 220px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 24px;
+    background: #f5f3f5;
+    color: #8b849b;
+    text-align: center;
+}
+
+.menu-image-placeholder span {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+}
+
+.menu-image-placeholder small {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.menu-card-copy {
+    padding: 20px 4px 0;
+}
+
+.menu-card-copy .card-kicker,
+.menu-feature-copy .card-kicker {
+    margin-bottom: 8px;
+    font-size: 11px;
+}
+
+.menu-card-copy h3,
+.menu-feature-copy h3 {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.menu-card-copy > p:last-child,
+.menu-feature-copy > p:last-child {
+    margin: 9px 0 0;
+    color: #625e6a;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Wide feature layout */
+.menu-feature {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    align-items: center;
+    gap: clamp(28px, 5vw, 76px);
+}
+
+.menu-feature .feature-image {
+    aspect-ratio: 1.45 / 1;
+    min-height: 300px;
+}
+
+.menu-feature-copy {
+    padding: 24px 0;
+}
+
+.menu-feature-copy h3 {
+    font-size: clamp(25px, 3vw, 38px);
+}
+
+.menu-feature-copy > p:last-child {
+    max-width: 500px;
+    margin-top: 16px;
+    font-size: 16px;
+}
+
 @media (max-width: 1024px) {
-    .menu-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .menu-tab { font-size: 15px; }
+    .menu-tabs {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .menu-tab {
+        min-height: 52px;
+        border-radius: 12px;
+        font-size: 15px;
+    }
+
+    .menu-card-grid {
+        gap: 20px;
+    }
 }
+
 @media (max-width: 900px) {
-    .menu-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-    .menu-feature { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .menu-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .menu-feature {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+
+    .menu-feature .feature-image {
+        min-height: 250px;
+    }
 }
+
 @media (max-width: 640px) {
-    .menu-intro { padding: 44px 0 38px; }
-    .desktop-break { display: none; }
-    .menu-tabs { display: flex; gap: 8px; overflow-x: auto; padding: 6px; border-radius: 14px; scrollbar-width: thin; scroll-snap-type: x proximity; }
-    .menu-tab { flex: 0 0 auto; min-height: 44px; padding: 10px 16px; font-size: 14px; white-space: nowrap; scroll-snap-align: start; }
-    .menu-panels { padding-top: 34px; }
-    .panel-heading { margin-bottom: 22px; }
-    .panel-heading > div > p:last-child { font-size: 14px; }
-    .menu-card-grid { grid-template-columns: 1fr; gap: 28px; }
-    .menu-image-placeholder { min-height: 210px; }
-    .menu-card-copy { padding-top: 16px; }
-    .menu-card-copy h3 { font-size: 19px; }
-    .menu-feature { grid-template-columns: 1fr; gap: 18px; }
-    .menu-feature-image { min-height: 220px; }
-    .menu-feature-copy { padding: 4px 0 0; }
+    .menu-hero {
+        min-height: 210px;
+        padding: 46px 0 42px;
+    }
+
+    .menu-hero h1 {
+        font-size: clamp(29px, 8vw, 38px);
+    }
+
+    .menu-hero .menu-inner > p:last-child {
+        max-width: 320px;
+        margin-top: 14px;
+        font-size: 14px;
+    }
+
+    .menu-content {
+        padding: 36px 0 64px;
+    }
+
+    .menu-tabs-wrap {
+        overflow: visible;
+        border: 0;
+    }
+
+    .menu-tabs {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 2px 2px 10px;
+        scrollbar-width: thin;
+        scroll-snap-type: x proximity;
+    }
+
+    .menu-tab {
+        flex: 0 0 auto;
+        min-height: 42px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: #f5f3f5;
+        font-size: 14px;
+        white-space: nowrap;
+        scroll-snap-align: start;
+    }
+
+    .menu-tab.is-active {
+        background: var(--color-background-brand);
+    }
+
+    .menu-panels {
+        padding-top: 28px;
+    }
+
+    .panel-heading {
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .panel-heading h2 {
+        font-size: 24px;
+    }
+
+    .panel-heading > div > p:last-child {
+        margin-top: 8px;
+        font-size: 14px;
+    }
+
+    .panel-count {
+        padding-top: 4px;
+        font-size: 11px;
+    }
+
+    .menu-card-grid,
+    .menu-card-grid.two-column {
+        grid-template-columns: 1fr;
+        gap: 26px;
+    }
+
+    .menu-image-placeholder {
+        min-height: 210px;
+        border-radius: 18px;
+    }
+
+    .menu-card-copy {
+        padding: 15px 2px 0;
+    }
+
+    .menu-card-copy h3 {
+        font-size: 19px;
+    }
+
+    .menu-card-copy > p:last-child {
+        font-size: 14px;
+    }
+
+    .menu-feature {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .menu-feature .feature-image {
+        min-height: 220px;
+        aspect-ratio: 1.25 / 1;
+    }
+
+    .menu-feature-copy {
+        padding: 4px 2px 0;
+    }
+
+    .menu-feature-copy h3 {
+        font-size: 25px;
+    }
+
+    .menu-feature-copy > p:last-child {
+        margin-top: 10px;
+        font-size: 14px;
+    }
 }
+
 @media (prefers-reduced-motion: reduce) {
-    .menu-tab { transition: none; }
+    .menu-tab {
+        transition: none;
+    }
 }

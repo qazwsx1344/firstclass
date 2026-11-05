@@ -424,7 +424,7 @@ body {
     }
 
     .benefits-inner {
-        width: calc(100% - 40px);
+        width: min(92%, 1480px);
     }
 
     .benefits-heading {
@@ -459,7 +459,7 @@ body {
     }
 
     .benefits-inner {
-        width: calc(100% - 32px);
+        width: min(92%, 1480px);
     }
 
     .benefits-heading {
@@ -689,7 +689,7 @@ body {
     }
 
     .lens-finder-inner {
-        width: calc(100% - 40px);
+        width: min(92%, 1480px);
     }
 
     .lens-finder-inner h2 {
@@ -960,7 +960,7 @@ body {
     }
 
     .best-new-inner {
-        width: calc(100% - 32px);
+        width: min(92%, 1480px);
     }
 
     .best-new-heading {
@@ -1202,7 +1202,7 @@ body {
     }
 
     .review-inner {
-        width: calc(100% - 32px);
+        width: min(92%, 1480px);
     }
 
     .review-heading {
@@ -1380,7 +1380,7 @@ body {
     }
 
     .store-pickup-inner {
-        width: calc(100% - 32px);
+        width: min(92%, 1480px);
     }
 
     .store-pickup-copy {
@@ -1507,7 +1507,7 @@ body {
     }
 
     .lens-me-inner {
-        width: calc(100% - 64px);
+        width: min(92%, 1480px);
     }
 
     .lens-me-copy {
@@ -1544,7 +1544,7 @@ body {
     .lens-me-inner {
         display: flex;
         flex-direction: column;
-        width: calc(100% - 32px);
+        width: min(92%, 1480px);
         padding: 44px 0 52px;
     }
 
@@ -1786,7 +1786,7 @@ body {
         padding-top: 64px;
     }
 
-    .site-footer-inner { width: 92%; }
+    .site-footer-inner { width: min(92%, 1480px); }
 
     .footer-company h2,
     .footer-social h2 { font-size: 17px; }
@@ -2196,7 +2196,7 @@ body {
     }
 
     .pick-inner {
-        width: calc(100% - 32px);
+        width: min(92%, 1480px);
     }
 
     .pick-heading {

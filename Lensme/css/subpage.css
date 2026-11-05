@@ -1,0 +1,32 @@
+/* Shared subpage foundation: follows Lensme/Design.md and reuses main.css components */
+.subpage{width:100%;background:var(--color-background-default);color:var(--color-text-primary);font-family:"Pretendard Variable",Pretendard,sans-serif}
+.subpage-inner{width:min(92%,1480px);margin:0 auto}
+.subpage-hero{display:flex;align-items:center;min-height:270px;padding:clamp(56px,7vw,96px) 0;background:var(--color-lavender-mist)}
+.subpage-eyebrow{margin:0 0 12px;color:var(--color-action-primary);font-size:13px;font-weight:700;letter-spacing:.12em}
+.subpage-hero h1{margin:0;color:var(--color-text-primary);font-size:clamp(32px,4vw,48px);font-weight:700;line-height:1.2;letter-spacing:-.035em}
+.subpage-intro{max-width:720px;margin:18px 0 0;color:#625e6a;font-size:clamp(15px,1.5vw,18px);line-height:1.6}
+.subpage-body{padding:26px 0 clamp(76px,8vw,120px)}
+.subpage-breadcrumb{display:flex;align-items:center;gap:12px;margin-bottom:52px;color:#8b849b;font-size:13px}
+.subpage-breadcrumb a{color:inherit;text-decoration:none}
+.subpage-breadcrumb a:hover,.subpage-breadcrumb a:focus-visible{color:var(--color-action-primary)}
+.subpage-section{padding-bottom:clamp(56px,6vw,88px)}
+.subpage-section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px}
+.subpage-section-heading h2{margin:0;color:var(--color-text-primary);font-size:clamp(26px,2.8vw,36px);font-weight:600;line-height:1.25;letter-spacing:-.03em}
+.subpage-section-heading>div>p:last-child{margin:12px 0 0;color:#625e6a;font-size:16px;line-height:1.6}
+.subpage-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.subpage-card{min-width:0}
+.subpage-image-placeholder{display:flex;width:100%;aspect-ratio:1.18/1;min-height:220px;flex-direction:column;align-items:center;justify-content:center;gap:8px;border-radius:24px;background:#f5f3f5;color:#8b849b;text-align:center}
+.subpage-image-placeholder span{font-size:12px;font-weight:700;letter-spacing:.12em}
+.subpage-image-placeholder small{font-size:14px}
+.subpage-card-copy{padding:20px 4px 0}
+.subpage-card-kicker{margin:0 0 8px;color:var(--color-action-primary);font-size:11px;font-weight:700;letter-spacing:.1em}
+.subpage-card-copy h3{margin:0;color:var(--color-text-primary);font-size:22px;font-weight:600;line-height:1.35}
+.subpage-card-copy>p:last-child{margin:9px 0 0;color:#625e6a;font-size:15px;line-height:1.6}
+.subpage-bottom-banner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:clamp(28px,4vw,52px);border-radius:24px;background:var(--color-lavender-mist)}
+.subpage-bottom-banner h2{max-width:700px;margin:0;color:var(--color-text-primary);font-size:clamp(21px,2.4vw,30px);font-weight:600;line-height:1.35}
+.subpage-home-link{display:inline-flex;flex:0 0 auto;align-items:center;justify-content:center;min-height:44px;padding:0 24px;border-radius:999px;background:var(--color-action-primary);color:#fff;text-decoration:none;font-size:14px;font-weight:600;transition:background-color .18s ease,transform .18s ease}
+.subpage-home-link:hover,.subpage-home-link:focus-visible{background:#625087}
+.subpage-home-link:active{transform:scale(.97)}
+@media(max-width:900px){.subpage-card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.subpage-bottom-banner{align-items:flex-start;flex-direction:column}}
+@media(max-width:640px){.subpage-hero{min-height:220px;padding:48px 0}.subpage-hero h1{font-size:clamp(29px,8vw,38px)}.subpage-intro{margin-top:14px;font-size:14px}.subpage-body{padding-top:20px;padding-bottom:64px}.subpage-breadcrumb{margin-bottom:36px;font-size:12px}.subpage-section-heading{margin-bottom:20px}.subpage-section-heading h2{font-size:24px}.subpage-section-heading>div>p:last-child{margin-top:8px;font-size:14px}.subpage-card-grid{grid-template-columns:1fr;gap:26px}.subpage-image-placeholder{min-height:210px;border-radius:18px}.subpage-card-copy{padding:15px 2px 0}.subpage-card-copy h3{font-size:19px}.subpage-card-copy>p:last-child{font-size:14px}.subpage-bottom-banner{gap:20px;border-radius:18px}.subpage-home-link{min-height:40px;padding:0 20px}}
+@media(prefers-reduced-motion:reduce){.subpage-home-link{transition:none}}

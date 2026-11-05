@@ -2043,7 +2043,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
+    gap: 0;
     border-radius: 50%;
     background: #B494E5;
     box-shadow: 0 2px 5px rgba(0, 0, 0, .22);
@@ -2053,16 +2053,21 @@ body {
 
 .floating-category-circle img {
     display: block;
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 auto;
     object-fit: contain;
 }
 
 .floating-category-circle span {
     display: block;
+    width: 100%;
+    padding: 0 2px;
+    box-sizing: border-box;
     font-size: 15px;
     font-weight: 600;
-    line-height: 1.15;
+    line-height: 1.1;
+    text-align: center;
     white-space: nowrap;
 }
 
@@ -2078,12 +2083,12 @@ body {
     }
 
     .floating-category-circle {
-        gap: 2px;
+        gap: 0;
     }
 
     .floating-category-circle img {
-        width: 30px;
-        height: 30px;
+        width: 34px;
+        height: 34px;
     }
 
 }

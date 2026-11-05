@@ -1,5 +1,12 @@
 /* 렌즈미 메뉴 탭 + 기존 Header 모바일 메뉴 동작 */
 (() => {
+    // 상단 렌즈미 로고 외의 임시 링크는 클릭해도 페이지가 위로 이동하지 않게 처리
+    document.addEventListener('click', (event) => {
+        const link = event.target.closest('a[href="#"]');
+        if (!link || link.classList.contains('header-logo')) return;
+        event.preventDefault();
+    });
+
     const tabs = Array.from(document.querySelectorAll('.menu-tab'));
     const panels = Array.from(document.querySelectorAll('.menu-panel'));
 

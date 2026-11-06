@@ -30,12 +30,12 @@
 @media(max-width:640px){.all-lens-round-scroll{justify-content:flex-start;gap:12px;margin-top:28px;padding:8px 4px}.all-lens-round-scroll button{flex:0 0 8px;width:8px;height:8px}}
 </style>
 <style>
-/* 컬러별 렌즈: 한 페이지 5열 x 4행, 상품 영역 좌우 페이지 이동 */
+/* 컬러별 렌즈: 한 페이지 4열 x 5행, 상품 영역 좌우 페이지 이동 */
 .all-lens-swiper{width:100%;overflow:hidden;touch-action:pan-y;cursor:grab}
 .all-lens-swiper.is-dragging{cursor:grabbing}
-.all-lens-swiper .swiper-wrapper{display:flex;transition:transform .6s ease;will-change:transform}
+.all-lens-swiper .swiper-wrapper{display:flex;transition:transform 1.1s cubic-bezier(.22,.61,.36,1);will-change:transform}
 .all-lens-swiper .swiper-slide{flex:0 0 100%;width:100%;height:auto}
-.all-lens-page-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));column-gap:20px;row-gap:24px}
+.all-lens-page-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:20px;row-gap:24px}
 .all-lens-page-grid .pick-card{min-width:0}
 .all-lens-pagination{display:flex;align-items:center;justify-content:center;gap:18px;width:100%;margin:36px auto 0;padding:8px 4px;overflow:visible}
 .all-lens-pagination .swiper-pagination-bullet{display:block;flex:0 0 10px;width:10px;height:10px;margin:0!important;padding:0;border:1px solid #8b849b;border-radius:50%;background:transparent;opacity:1;cursor:pointer}
@@ -820,8 +820,15 @@ document.addEventListener('DOMContentLoaded',function(){
 
     var currentPage = 0;
     var pageCount = 0;
+    var pageAnimating = false;
+    wrapper.addEventListener('transitionend',function(event){
+      if(event.propertyName==='transform') pageAnimating=false;
+    });
     function goToPage(index) {
-      currentPage = Math.max(0, Math.min(pageCount - 1, index));
+      var nextPage = Math.max(0, Math.min(pageCount - 1, index));
+      if(pageAnimating || nextPage===currentPage) return;
+      pageAnimating = true;
+      currentPage = nextPage;
       wrapper.style.transform = 'translate3d(-' + (currentPage * 100) + '%,0,0)';
       Array.prototype.forEach.call(pagination.children,function(dot,i){
         dot.classList.toggle('swiper-pagination-bullet-active',i===currentPage);
@@ -848,6 +855,7 @@ document.addEventListener('DOMContentLoaded',function(){
         slide.appendChild(grid);slides.push(slide);
       }
       wrapper.replaceChildren.apply(wrapper,slides);
+      pageAnimating=false;
       wrapper.style.transition='none';
       wrapper.style.transform='translate3d(0,0,0)';
       wrapper.offsetHeight;

@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../font/css/pretendardvariable.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/subpage.css">
+    <link rel="stylesheet" href="../npm/swiper/swiper-bundle.min.css">
+    <script src="../npm/swiper/swiper-bundle.min.js"></script>
     <script src="js/subpage.js" defer></script>
 <style>
 /* 전체 렌즈 페이지 전용 스타일 */
@@ -36,6 +38,36 @@ document.addEventListener('DOMContentLoaded',function(){
       dots.forEach(function(item){item.setAttribute('aria-current','false');});
       dot.setAttribute('aria-current','true');
     });
+  });
+});
+</script>
+
+<style>
+/* 전체 렌즈 상품 슬라이더 */
+.all-lens-swiper{width:100%;overflow:hidden}
+.all-lens-swiper .swiper-slide{height:auto}
+.all-lens-pagination{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:58px}
+.all-lens-pagination .swiper-pagination-bullet{width:10px;height:10px;margin:0!important;border:1px solid #8b849b;border-radius:50%;background:transparent;opacity:1}
+.all-lens-pagination .swiper-pagination-bullet-active{background:#8b849b}
+@media(max-width:1024px){.all-lens-pagination{margin-top:44px}}
+@media(max-width:640px){.all-lens-swiper{overflow:visible}.all-lens-pagination{gap:12px;margin-top:32px}.all-lens-pagination .swiper-pagination-bullet{width:8px;height:8px}}
+@media(prefers-reduced-motion:reduce){.all-lens-swiper .swiper-wrapper{transition-duration:0ms!important}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  if(typeof Swiper==='undefined') return;
+  new Swiper('.all-lens-swiper',{
+    slidesPerView:4,
+    slidesPerGroup:4,
+    spaceBetween:20,
+    speed:600,
+    pagination:{el:'.all-lens-pagination',clickable:true},
+    breakpoints:{
+      0:{slidesPerView:1.35,slidesPerGroup:1,spaceBetween:14},
+      480:{slidesPerView:2.2,slidesPerGroup:2,spaceBetween:16},
+      768:{slidesPerView:3.4,slidesPerGroup:3,spaceBetween:20},
+      1200:{slidesPerView:4,slidesPerGroup:4,spaceBetween:24}
+    }
   });
 });
 </script>
@@ -133,43 +165,51 @@ document.addEventListener('DOMContentLoaded',function(){
           </div>
         </div>
       </div>
-      <div class="pick-list">
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_01.png" alt="포그베일 원데이 브라운 렌즈"></div><h3>포그베일 원데이 브라운</h3><p class="pick-price">19,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">하루 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_02.png" alt="크림앤스윗 크림그레이 렌즈"></div><h3>크림앤스윗 크림그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_03.png" alt="포그베일 그레이 렌즈"></div><h3>포그베일 그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_04.png" alt="악마 컨택트 아이듀 미니 브라운 렌즈"></div><h3>악마 컨택트 아이듀 미니 브라운(30p)</h3><p class="pick-price">59,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img.png" alt="크림앤스윗 크림쵸코 렌즈"></div><h3>크림앤스윗 크림쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img02.png" alt="루미문 원데이 헤이즈쵸코 렌즈"></div><h3>루미문 원데이 헤이즈쵸코 (10p)</h3><p class="pick-price">25,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">하루 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img03.png" alt="글림엣지 볼드브라운 렌즈"></div><h3>글림엣지 볼드브라운</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_05.png" alt="미니블 틴트쵸코 렌즈"></div><h3>미니블 틴트쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_01.png" alt="포그베일 원데이 브라운 렌즈"></div><h3>포그베일 원데이 브라운</h3><p class="pick-price">19,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">하루 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_02.png" alt="크림앤스윗 크림그레이 렌즈"></div><h3>크림앤스윗 크림그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_03.png" alt="포그베일 그레이 렌즈"></div><h3>포그베일 그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_04.png" alt="악마 컨택트 아이듀 미니 브라운 렌즈"></div><h3>악마 컨택트 아이듀 미니 브라운(30p)</h3><p class="pick-price">59,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img.png" alt="크림앤스윗 크림쵸코 렌즈"></div><h3>크림앤스윗 크림쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img02.png" alt="루미문 원데이 헤이즈쵸코 렌즈"></div><h3>루미문 원데이 헤이즈쵸코 (10p)</h3><p class="pick-price">25,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">하루 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img03.png" alt="글림엣지 볼드브라운 렌즈"></div><h3>글림엣지 볼드브라운</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_05.png" alt="미니블 틴트쵸코 렌즈"></div><h3>미니블 틴트쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_01.png" alt="포그베일 원데이 브라운 렌즈"></div><h3>포그베일 원데이 브라운</h3><p class="pick-price">19,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">하루 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_02.png" alt="크림앤스윗 크림그레이 렌즈"></div><h3>크림앤스윗 크림그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_03.png" alt="포그베일 그레이 렌즈"></div><h3>포그베일 그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
-        <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_04.png" alt="악마 컨택트 아이듀 미니 브라운 렌즈"></div><h3>악마 컨택트 아이듀 미니 브라운(30p)</h3><p class="pick-price">59,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+      <div class="swiper all-lens-swiper">
+        <div class="swiper-wrapper">
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_01.png" alt="포그베일 원데이 브라운 렌즈"></div><h3>포그베일 원데이 브라운</h3><p class="pick-price">19,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">하루 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_02.png" alt="크림앤스윗 크림그레이 렌즈"></div><h3>크림앤스윗 크림그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_03.png" alt="포그베일 그레이 렌즈"></div><h3>포그베일 그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_04.png" alt="악마 컨택트 아이듀 미니 브라운 렌즈"></div><h3>악마 컨택트 아이듀 미니 브라운(30p)</h3><p class="pick-price">59,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img.png" alt="크림앤스윗 크림쵸코 렌즈"></div><h3>크림앤스윗 크림쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img02.png" alt="루미문 원데이 헤이즈쵸코 렌즈"></div><h3>루미문 원데이 헤이즈쵸코 (10p)</h3><p class="pick-price">25,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">하루 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img03.png" alt="글림엣지 볼드브라운 렌즈"></div><h3>글림엣지 볼드브라운</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_05.png" alt="미니블 틴트쵸코 렌즈"></div><h3>미니블 틴트쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_01.png" alt="포그베일 원데이 브라운 렌즈"></div><h3>포그베일 원데이 브라운</h3><p class="pick-price">19,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">하루 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_02.png" alt="크림앤스윗 크림그레이 렌즈"></div><h3>크림앤스윗 크림그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_03.png" alt="포그베일 그레이 렌즈"></div><h3>포그베일 그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_04.png" alt="악마 컨택트 아이듀 미니 브라운 렌즈"></div><h3>악마 컨택트 아이듀 미니 브라운(30p)</h3><p class="pick-price">59,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img.png" alt="크림앤스윗 크림쵸코 렌즈"></div><h3>크림앤스윗 크림쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img02.png" alt="루미문 원데이 헤이즈쵸코 렌즈"></div><h3>루미문 원데이 헤이즈쵸코 (10p)</h3><p class="pick-price">25,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">하루 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img03.png" alt="글림엣지 볼드브라운 렌즈"></div><h3>글림엣지 볼드브라운</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_05.png" alt="미니블 틴트쵸코 렌즈"></div><h3>미니블 틴트쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_01.png" alt="포그베일 원데이 브라운 렌즈"></div><h3>포그베일 원데이 브라운</h3><p class="pick-price">19,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">하루 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_02.png" alt="크림앤스윗 크림그레이 렌즈"></div><h3>크림앤스윗 크림그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_03.png" alt="포그베일 그레이 렌즈"></div><h3>포그베일 그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_04.png" alt="악마 컨택트 아이듀 미니 브라운 렌즈"></div><h3>악마 컨택트 아이듀 미니 브라운(30p)</h3><p class="pick-price">59,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img.png" alt="크림앤스윗 크림쵸코 렌즈"></div><h3>크림앤스윗 크림쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img02.png" alt="루미문 원데이 헤이즈쵸코 렌즈"></div><h3>루미문 원데이 헤이즈쵸코 (10p)</h3><p class="pick-price">25,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">하루 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img03.png" alt="글림엣지 볼드브라운 렌즈"></div><h3>글림엣지 볼드브라운</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_05.png" alt="미니블 틴트쵸코 렌즈"></div><h3>미니블 틴트쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_01.png" alt="포그베일 원데이 브라운 렌즈"></div><h3>포그베일 원데이 브라운</h3><p class="pick-price">19,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">하루 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_02.png" alt="크림앤스윗 크림그레이 렌즈"></div><h3>크림앤스윗 크림그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_03.png" alt="포그베일 그레이 렌즈"></div><h3>포그베일 그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_04.png" alt="악마 컨택트 아이듀 미니 브라운 렌즈"></div><h3>악마 컨택트 아이듀 미니 브라운(30p)</h3><p class="pick-price">59,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img.png" alt="크림앤스윗 크림쵸코 렌즈"></div><h3>크림앤스윗 크림쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img02.png" alt="루미문 원데이 헤이즈쵸코 렌즈"></div><h3>루미문 원데이 헤이즈쵸코 (10p)</h3><p class="pick-price">25,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">하루 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img03.png" alt="글림엣지 볼드브라운 렌즈"></div><h3>글림엣지 볼드브라운</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_05.png" alt="미니블 틴트쵸코 렌즈"></div><h3>미니블 틴트쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_01.png" alt="포그베일 원데이 브라운 렌즈"></div><h3>포그베일 원데이 브라운</h3><p class="pick-price">19,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">하루 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_02.png" alt="크림앤스윗 크림그레이 렌즈"></div><h3>크림앤스윗 크림그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_03.png" alt="포그베일 그레이 렌즈"></div><h3>포그베일 그레이</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_04.png" alt="악마 컨택트 아이듀 미니 브라운 렌즈"></div><h3>악마 컨택트 아이듀 미니 브라운(30p)</h3><p class="pick-price">59,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img.png" alt="크림앤스윗 크림쵸코 렌즈"></div><h3>크림앤스윗 크림쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img02.png" alt="루미문 원데이 헤이즈쵸코 렌즈"></div><h3>루미문 원데이 헤이즈쵸코 (10p)</h3><p class="pick-price">25,000원</p><p class="pick-size">13.4mm</p><p class="pick-date">하루 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/PICK_img03.png" alt="글림엣지 볼드브라운 렌즈"></div><h3>글림엣지 볼드브라운</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        <article class="swiper-slide pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_05.png" alt="미니블 틴트쵸코 렌즈"></div><h3>미니블 틴트쵸코</h3><p class="pick-price">30,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
+        </div>
       </div>
-    </section>
-    <section class="all-lens-round-section" aria-label="렌즈 목록 페이지 선택">
-      <div class="all-lens-round-scroll" role="group" aria-label="페이지 선택">
-        <button type="button" aria-label="1번째 페이지" aria-current="true"></button>
-        <button type="button" aria-label="2번째 페이지" aria-current="false"></button>
-        <button type="button" aria-label="3번째 페이지" aria-current="false"></button>
-        <button type="button" aria-label="4번째 페이지" aria-current="false"></button>
-        <button type="button" aria-label="5번째 페이지" aria-current="false"></button>
-        <button type="button" aria-label="6번째 페이지" aria-current="false"></button>
-        <button type="button" aria-label="7번째 페이지" aria-current="false"></button>
-        <button type="button" aria-label="8번째 페이지" aria-current="false"></button>
-        <button type="button" aria-label="9번째 페이지" aria-current="false"></button>
-        <button type="button" aria-label="10번째 페이지" aria-current="false"></button>
-        <button type="button" aria-label="11번째 페이지" aria-current="false"></button>
-      </div>
+      <div class="all-lens-pagination" aria-label="상품 목록 페이지 선택"></div>
     </section>
   </div>
 </main>

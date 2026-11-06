@@ -30,23 +30,19 @@
 @media(max-width:640px){.all-lens-round-scroll{justify-content:flex-start;gap:12px;margin-top:28px;padding:8px 4px}.all-lens-round-scroll button{flex:0 0 8px;width:8px;height:8px}}
 </style>
 <style>
-/* 전체 렌즈: 한 페이지에 4열 x 5행, 좌우 슬라이드 */
-.all-lens-swiper{width:100%;overflow:hidden}
-.all-lens-swiper .swiper-slide{height:auto}
-.all-lens-page-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:20px;row-gap:24px}
+/* 컬러별 렌즈: 한 페이지 5열 x 4행, 상품 영역 좌우 페이지 이동 */
+.all-lens-swiper{width:100%;overflow:hidden;touch-action:pan-y;cursor:grab}
+.all-lens-swiper.is-dragging{cursor:grabbing}
+.all-lens-swiper .swiper-wrapper{display:flex;transition:transform .6s ease;will-change:transform}
+.all-lens-swiper .swiper-slide{flex:0 0 100%;width:100%;height:auto}
+.all-lens-page-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));column-gap:20px;row-gap:24px}
 .all-lens-page-grid .pick-card{min-width:0}
-.all-lens-pagination{display:flex;align-items:center;justify-content:flex-start;gap:18px;width:100%;max-width:100%;margin-top:58px;padding:8px 4px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;-webkit-overflow-scrolling:touch;white-space:nowrap}
-.all-lens-pagination::-webkit-scrollbar{display:none}
-.all-lens-pagination .swiper-pagination-bullet{flex:0 0 10px;width:10px;height:10px;margin:0!important;border:1px solid #8b849b;border-radius:50%;background:transparent;opacity:1}
+.all-lens-pagination{display:flex;align-items:center;justify-content:center;gap:18px;width:100%;margin:36px auto 0;padding:8px 4px;overflow:visible}
+.all-lens-pagination .swiper-pagination-bullet{display:block;flex:0 0 10px;width:10px;height:10px;margin:0!important;padding:0;border:1px solid #8b849b;border-radius:50%;background:transparent;opacity:1;cursor:pointer}
 .all-lens-pagination .swiper-pagination-bullet-active{background:#8b849b}
-@media(max-width:1024px){.all-lens-page-grid{column-gap:16px;row-gap:22px}.all-lens-pagination{margin-top:44px}}
-@media(max-width:640px){.all-lens-page-grid{column-gap:10px;row-gap:18px}.all-lens-pagination{gap:12px;margin-top:32px}.all-lens-pagination .swiper-pagination-bullet{flex-basis:8px;width:8px;height:8px}}
+@media(max-width:1024px){.all-lens-page-grid{column-gap:16px;row-gap:22px}.all-lens-pagination{margin-top:32px}}
+@media(max-width:640px){.all-lens-page-grid{column-gap:10px;row-gap:18px}.all-lens-pagination{gap:12px;margin-top:28px}.all-lens-pagination .swiper-pagination-bullet{flex-basis:8px;width:8px;height:8px}}
 @media(prefers-reduced-motion:reduce){.all-lens-swiper .swiper-wrapper{transition-duration:0ms!important}}
-
-/* 컬러별 페이지 원형 버튼 마우스 드래그 */
-.all-lens-pagination{cursor:grab;scroll-snap-type:x mandatory;user-select:none}
-.all-lens-pagination.is-dragging{cursor:grabbing;scroll-behavior:auto}
-.all-lens-pagination .swiper-pagination-bullet{scroll-snap-align:start}
 </style>
 <style>
 /* 상품 이미지에 마우스를 올리면 렌즈 상세 이미지로 전환 */
@@ -800,16 +796,14 @@ document.addEventListener('DOMContentLoaded',function(){
     var countText = document.querySelector('.subpage-breadcrumb .all-lens-count');
     var buttons = Array.prototype.slice.call(document.querySelectorAll('.all-lens-filter[data-color]'));
     var pagination = document.querySelector('.all-lens-pagination');
-
-    if (!section || !wrapper || !countText || !buttons.length) return;
+    if (!section || !wrapper || !countText || !buttons.length || !pagination) return;
 
     var counts = { all: 353, brown: 126, gray: 90, choco: 60, black: 34, blue: 12, green: 8, pink: 11, violet: 6, etc: 6 };
     var originalCards = Array.prototype.slice.call(wrapper.querySelectorAll('.pick-card'));
     var groups = { brown: [], gray: [], choco: [], black: [], blue: [], green: [], pink: [], violet: [], etc: [] };
-
     function getColor(card) {
       var title = card.querySelector('h3');
-      var name = title ? title.textContent.replace(/\s/g, '') : '';
+      var name = title ? title.textContent.replace(/\\s/g, '') : '';
       if (name.indexOf('브라운') !== -1) return 'brown';
       if (name.indexOf('그레이') !== -1) return 'gray';
       if (name.indexOf('쵸코') !== -1 || name.indexOf('초코') !== -1) return 'choco';
@@ -820,156 +814,95 @@ document.addEventListener('DOMContentLoaded',function(){
       if (name.indexOf('바이올렛') !== -1 || name.indexOf('퍼플') !== -1) return 'violet';
       return 'etc';
     }
-
-    originalCards.forEach(function (card) {
-      groups[getColor(card)].push(card.cloneNode(true));
-    });
+    originalCards.forEach(function(card){ groups[getColor(card)].push(card.cloneNode(true)); });
     var fallback = originalCards.length ? originalCards[0].cloneNode(true) : null;
-    Object.keys(groups).forEach(function (key) {
-      if (!groups[key].length && fallback) groups[key].push(fallback.cloneNode(true));
-    });
+    Object.keys(groups).forEach(function(key){ if(!groups[key].length && fallback) groups[key].push(fallback.cloneNode(true)); });
 
+    var currentPage = 0;
+    var pageCount = 0;
+    function goToPage(index) {
+      currentPage = Math.max(0, Math.min(pageCount - 1, index));
+      wrapper.style.transform = 'translate3d(-' + (currentPage * 100) + '%,0,0)';
+      Array.prototype.forEach.call(pagination.children,function(dot,i){
+        dot.classList.toggle('swiper-pagination-bullet-active',i===currentPage);
+        dot.setAttribute('aria-current',i===currentPage?'true':'false');
+      });
+    }
     function render(color) {
       var total = counts[color] || counts.all;
       var cards = [];
-
-      if (color === 'all') {
-        Object.keys(groups).forEach(function (key) {
-          for (var n = 0; n < counts[key]; n++) {
-            cards.push(groups[key][n % groups[key].length].cloneNode(true));
-          }
+      if(color==='all'){
+        Object.keys(groups).forEach(function(key){
+          for(var n=0;n<counts[key];n++) cards.push(groups[key][n%groups[key].length].cloneNode(true));
         });
       } else {
-        for (var i = 0; i < total; i++) {
-          cards.push(groups[color][i % groups[color].length].cloneNode(true));
-        }
+        for(var i=0;i<total;i++) cards.push(groups[color][i%groups[color].length].cloneNode(true));
       }
-
-      var slides = [];
-      for (var startIndex = 0; startIndex < cards.length; startIndex += 20) {
-        var slide = document.createElement('div');
-        slide.className = 'swiper-slide';
-        var grid = document.createElement('div');
-        grid.className = 'all-lens-page-grid';
-        cards.slice(startIndex, startIndex + 20).forEach(function (card) {
-          grid.appendChild(card);
-        });
-        slide.appendChild(grid);
-        slides.push(slide);
+      var slides=[];
+      for(var startIndex=0;startIndex<cards.length;startIndex+=20){
+        var slide=document.createElement('div');
+        slide.className='swiper-slide';
+        var grid=document.createElement('div');
+        grid.className='all-lens-page-grid';
+        cards.slice(startIndex,startIndex+20).forEach(function(card){grid.appendChild(card);});
+        slide.appendChild(grid);slides.push(slide);
       }
-
-      wrapper.replaceChildren.apply(wrapper, slides);
-      wrapper.style.transform = 'translate3d(0,0,0)';
-      countText.textContent = total + '개';
-
-      buttons.forEach(function (button) {
-        var active = button.getAttribute('data-color') === color;
-        button.classList.toggle('is-active', active);
-        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      wrapper.replaceChildren.apply(wrapper,slides);
+      wrapper.style.transition='none';
+      wrapper.style.transform='translate3d(0,0,0)';
+      wrapper.offsetHeight;
+      wrapper.style.transition='';
+      countText.textContent=total+'개';
+      buttons.forEach(function(button){
+        var active=button.getAttribute('data-color')===color;
+        button.classList.toggle('is-active',active);
+        button.setAttribute('aria-pressed',active?'true':'false');
       });
-
-      if (pagination) {
-        pagination.replaceChildren();
-        slides.forEach(function (slide, index) {
-          var dot = document.createElement('button');
-          dot.type = 'button';
-          dot.className = 'swiper-pagination-bullet' + (index === 0 ? ' swiper-pagination-bullet-active' : '');
-          dot.setAttribute('aria-label', (index + 1) + '페이지');
-          dot.addEventListener('click', function () {
-            wrapper.style.transform = 'translate3d(-' + (index * 100) + '%,0,0)';
-            Array.prototype.forEach.call(pagination.children, function (item, itemIndex) {
-              item.classList.toggle('swiper-pagination-bullet-active', itemIndex === index);
-            });
-          });
-          pagination.appendChild(dot);
-        });
-      }
+      pagination.replaceChildren();
+      pageCount=slides.length;
+      slides.forEach(function(_,index){
+        var dot=document.createElement('button');
+        dot.type='button';
+        dot.className='swiper-pagination-bullet';
+        dot.setAttribute('aria-label',(index+1)+'페이지');
+        dot.addEventListener('click',function(){goToPage(index);});
+        pagination.appendChild(dot);
+      });
+      goToPage(0);
     }
+    buttons.forEach(function(button){button.addEventListener('click',function(){render(button.getAttribute('data-color'));});});
 
-    buttons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        render(button.getAttribute('data-color'));
-      });
+    var startX=0,startY=0,dragging=false,dragged=false;
+    section.addEventListener('pointerdown',function(event){
+      if(event.pointerType==='touch'||event.button!==0) return;
+      dragging=true;dragged=false;startX=event.clientX;startY=event.clientY;
+      section.classList.add('is-dragging');section.setPointerCapture(event.pointerId);
     });
-
+    section.addEventListener('pointermove',function(event){
+      if(!dragging)return;
+      var dx=event.clientX-startX,dy=event.clientY-startY;
+      if(Math.abs(dx)>8&&Math.abs(dx)>Math.abs(dy)) dragged=true;
+    });
+    function finishDrag(event){
+      if(!dragging)return;
+      var dx=event.clientX-startX;
+      dragging=false;section.classList.remove('is-dragging');
+      if(dragged&&Math.abs(dx)>45)goToPage(currentPage+(dx<0?1:-1));
+    }
+    section.addEventListener('pointerup',finishDrag);
+    section.addEventListener('pointercancel',function(){dragging=false;section.classList.remove('is-dragging');});
+    section.addEventListener('click',function(event){
+      if(dragged){event.preventDefault();event.stopPropagation();dragged=false;}
+    },true);
+    section.addEventListener('wheel',function(event){
+      var delta=Math.abs(event.deltaX)>Math.abs(event.deltaY)?event.deltaX:event.deltaY;
+      if(Math.abs(delta)<12)return;
+      event.preventDefault();goToPage(currentPage+(delta>0?1:-1));
+    },{passive:false});
     render('all');
   }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLensColorFilter);
-  } else {
-    initLensColorFilter();
-  }
-})();
-</script>
-
-<script>
-/* 컬러별 렌즈 페이지: 원형 페이지 버튼을 마우스로 좌우 드래그하거나 휠로 이동 */
-(function () {
-  function enableColorPaginationDrag() {
-    var pagination = document.querySelector('.all-lens-pagination');
-    var wrapper = document.querySelector('.all-lens-swiper .swiper-wrapper');
-    if (!pagination || !wrapper || pagination.dataset.dragReady === 'true') return;
-    pagination.dataset.dragReady = 'true';
-
-    function goToVisiblePage() {
-      var dots = pagination.querySelectorAll('.swiper-pagination-bullet');
-      if (!dots.length) return;
-      var first = dots[0];
-      var step = first.getBoundingClientRect().width + (parseFloat(getComputedStyle(pagination).gap) || 0);
-      if (!step) return;
-      var index = Math.max(0, Math.min(dots.length - 1, Math.round(pagination.scrollLeft / step)));
-      dots[index].click();
-    }
-
-    pagination.addEventListener('wheel', function (event) {
-      if (pagination.scrollWidth <= pagination.clientWidth) return;
-      var delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
-      if (!delta) return;
-      event.preventDefault();
-      pagination.scrollLeft += delta;
-      goToVisiblePage();
-    }, { passive: false });
-
-    var dragging = false;
-    var startX = 0;
-    var startScroll = 0;
-    var moved = false;
-    pagination.addEventListener('pointerdown', function (event) {
-      if (event.pointerType === 'touch' || event.button !== 0) return;
-      dragging = true;
-      moved = false;
-      startX = event.clientX;
-      startScroll = pagination.scrollLeft;
-      pagination.classList.add('is-dragging');
-      pagination.setPointerCapture(event.pointerId);
-    });
-    pagination.addEventListener('pointermove', function (event) {
-      if (!dragging) return;
-      var distance = event.clientX - startX;
-      if (Math.abs(distance) > 3) moved = true;
-      pagination.scrollLeft = startScroll - distance;
-      if (moved) goToVisiblePage();
-    });
-    function stopDragging() {
-      if (!dragging) return;
-      dragging = false;
-      pagination.classList.remove('is-dragging');
-      if (moved) goToVisiblePage();
-    }
-    pagination.addEventListener('pointerup', stopDragging);
-    pagination.addEventListener('pointercancel', stopDragging);
-    pagination.addEventListener('lostpointercapture', stopDragging);
-    pagination.addEventListener('click', function (event) {
-      if (moved) {
-        event.preventDefault();
-        event.stopPropagation();
-        moved = false;
-      }
-    }, true);
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', enableColorPaginationDrag);
-  else enableColorPaginationDrag();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initLensColorFilter);
+  else initLensColorFilter();
 })();
 </script>
 </body>

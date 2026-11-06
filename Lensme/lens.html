@@ -831,7 +831,9 @@ document.addEventListener('DOMContentLoaded',function(){
     }
     if(swiper){swiper.destroy(true,true);swiper=null;}
     wrapper.replaceChildren(...slides);
+    // 선택한 컬러의 상품 수를 breadcrumb와 실제 상품 목록에 함께 반영
     if(countElement) countElement.textContent=total+'개';
+    wrapper.dataset.productCount=String(selected.length);
     filterButtons.forEach(button=>{
       const active=button.dataset.color===color;
       button.classList.toggle('is-active',active);

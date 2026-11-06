@@ -138,7 +138,7 @@
     </div>
   </section>
   <div class="subpage-inner subpage-body">
-    <nav class="subpage-breadcrumb" aria-label="현재 위치"><a href="index.html">HOME</a><span aria-hidden="true">/</span><span>컬러별 렌즈</span><span aria-hidden="true">/</span><span class="all-lens-count">426개</span></nav>
+    <nav class="subpage-breadcrumb" aria-label="현재 위치"><a href="index.html">HOME</a><span aria-hidden="true">/</span><span>컬러별 렌즈</span><span aria-hidden="true">/</span><span class="all-lens-count">353개</span></nav>
     <section class="subpage-section" aria-labelledby="all-products-title">
       <div class="subpage-section-heading">
         <div>
@@ -787,99 +787,114 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const section = document.querySelector('.all-lens-swiper');
-  const wrapper = section && section.querySelector('.swiper-wrapper');
-  const countText = document.querySelector('.subpage-breadcrumb .all-lens-count');
-  const buttons = document.querySelectorAll('.all-lens-filter[data-color]');
-  const pagination = document.querySelector('.all-lens-pagination');
-  if (!section || !wrapper || !countText || !buttons.length) return;
+(function () {
+  function initLensColorFilter() {
+    var section = document.querySelector('.all-lens-swiper');
+    var wrapper = section ? section.querySelector('.swiper-wrapper') : null;
+    var countText = document.querySelector('.subpage-breadcrumb .all-lens-count');
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('.all-lens-filter[data-color]'));
+    var pagination = document.querySelector('.all-lens-pagination');
 
-  const counts = { all: 353, brown: 126, gray: 90, choco: 60, black: 34, blue: 12, green: 8, pink: 11, violet: 6, etc: 6 };
-  const sourceCards = Array.from(wrapper.querySelectorAll('.pick-card'));
-  const groups = { brown: [], gray: [], choco: [], black: [], blue: [], green: [], pink: [], violet: [], etc: [] };
+    if (!section || !wrapper || !countText || !buttons.length) return;
 
-  function colorOf(card) {
-    const name = (card.querySelector('h3')?.textContent || '').replace(/\\s/g, '');
-    if (name.includes('브라운')) return 'brown';
-    if (name.includes('그레이')) return 'gray';
-    if (name.includes('쵸코') || name.includes('초코')) return 'choco';
-    if (name.includes('블랙')) return 'black';
-    if (name.includes('블루')) return 'blue';
-    if (name.includes('그린')) return 'green';
-    if (name.includes('핑크')) return 'pink';
-    if (name.includes('바이올렛') || name.includes('퍼플')) return 'violet';
-    return 'etc';
-  }
+    var counts = { all: 353, brown: 126, gray: 90, choco: 60, black: 34, blue: 12, green: 8, pink: 11, violet: 6, etc: 6 };
+    var originalCards = Array.prototype.slice.call(wrapper.querySelectorAll('.pick-card'));
+    var groups = { brown: [], gray: [], choco: [], black: [], blue: [], green: [], pink: [], violet: [], etc: [] };
 
-  sourceCards.forEach(card => groups[colorOf(card)].push(card.cloneNode(true)));
-  const fallback = sourceCards[0] ? sourceCards[0].cloneNode(true) : null;
-  Object.keys(groups).forEach(key => {
-    if (!groups[key].length && fallback) groups[key].push(fallback.cloneNode(true));
-  });
+    function getColor(card) {
+      var title = card.querySelector('h3');
+      var name = title ? title.textContent.replace(/\s/g, '') : '';
+      if (name.indexOf('브라운') !== -1) return 'brown';
+      if (name.indexOf('그레이') !== -1) return 'gray';
+      if (name.indexOf('쵸코') !== -1 || name.indexOf('초코') !== -1) return 'choco';
+      if (name.indexOf('블랙') !== -1) return 'black';
+      if (name.indexOf('블루') !== -1) return 'blue';
+      if (name.indexOf('그린') !== -1) return 'green';
+      if (name.indexOf('핑크') !== -1) return 'pink';
+      if (name.indexOf('바이올렛') !== -1 || name.indexOf('퍼플') !== -1) return 'violet';
+      return 'etc';
+    }
 
-  // Swiper 라이브러리 유무와 관계없이 가로 페이지 이동이 되도록 처리
-  wrapper.style.display = 'flex';
-  wrapper.style.transition = 'transform .45s ease';
-  section.style.overflow = 'hidden';
+    originalCards.forEach(function (card) {
+      groups[getColor(card)].push(card.cloneNode(true));
+    });
+    var fallback = originalCards.length ? originalCards[0].cloneNode(true) : null;
+    Object.keys(groups).forEach(function (key) {
+      if (!groups[key].length && fallback) groups[key].push(fallback.cloneNode(true));
+    });
 
-  function render(color) {
-    const total = counts[color] ?? counts.all;
-    let cards = [];
+    function render(color) {
+      var total = counts[color] || counts.all;
+      var cards = [];
 
-    if (color === 'all') {
-      Object.keys(groups).forEach(key => {
-        for (let i = 0; i < counts[key]; i++) {
-          cards.push(groups[key][i % groups[key].length].cloneNode(true));
+      if (color === 'all') {
+        Object.keys(groups).forEach(function (key) {
+          for (var n = 0; n < counts[key]; n++) {
+            cards.push(groups[key][n % groups[key].length].cloneNode(true));
+          }
+        });
+      } else {
+        for (var i = 0; i < total; i++) {
+          cards.push(groups[color][i % groups[color].length].cloneNode(true));
         }
+      }
+
+      var slides = [];
+      for (var startIndex = 0; startIndex < cards.length; startIndex += 20) {
+        var slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        var grid = document.createElement('div');
+        grid.className = 'all-lens-page-grid';
+        cards.slice(startIndex, startIndex + 20).forEach(function (card) {
+          grid.appendChild(card);
+        });
+        slide.appendChild(grid);
+        slides.push(slide);
+      }
+
+      wrapper.replaceChildren.apply(wrapper, slides);
+      wrapper.style.transform = 'translate3d(0,0,0)';
+      countText.textContent = total + '개';
+
+      buttons.forEach(function (button) {
+        var active = button.getAttribute('data-color') === color;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
       });
-    } else {
-      for (let i = 0; i < total; i++) {
-        cards.push(groups[color][i % groups[color].length].cloneNode(true));
+
+      if (pagination) {
+        pagination.replaceChildren();
+        slides.forEach(function (slide, index) {
+          var dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'swiper-pagination-bullet' + (index === 0 ? ' swiper-pagination-bullet-active' : '');
+          dot.setAttribute('aria-label', (index + 1) + '페이지');
+          dot.addEventListener('click', function () {
+            wrapper.style.transform = 'translate3d(-' + (index * 100) + '%,0,0)';
+            Array.prototype.forEach.call(pagination.children, function (item, itemIndex) {
+              item.classList.toggle('swiper-pagination-bullet-active', itemIndex === index);
+            });
+          });
+          pagination.appendChild(dot);
+        });
       }
     }
 
-    const pages = [];
-    for (let i = 0; i < cards.length; i += 20) {
-      const slide = document.createElement('div');
-      slide.className = 'swiper-slide';
-      slide.style.cssText = 'flex:0 0 100%;width:100%;';
-      const grid = document.createElement('div');
-      grid.className = 'all-lens-page-grid';
-      cards.slice(i, i + 20).forEach(card => grid.appendChild(card));
-      slide.appendChild(grid);
-      pages.push(slide);
-    }
-
-    wrapper.replaceChildren(...pages);
-    wrapper.style.transform = 'translateX(0)';
-    countText.textContent = total + '개';
-
-    buttons.forEach(button => {
-      const active = button.dataset.color === color;
-      button.classList.toggle('is-active', active);
-      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        render(button.getAttribute('data-color'));
+      });
     });
 
-    if (pagination) {
-      pagination.replaceChildren();
-      pages.forEach((page, index) => {
-        const dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'swiper-pagination-bullet' + (index === 0 ? ' swiper-pagination-bullet-active' : '');
-        dot.setAttribute('aria-label', (index + 1) + '페이지');
-        dot.addEventListener('click', () => {
-          wrapper.style.transform = 'translateX(-' + (index * 100) + '%)';
-          pagination.querySelectorAll('button').forEach((item, i) => item.classList.toggle('swiper-pagination-bullet-active', i === index));
-        });
-        pagination.appendChild(dot);
-      });
-    }
+    render('all');
   }
 
-  buttons.forEach(button => button.addEventListener('click', () => render(button.dataset.color)));
-  render('all');
-});
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLensColorFilter);
+  } else {
+    initLensColorFilter();
+  }
+})();
 </script>
 </body>
 </html>

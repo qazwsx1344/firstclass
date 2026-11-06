@@ -787,69 +787,97 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 <script>
-document.addEventListener('DOMContentLoaded',function(){
-  const swiperElement=document.querySelector('.all-lens-swiper');
-  const wrapper=swiperElement&&swiperElement.querySelector('.swiper-wrapper');
-  const filterButtons=document.querySelectorAll('.all-lens-filter[data-color]');
-  const countElement=document.querySelector('.subpage-breadcrumb .all-lens-count');
-  if(!swiperElement||!wrapper||!countElement||!filterButtons.length) return;
+document.addEventListener('DOMContentLoaded', function () {
+  const section = document.querySelector('.all-lens-swiper');
+  const wrapper = section && section.querySelector('.swiper-wrapper');
+  const countText = document.querySelector('.subpage-breadcrumb .all-lens-count');
+  const buttons = document.querySelectorAll('.all-lens-filter[data-color]');
+  const pagination = document.querySelector('.all-lens-pagination');
+  if (!section || !wrapper || !countText || !buttons.length) return;
 
-  const counts={all:353,brown:126,gray:90,choco:60,black:34,blue:12,green:8,pink:11,violet:6,etc:6};
-  const originalCards=Array.from(wrapper.querySelectorAll('.pick-card'));
-  const templates={brown:[],gray:[],choco:[],black:[],blue:[],green:[],pink:[],violet:[],etc:[]};
-  function getColor(card){
-    const name=(card.querySelector('h3')?.textContent||'').toLowerCase();
-    if(name.includes('브라운')) return 'brown';
-    if(name.includes('그레이')) return 'gray';
-    if(name.includes('쵸코')||name.includes('초코')) return 'choco';
-    if(name.includes('블랙')) return 'black';
-    if(name.includes('블루')) return 'blue';
-    if(name.includes('그린')) return 'green';
-    if(name.includes('핑크')) return 'pink';
-    if(name.includes('바이올렛')||name.includes('퍼플')) return 'violet';
+  const counts = { all: 353, brown: 126, gray: 90, choco: 60, black: 34, blue: 12, green: 8, pink: 11, violet: 6, etc: 6 };
+  const sourceCards = Array.from(wrapper.querySelectorAll('.pick-card'));
+  const groups = { brown: [], gray: [], choco: [], black: [], blue: [], green: [], pink: [], violet: [], etc: [] };
+
+  function colorOf(card) {
+    const name = (card.querySelector('h3')?.textContent || '').replace(/\\s/g, '');
+    if (name.includes('브라운')) return 'brown';
+    if (name.includes('그레이')) return 'gray';
+    if (name.includes('쵸코') || name.includes('초코')) return 'choco';
+    if (name.includes('블랙')) return 'black';
+    if (name.includes('블루')) return 'blue';
+    if (name.includes('그린')) return 'green';
+    if (name.includes('핑크')) return 'pink';
+    if (name.includes('바이올렛') || name.includes('퍼플')) return 'violet';
     return 'etc';
   }
-  originalCards.forEach(card=>templates[getColor(card)].push(card.cloneNode(true)));
-  const fallback=originalCards.length?originalCards[0].cloneNode(true):null;
-  Object.keys(templates).forEach(key=>{if(!templates[key].length&&fallback) templates[key]=[fallback];});
 
-  let swiper=null;
-  function render(color){
-    const total=counts[color]??counts.all;
-    const selected=color==='all'
-      ? Object.keys(templates).flatMap(key=>Array.from({length:counts[key]},(_,i)=>templates[key][i%templates[key].length]?.cloneNode(true)).filter(Boolean))
-      : Array.from({length:total},(_,i)=>templates[color][i%templates[color].length]?.cloneNode(true)).filter(Boolean);
+  sourceCards.forEach(card => groups[colorOf(card)].push(card.cloneNode(true)));
+  const fallback = sourceCards[0] ? sourceCards[0].cloneNode(true) : null;
+  Object.keys(groups).forEach(key => {
+    if (!groups[key].length && fallback) groups[key].push(fallback.cloneNode(true));
+  });
 
-    const slides=[];
-    for(let i=0;i<selected.length;i+=20){
-      const slide=document.createElement('div');
-      slide.className='swiper-slide';
-      const grid=document.createElement('div');
-      grid.className='all-lens-page-grid';
-      selected.slice(i,i+20).forEach(card=>grid.appendChild(card));
-      slide.appendChild(grid);
-      slides.push(slide);
+  // Swiper 라이브러리 유무와 관계없이 가로 페이지 이동이 되도록 처리
+  wrapper.style.display = 'flex';
+  wrapper.style.transition = 'transform .45s ease';
+  section.style.overflow = 'hidden';
+
+  function render(color) {
+    const total = counts[color] ?? counts.all;
+    let cards = [];
+
+    if (color === 'all') {
+      Object.keys(groups).forEach(key => {
+        for (let i = 0; i < counts[key]; i++) {
+          cards.push(groups[key][i % groups[key].length].cloneNode(true));
+        }
+      });
+    } else {
+      for (let i = 0; i < total; i++) {
+        cards.push(groups[color][i % groups[color].length].cloneNode(true));
+      }
     }
 
-    if(swiper){swiper.destroy(true,true);swiper=null;}
-    wrapper.replaceChildren(...slides);
-    countElement.textContent=total+'개';
-    filterButtons.forEach(button=>{
-      const active=button.dataset.color===color;
-      button.classList.toggle('is-active',active);
-      button.setAttribute('aria-pressed',active?'true':'false');
+    const pages = [];
+    for (let i = 0; i < cards.length; i += 20) {
+      const slide = document.createElement('div');
+      slide.className = 'swiper-slide';
+      slide.style.cssText = 'flex:0 0 100%;width:100%;';
+      const grid = document.createElement('div');
+      grid.className = 'all-lens-page-grid';
+      cards.slice(i, i + 20).forEach(card => grid.appendChild(card));
+      slide.appendChild(grid);
+      pages.push(slide);
+    }
+
+    wrapper.replaceChildren(...pages);
+    wrapper.style.transform = 'translateX(0)';
+    countText.textContent = total + '개';
+
+    buttons.forEach(button => {
+      const active = button.dataset.color === color;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
 
-    if(typeof Swiper!=='undefined'){
-      swiper=new Swiper(swiperElement,{
-        slidesPerView:1,slidesPerGroup:1,spaceBetween:24,speed:600,
-        pagination:{el:'.all-lens-pagination',clickable:true}
+    if (pagination) {
+      pagination.replaceChildren();
+      pages.forEach((page, index) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'swiper-pagination-bullet' + (index === 0 ? ' swiper-pagination-bullet-active' : '');
+        dot.setAttribute('aria-label', (index + 1) + '페이지');
+        dot.addEventListener('click', () => {
+          wrapper.style.transform = 'translateX(-' + (index * 100) + '%)';
+          pagination.querySelectorAll('button').forEach((item, i) => item.classList.toggle('swiper-pagination-bullet-active', i === index));
+        });
+        pagination.appendChild(dot);
       });
     }
   }
-  filterButtons.forEach(button=>{
-    button.addEventListener('click',function(){render(this.dataset.color);});
-  });
+
+  buttons.forEach(button => button.addEventListener('click', () => render(button.dataset.color)));
   render('all');
 });
 </script>

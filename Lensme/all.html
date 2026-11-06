@@ -21,12 +21,12 @@
 @media(max-width:640px){.all-lens-filters{gap:8px}.all-lens-filter{width:100px;min-width:100px;height:40px;font-size:13px}}
 </style>
 <style>
-.all-lens-round-scroll{display:flex;justify-content:center;align-items:center;gap:18px;margin:36px auto 0;padding:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
+.all-lens-round-scroll{display:flex;justify-content:flex-start;align-items:center;gap:18px;width:100%;max-width:100%;margin:36px auto 0;padding:8px 4px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;-webkit-overflow-scrolling:touch;white-space:nowrap}
 .all-lens-round-scroll::-webkit-scrollbar{display:none}
 .all-lens-round-scroll button{flex:0 0 10px;width:10px;height:10px;margin:0;padding:0;border:1px solid #8b849b;border-radius:50%;background:transparent;cursor:pointer}
 .all-lens-round-scroll button[aria-current="true"]{background:#8b849b}
 .all-lens-round-scroll button:focus-visible{outline:2px solid #292536;outline-offset:4px}
-@media(max-width:640px){.all-lens-round-scroll{justify-content:flex-start;gap:12px;margin-top:28px;padding:4px 2px}.all-lens-round-scroll button{flex-basis:8px;width:8px;height:8px}}
+@media(max-width:640px){.all-lens-round-scroll{justify-content:flex-start;gap:12px;margin-top:28px;padding:8px 4px}.all-lens-round-scroll button{flex:0 0 8px;width:8px;height:8px}}
 </style>
 <script>
 document.addEventListener('DOMContentLoaded',function(){
@@ -119,16 +119,6 @@ document.addEventListener('DOMContentLoaded',function(){
   </section>
   <div class="subpage-inner subpage-body">
     <nav class="subpage-breadcrumb" aria-label="현재 위치"><a href="index.html">HOME</a><span aria-hidden="true">/</span><span>전체 렌즈</span></nav>
-    <section class="subpage-section" aria-labelledby="category-title">
-      <div class="subpage-section-heading">
-        <div><p class="subpage-eyebrow">FIND YOUR LENS</p><h2 id="category-title">어떤 렌즈를 찾고 있나요?</h2><p>관심 있는 기준을 선택해 렌즈를 더 쉽게 살펴볼 수 있어요.</p></div>
-      </div>
-      <div class="subpage-card-grid">
-        <article class="subpage-card"><div class="subpage-card-copy"><p class="subpage-card-kicker">01 / COLOR</p><h3>컬러별</h3><p>브라운, 그레이 등 원하는 컬러와 분위기로 찾아보세요.</p></div></article>
-        <article class="subpage-card"><div class="subpage-card-copy"><p class="subpage-card-kicker">02 / DIAMETER</p><h3>직경별</h3><p>렌즈의 그래픽 직경을 기준으로 원하는 크기를 살펴보세요.</p></div></article>
-        <article class="subpage-card"><div class="subpage-card-copy"><p class="subpage-card-kicker">03 / TYPE</p><h3>유형별</h3><p>하루 착용부터 한 달 착용까지 착용 유형을 확인해 보세요.</p></div></article>
-      </div>
-    </section>
     <section class="subpage-section" aria-labelledby="all-products-title">
       <div class="subpage-section-heading">
         <div>

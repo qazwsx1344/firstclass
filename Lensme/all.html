@@ -78,6 +78,14 @@ document.addEventListener('DOMContentLoaded',function(){
 @media (max-width:640px){.all-lens-page-grid .pick-image-wrap{border-radius:16px;}}
 @media (prefers-reduced-motion:reduce){.all-lens-page-grid .pick-image-wrap .pick-image{transition:none;}}
 </style>
+<style>
+/* 전체 렌즈 HERO 상품 이미지 */
+.all-lens-hero{position:relative;isolation:isolate;min-height:340px;background-color:#f5f1fa;background-image:linear-gradient(90deg,#f5f1fa 0%,rgba(245,241,250,.98) 34%,rgba(245,241,250,.68) 56%,rgba(245,241,250,.04) 100%),url("img/lens_hero.png");background-repeat:no-repeat;background-position:center,right center;background-size:cover,auto 100%}
+.all-lens-hero .subpage-inner{position:relative;z-index:1}
+.all-lens-hero .subpage-intro{max-width:680px}
+@media(max-width:768px){.all-lens-hero{min-height:300px;background-image:linear-gradient(90deg,rgba(245,241,250,.98) 0%,rgba(245,241,250,.9) 48%,rgba(245,241,250,.45) 100%),url("img/lens_hero.png");background-position:center,right center;background-size:cover,auto 100%}}
+@media(max-width:480px){.all-lens-hero{min-height:260px;background-position:center,right center;background-size:cover,auto 82%}.all-lens-hero .subpage-intro{max-width:90%}}
+</style>
 <!-- lens-submenu-sync-20261106 -->
 </head>
 <body>
@@ -149,7 +157,7 @@ document.addEventListener('DOMContentLoaded',function(){
                             </div>
                         </header>
 <main class="subpage">
-  <section class="subpage-hero" aria-labelledby="page-title">
+  <section class="subpage-hero all-lens-hero" aria-labelledby="page-title">
     <div class="subpage-inner">
       <p class="subpage-eyebrow">LENS COLLECTION</p>
       <h1 id="page-title">전체 렌즈</h1>

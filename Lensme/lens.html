@@ -42,6 +42,11 @@
 @media(max-width:1024px){.all-lens-page-grid{column-gap:16px;row-gap:22px}.all-lens-pagination{margin-top:44px}}
 @media(max-width:640px){.all-lens-page-grid{column-gap:10px;row-gap:18px}.all-lens-pagination{gap:12px;margin-top:32px}.all-lens-pagination .swiper-pagination-bullet{flex-basis:8px;width:8px;height:8px}}
 @media(prefers-reduced-motion:reduce){.all-lens-swiper .swiper-wrapper{transition-duration:0ms!important}}
+
+/* 컬러별 페이지 원형 버튼 마우스 드래그 */
+.all-lens-pagination{cursor:grab;scroll-snap-type:x mandatory;user-select:none}
+.all-lens-pagination.is-dragging{cursor:grabbing;scroll-behavior:auto}
+.all-lens-pagination .swiper-pagination-bullet{scroll-snap-align:start}
 </style>
 <style>
 /* 상품 이미지에 마우스를 올리면 렌즈 상세 이미지로 전환 */
@@ -895,6 +900,76 @@ document.addEventListener('DOMContentLoaded',function(){
   } else {
     initLensColorFilter();
   }
+})();
+</script>
+
+<script>
+/* 컬러별 렌즈 페이지: 원형 페이지 버튼을 마우스로 좌우 드래그하거나 휠로 이동 */
+(function () {
+  function enableColorPaginationDrag() {
+    var pagination = document.querySelector('.all-lens-pagination');
+    var wrapper = document.querySelector('.all-lens-swiper .swiper-wrapper');
+    if (!pagination || !wrapper || pagination.dataset.dragReady === 'true') return;
+    pagination.dataset.dragReady = 'true';
+
+    function goToVisiblePage() {
+      var dots = pagination.querySelectorAll('.swiper-pagination-bullet');
+      if (!dots.length) return;
+      var first = dots[0];
+      var step = first.getBoundingClientRect().width + (parseFloat(getComputedStyle(pagination).gap) || 0);
+      if (!step) return;
+      var index = Math.max(0, Math.min(dots.length - 1, Math.round(pagination.scrollLeft / step)));
+      dots[index].click();
+    }
+
+    pagination.addEventListener('wheel', function (event) {
+      if (pagination.scrollWidth <= pagination.clientWidth) return;
+      var delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      if (!delta) return;
+      event.preventDefault();
+      pagination.scrollLeft += delta;
+      goToVisiblePage();
+    }, { passive: false });
+
+    var dragging = false;
+    var startX = 0;
+    var startScroll = 0;
+    var moved = false;
+    pagination.addEventListener('pointerdown', function (event) {
+      if (event.pointerType === 'touch' || event.button !== 0) return;
+      dragging = true;
+      moved = false;
+      startX = event.clientX;
+      startScroll = pagination.scrollLeft;
+      pagination.classList.add('is-dragging');
+      pagination.setPointerCapture(event.pointerId);
+    });
+    pagination.addEventListener('pointermove', function (event) {
+      if (!dragging) return;
+      var distance = event.clientX - startX;
+      if (Math.abs(distance) > 3) moved = true;
+      pagination.scrollLeft = startScroll - distance;
+      if (moved) goToVisiblePage();
+    });
+    function stopDragging() {
+      if (!dragging) return;
+      dragging = false;
+      pagination.classList.remove('is-dragging');
+      if (moved) goToVisiblePage();
+    }
+    pagination.addEventListener('pointerup', stopDragging);
+    pagination.addEventListener('pointercancel', stopDragging);
+    pagination.addEventListener('lostpointercapture', stopDragging);
+    pagination.addEventListener('click', function (event) {
+      if (moved) {
+        event.preventDefault();
+        event.stopPropagation();
+        moved = false;
+      }
+    }, true);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', enableColorPaginationDrag);
+  else enableColorPaginationDrag();
 })();
 </script>
 </body>

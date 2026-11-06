@@ -902,11 +902,7 @@ document.addEventListener('DOMContentLoaded',function(){
     section.addEventListener('click',function(event){
       if(dragged){event.preventDefault();event.stopPropagation();dragged=false;}
     },true);
-    section.addEventListener('wheel',function(event){
-      var delta=Math.abs(event.deltaX)>Math.abs(event.deltaY)?event.deltaX:event.deltaY;
-      if(Math.abs(delta)<12)return;
-      event.preventDefault();goToPage(currentPage+(delta>0?1:-1));
-    },{passive:false});
+    /* 마우스 휠은 페이지 이동에 사용하지 않고 일반 세로 스크롤로 유지 */
     render('all');
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initLensColorFilter);

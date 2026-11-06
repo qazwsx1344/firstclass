@@ -16,9 +16,10 @@
 .all-lens-count{margin-left:8px;color:inherit;font-size:inherit;font-weight:inherit}
 .all-lens-filters{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 .all-lens-filter{box-sizing:border-box;width:100px;min-width:100px;height:40px;padding:0 12px;border:1px solid #7863A8;border-radius:999px;background:#7863A8;color:#fff;font:600 14px/1 "Pretendard Variable",Pretendard,sans-serif;cursor:pointer;transition:background-color .18s ease,color .18s ease,border-color .18s ease}
-.all-lens-filter:hover,.all-lens-filter:focus-visible{background:#fff;color:#7863A8}
+.all-lens-filter:hover,.all-lens-filter:focus-visible,.all-lens-filter.is-active{background:#fff;color:#7863A8}
 .all-lens-filter:focus-visible{outline:2px solid #292536;outline-offset:3px}
 @media(max-width:640px){.all-lens-filters{gap:8px}.all-lens-filter{width:100px;min-width:100px;height:40px;font-size:13px}}
+.all-lens-filter.is-active{box-shadow:inset 0 0 0 1px #7863A8}
 </style>
 <style>
 .all-lens-round-scroll{display:flex;justify-content:flex-start;align-items:center;gap:18px;width:100%;max-width:100%;margin:36px auto 0;padding:8px 4px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;-webkit-overflow-scrolling:touch;white-space:nowrap}
@@ -143,10 +144,17 @@
         <div>
           <p class="subpage-eyebrow">LENS ME COLLECTION</p>
           <h2 id="all-products-title">컬러별 렌즈 보기</h2>
-          <div class="all-lens-filters" role="group" aria-label="렌즈 분류 선택">
-            <button class="all-lens-filter" type="button" aria-pressed="false">컬러별</button>
-            <button class="all-lens-filter" type="button" aria-pressed="false">도수별</button>
-            <button class="all-lens-filter" type="button" aria-pressed="false">기능별</button>
+          <div class="all-lens-filters" role="group" aria-label="컬러별 렌즈 필터">
+            <button class="all-lens-filter is-active" type="button" data-color="all" aria-pressed="true">전체</button>
+            <button class="all-lens-filter" type="button" data-color="brown" aria-pressed="false">브라운</button>
+            <button class="all-lens-filter" type="button" data-color="gray" aria-pressed="false">그레이</button>
+            <button class="all-lens-filter" type="button" data-color="choco" aria-pressed="false">쵸코</button>
+            <button class="all-lens-filter" type="button" data-color="black" aria-pressed="false">블랙</button>
+            <button class="all-lens-filter" type="button" data-color="blue" aria-pressed="false">블루</button>
+            <button class="all-lens-filter" type="button" data-color="green" aria-pressed="false">그린</button>
+            <button class="all-lens-filter" type="button" data-color="pink" aria-pressed="false">핑크</button>
+            <button class="all-lens-filter" type="button" data-color="violet" aria-pressed="false">바이올렛</button>
+            <button class="all-lens-filter" type="button" data-color="etc" aria-pressed="false">기타</button>
           </div>
         </div>
       </div>
@@ -780,14 +788,62 @@ document.addEventListener('DOMContentLoaded',function(){
 </script>
 <script>
 document.addEventListener('DOMContentLoaded',function(){
-  if(typeof Swiper==='undefined') return;
-  new Swiper('.all-lens-swiper',{
-    slidesPerView:1,
-    slidesPerGroup:1,
-    spaceBetween:24,
-    speed:600,
-    pagination:{el:'.all-lens-pagination',clickable:true}
-  });
+  const swiperElement=document.querySelector('.all-lens-swiper');
+  const wrapper=swiperElement&&swiperElement.querySelector('.swiper-wrapper');
+  const filterButtons=document.querySelectorAll('.all-lens-filter[data-color]');
+  const countElement=document.querySelector('.all-lens-count');
+  if(!swiperElement||!wrapper||typeof Swiper==='undefined') return;
+
+  const counts={all:353,brown:126,gray:90,choco:60,black:34,blue:12,green:8,pink:11,violet:6,etc:6};
+  const originalCards=Array.from(wrapper.querySelectorAll('.pick-card'));
+  const templates={brown:[],gray:[],choco:[],black:[],blue:[],green:[],pink:[],violet:[],etc:[]};
+  function getColor(card){
+    const name=(card.querySelector('h3')?.textContent||'').toLowerCase();
+    if(name.includes('브라운')) return 'brown';
+    if(name.includes('그레이')) return 'gray';
+    if(name.includes('쵸코')||name.includes('초코')) return 'choco';
+    if(name.includes('블랙')) return 'black';
+    if(name.includes('블루')) return 'blue';
+    if(name.includes('그린')) return 'green';
+    if(name.includes('핑크')) return 'pink';
+    if(name.includes('바이올렛')||name.includes('퍼플')) return 'violet';
+    return 'etc';
+  }
+  originalCards.forEach(card=>templates[getColor(card)].push(card.cloneNode(true)));
+  const fallback=originalCards.slice(0,1).map(card=>card.cloneNode(true));
+  Object.keys(templates).forEach(key=>{if(!templates[key].length) templates[key]=fallback;});
+
+  let swiper=null;
+  function render(color){
+    const total=counts[color];
+    const selected=color==='all'
+      ? Object.entries(counts).filter(([key])=>key!=='all').flatMap(([key])=>Array.from({length:counts[key]},(_,i)=>templates[key][i%templates[key].length].cloneNode(true)))
+      : Array.from({length:total},(_,i)=>templates[color][i%templates[color].length].cloneNode(true));
+    const slides=[];
+    for(let i=0;i<selected.length;i+=20){
+      const slide=document.createElement('div');
+      slide.className='swiper-slide';
+      const grid=document.createElement('div');
+      grid.className='all-lens-page-grid';
+      selected.slice(i,i+20).forEach(card=>grid.appendChild(card));
+      slide.appendChild(grid);
+      slides.push(slide);
+    }
+    if(swiper){swiper.destroy(true,true);swiper=null;}
+    wrapper.replaceChildren(...slides);
+    if(countElement) countElement.textContent=total+'개';
+    filterButtons.forEach(button=>{
+      const active=button.dataset.color===color;
+      button.classList.toggle('is-active',active);
+      button.setAttribute('aria-pressed',String(active));
+    });
+    swiper=new Swiper('.all-lens-swiper',{
+      slidesPerView:1,slidesPerGroup:1,spaceBetween:24,speed:600,
+      pagination:{el:'.all-lens-pagination',clickable:true}
+    });
+  }
+  filterButtons.forEach(button=>button.addEventListener('click',()=>render(button.dataset.color)));
+  render('all');
 });
 </script>
 </body>

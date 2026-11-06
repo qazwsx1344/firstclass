@@ -13,19 +13,28 @@
 <style>
 /* 전체 렌즈 페이지 전용 스타일 */
 .all-lens-count{margin:12px 0 4px!important;color:#292536!important;font-size:16px!important}
-.all-lens-count strong{margin-left:5px;color:#7863A8;font-size:22px;font-weight:700}
+.all-lens-count strong{margin-left:5px;color:inherit;font-size:inherit;font-weight:inherit}
 .all-lens-filters{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 .all-lens-filter{box-sizing:border-box;width:100px;min-width:100px;height:40px;padding:0 12px;border:1px solid #7863A8;border-radius:999px;background:#7863A8;color:#fff;font:600 14px/1 "Pretendard Variable",Pretendard,sans-serif;cursor:pointer;transition:background-color .18s ease,color .18s ease,border-color .18s ease}
-.all-lens-filter:hover,.all-lens-filter:focus-visible,.all-lens-filter[aria-pressed="true"]{background:#fff;color:#7863A8}
+.all-lens-filter:hover,.all-lens-filter:focus-visible{background:#fff;color:#7863A8}
 .all-lens-filter:focus-visible{outline:2px solid #292536;outline-offset:3px}
 @media(max-width:640px){.all-lens-filters{gap:8px}.all-lens-filter{width:100px;min-width:100px;height:40px;font-size:13px}}
 </style>
+<style>
+.all-lens-round-scroll{display:flex;justify-content:center;align-items:center;gap:18px;margin:36px auto 0;padding:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
+.all-lens-round-scroll::-webkit-scrollbar{display:none}
+.all-lens-round-scroll button{flex:0 0 10px;width:10px;height:10px;margin:0;padding:0;border:1px solid #8b849b;border-radius:50%;background:transparent;cursor:pointer}
+.all-lens-round-scroll button[aria-current="true"]{background:#8b849b}
+.all-lens-round-scroll button:focus-visible{outline:2px solid #292536;outline-offset:4px}
+@media(max-width:640px){.all-lens-round-scroll{justify-content:flex-start;gap:12px;margin-top:28px;padding:4px 2px}.all-lens-round-scroll button{flex-basis:8px;width:8px;height:8px}}
+</style>
 <script>
 document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('.all-lens-filter').forEach(function(button){
-    button.addEventListener('click',function(){
-      var selected=button.getAttribute('aria-pressed')==='true';
-      button.setAttribute('aria-pressed',String(!selected));
+  var dots=document.querySelectorAll('.all-lens-round-scroll button');
+  dots.forEach(function(dot){
+    dot.addEventListener('click',function(){
+      dots.forEach(function(item){item.setAttribute('aria-current','false');});
+      dot.setAttribute('aria-current','true');
     });
   });
 });
@@ -157,7 +166,21 @@ document.addEventListener('DOMContentLoaded',function(){
         <article class="pick-card"><div class="pick-product"><div class="pick-image-wrap"><img class="pick-image" src="img/new_04.png" alt="악마 컨택트 아이듀 미니 브라운 렌즈"></div><h3>악마 컨택트 아이듀 미니 브라운(30p)</h3><p class="pick-price">59,000원</p><p class="pick-size">13.0mm</p><p class="pick-date">한 달 착용</p></div></article>
       </div>
     </section>
-    <section class="subpage-bottom-banner"><div><p class="subpage-eyebrow">LENS ME</p><h2>나에게 어울리는 렌즈를 렌즈미에서 찾아보세요.</h2></div><a class="subpage-home-link" href="index.html">메인으로 돌아가기</a></section>
+    <section class="all-lens-round-section" aria-label="렌즈 목록 페이지 선택">
+      <div class="all-lens-round-scroll" role="group" aria-label="페이지 선택">
+        <button type="button" aria-label="1번째 페이지" aria-current="true"></button>
+        <button type="button" aria-label="2번째 페이지" aria-current="false"></button>
+        <button type="button" aria-label="3번째 페이지" aria-current="false"></button>
+        <button type="button" aria-label="4번째 페이지" aria-current="false"></button>
+        <button type="button" aria-label="5번째 페이지" aria-current="false"></button>
+        <button type="button" aria-label="6번째 페이지" aria-current="false"></button>
+        <button type="button" aria-label="7번째 페이지" aria-current="false"></button>
+        <button type="button" aria-label="8번째 페이지" aria-current="false"></button>
+        <button type="button" aria-label="9번째 페이지" aria-current="false"></button>
+        <button type="button" aria-label="10번째 페이지" aria-current="false"></button>
+        <button type="button" aria-label="11번째 페이지" aria-current="false"></button>
+      </div>
+    </section>
   </div>
 </main>
 <footer class="site-footer">

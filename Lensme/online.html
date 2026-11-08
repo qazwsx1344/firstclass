@@ -11,6 +11,30 @@
     <link rel="stylesheet" href="css/subpage.css">
     <script src="js/subpage.js" defer></script>
 <!-- lens-submenu-sync-20261106 -->
+<style>
+/* 온라인 전용 렌즈 페이지 전용 레이아웃 */
+.online-lens-hero{position:relative;isolation:isolate;min-height:340px;background-color:#f5f1fa;background-image:linear-gradient(90deg,#f5f1fa 0%,rgba(245,241,250,.98) 34%,rgba(245,241,250,.68) 56%,rgba(245,241,250,.04) 100%),url("img/lens_hero.png?v=20261106");background-repeat:no-repeat;background-position:center,right center;background-size:cover,auto 100%}
+.online-lens-hero .subpage-inner{position:relative;z-index:1}
+.online-lens-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.online-lens-tab{box-sizing:border-box;min-width:100px;height:40px;padding:0 18px;border:1px solid #7863A8;border-radius:999px;background:#7863A8;color:#fff;font:600 14px/1 "Pretendard Variable",Pretendard,sans-serif;cursor:pointer;transition:background-color .18s ease,color .18s ease}
+.online-lens-tab:hover,.online-lens-tab:focus-visible,.online-lens-tab.is-active{background:#fff;color:#7863A8}
+.online-lens-tab:focus-visible{outline:2px solid #292536;outline-offset:3px}
+.online-lens-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 20px}
+.online-lens-card{min-width:0}
+.online-lens-card img{display:block;width:100%;aspect-ratio:1/1.25;border-radius:20px;object-fit:cover}
+.online-lens-card h3{overflow:hidden;margin:10px 0 3px;color:#292536;font-size:16px;font-weight:500;line-height:1.4;text-overflow:ellipsis;white-space:nowrap}
+.online-lens-card p{margin:0;color:#625e6a;font-size:14px;font-weight:300;line-height:1.5}
+.online-lens-card .online-lens-price{color:#292536}
+.online-lens-pagination{display:flex;align-items:center;justify-content:center;gap:18px;margin:36px auto 0}
+.online-lens-pagination button{display:inline-flex;min-width:28px;height:32px;align-items:center;justify-content:center;padding:0 5px;border:0;border-bottom:1px solid transparent;background:transparent;color:#625e6a;font:500 15px "Pretendard Variable",Pretendard,sans-serif;cursor:pointer}
+.online-lens-pagination button.is-current{border-bottom-color:#7863A8;color:#7863A8;font-weight:700}
+.online-lens-pagination button:disabled{opacity:.35;cursor:default}
+.online-lens-pagination button:focus-visible{outline:2px solid #7863A8;outline-offset:3px}
+.online-lens-pagination .page-arrow{font-size:22px}
+@media(max-width:900px){.online-lens-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}}
+@media(max-width:640px){.online-lens-hero{min-height:260px;background-image:linear-gradient(90deg,rgba(245,241,250,.98) 0%,rgba(245,241,250,.9) 48%,rgba(245,241,250,.45) 100%),url("img/lens_hero.png?v=20261106");background-position:center,right center;background-size:cover,auto 82%}.online-lens-tabs{gap:8px}.online-lens-tab{min-width:calc(25% - 6px);height:38px;padding:0 8px;font-size:13px}.online-lens-grid{gap:20px 12px}.online-lens-card img{border-radius:16px}.online-lens-card h3{font-size:13px}.online-lens-card p{font-size:12px}.online-lens-pagination{gap:10px;margin-top:28px}}
+@media(prefers-reduced-motion:reduce){.online-lens-tab{transition:none}}
+</style>
 </head>
 <body>
 <div id="wrap">
@@ -79,18 +103,42 @@
                 </nav>
                             </div>
                         </header>
-<main class="subpage">
-  <section class="subpage-hero" aria-labelledby="page-title"><div class="subpage-inner">
-    <p class="subpage-eyebrow">ONLINE EXCLUSIVE</p><h1 id="page-title">온라인 전용 렌즈</h1><p class="subpage-intro">온라인에서만 만날 수 있는 렌즈를 확인해 보세요.</p>
-  </div></section>
+<main class="subpage online-lens-page">
+  <section class="subpage-hero online-lens-hero" aria-labelledby="page-title">
+    <div class="subpage-inner">
+      <p class="subpage-eyebrow">ONLINE EXCLUSIVE</p>
+      <h1 id="page-title">온라인 전용 렌즈</h1>
+      <p class="subpage-intro">온라인에서만 만날 수 있는 렌즈를 컬러별로 살펴보세요.</p>
+    </div>
+  </section>
   <div class="subpage-inner subpage-body">
-    <nav class="subpage-breadcrumb" aria-label="현재 위치"><a href="index.html">HOME</a><span aria-hidden="true">/</span><span>온라인 전용 렌즈</span></nav>
-    <section class="subpage-section" aria-labelledby="content-title">
-      <div class="subpage-section-heading"><div><p class="subpage-eyebrow">ONLINE EXCLUSIVE</p><h2 id="content-title">온라인 전용 렌즈</h2><p>온라인 전용으로 소개하는 렌즈 상품과 특징을 확인할 수 있습니다.</p></div></div>
-      <div class="subpage-card-grid"><article class="subpage-card"><div class="subpage-card-copy"><p class="subpage-card-kicker">01 / ONLINE EXCLUSIVE</p><h3>온라인 전용 상품</h3><p>온라인에서 소개하는 렌즈 상품을 살펴보세요.</p></div></article>
-<article class="subpage-card"><div class="subpage-card-copy"><p class="subpage-card-kicker">02 / ONLINE EXCLUSIVE</p><h3>상품 특징</h3><p>렌즈의 컬러와 직경, 착용 주기 등 제품 정보를 확인해 보세요.</p></div></article></div>
+    <nav class="subpage-breadcrumb" aria-label="현재 위치">
+      <a href="index.html">HOME</a><span aria-hidden="true">/</span>
+      <span>온라인 전용 렌즈</span><span aria-hidden="true">/</span>
+      <span class="online-lens-count" aria-live="polite">14개</span>
+    </nav>
+    <section class="subpage-section" aria-labelledby="online-products-title">
+      <div class="subpage-section-heading">
+        <div>
+          <p class="subpage-eyebrow">LENS ME COLLECTION</p>
+          <h2 id="online-products-title">온라인 전용 렌즈 보기</h2>
+          <div class="online-lens-tabs" role="group" aria-label="온라인 전용 렌즈 컬러 선택">
+            <button class="online-lens-tab is-active" type="button" data-color="brown" aria-pressed="true">브라운</button>
+            <button class="online-lens-tab" type="button" data-color="gray" aria-pressed="false">그레이</button>
+            <button class="online-lens-tab" type="button" data-color="choco" aria-pressed="false">쵸코</button>
+            <button class="online-lens-tab" type="button" data-color="blue" aria-pressed="false">블루</button>
+            <button class="online-lens-tab" type="button" data-color="green" aria-pressed="false">그린</button>
+            <button class="online-lens-tab" type="button" data-color="pink" aria-pressed="false">핑크</button>
+            <button class="online-lens-tab" type="button" data-color="violet" aria-pressed="false">바이올렛</button>
+            <button class="online-lens-tab" type="button" data-color="etc" aria-pressed="false">기타</button>
+          </div>
+        </div>
+      </div>
+      <div class="online-lens-products" aria-live="polite">
+        <div class="online-lens-grid"></div>
+      </div>
+      <nav class="online-lens-pagination" aria-label="상품 목록 페이지 선택"></nav>
     </section>
-    <section class="subpage-bottom-banner"><div><p class="subpage-eyebrow">LENS ME</p><h2>나에게 어울리는 렌즈를 렌즈미에서 찾아보세요.</h2></div><a class="subpage-home-link" href="index.html">메인으로 돌아가기</a></section>
   </div>
 </main>
 <footer class="site-footer">
@@ -169,5 +217,76 @@
             </a>
         </aside>
 </div>
+<script>
+(function(){
+  var section=document.querySelector('.online-lens-page');
+  if(!section)return;
+  var counts={brown:14,gray:15,choco:5,blue:3,green:3,pink:4,violet:3,etc:2};
+  var labels={brown:'브라운',gray:'그레이',choco:'쵸코',blue:'블루',green:'그린',pink:'핑크',violet:'바이올렛',etc:'기타'};
+  var imageSets={
+    brown:['new_01.png','new_04.png','PICK_img03.png'],
+    gray:['new_02.png','new_03.png'],
+    choco:['PICK_img.png','PICK_img02.png','new_05.png'],
+    blue:['new_03.png','PICK_img02.png'],
+    green:['new_02.png','PICK_img03.png'],
+    pink:['new_01.png','PICK_img.png'],
+    violet:['new_03.png','new_04.png'],
+    etc:['PICK_img02.png','new_05.png']
+  };
+  var tabs=Array.from(section.querySelectorAll('.online-lens-tab'));
+  var countText=section.querySelector('.online-lens-count');
+  var grid=section.querySelector('.online-lens-grid');
+  var pagination=section.querySelector('.online-lens-pagination');
+  var currentColor='brown',currentPage=1,pageSize=20;
+  function makeCard(color,index){
+    var card=document.createElement('article');
+    card.className='online-lens-card';
+    var image=document.createElement('img');
+    image.src='img/'+imageSets[color][index%imageSets[color].length];
+    image.alt='온라인 전용 '+labels[color]+' 컬러 렌즈';
+    image.loading='lazy';
+    var title=document.createElement('h3');
+    title.textContent='온라인 전용 '+labels[color]+' 렌즈';
+    var price=document.createElement('p');
+    price.className='online-lens-price';
+    price.textContent='렌즈 상품';
+    var info=document.createElement('p');
+    info.textContent='컬러별 상품 정보';
+    card.append(image,title,price,info);
+    return card;
+  }
+  function drawPagination(totalPages){
+    pagination.replaceChildren();
+    function addButton(text,page,extra,disabled,label){
+      var button=document.createElement('button');
+      button.type='button';button.textContent=text;
+      if(extra)button.className=extra;
+      button.disabled=!!disabled;
+      if(label)button.setAttribute('aria-label',label);
+      if(page===currentPage&&!extra) {button.classList.add('is-current');button.setAttribute('aria-current','page');}
+      button.addEventListener('click',function(){currentPage=page;render();});
+      pagination.appendChild(button);
+    }
+    addButton('‹',Math.max(1,currentPage-1),'page-arrow',currentPage===1,'이전 페이지');
+    for(var p=1;p<=totalPages;p++)addButton(String(p),p,'',false,p+'페이지');
+    addButton('›',Math.min(totalPages,currentPage+1),'page-arrow',currentPage===totalPages,'다음 페이지');
+  }
+  function render(){
+    var total=counts[currentColor],totalPages=Math.ceil(total/pageSize);
+    countText.textContent=total+'개';
+    tabs.forEach(function(tab){
+      var active=tab.dataset.color===currentColor;
+      tab.classList.toggle('is-active',active);
+      tab.setAttribute('aria-pressed',active?'true':'false');
+    });
+    grid.replaceChildren();
+    var first=(currentPage-1)*pageSize,last=Math.min(first+pageSize,total);
+    for(var i=first;i<last;i++)grid.appendChild(makeCard(currentColor,i));
+    drawPagination(totalPages);
+  }
+  tabs.forEach(function(tab){tab.addEventListener('click',function(){currentColor=tab.dataset.color;currentPage=1;render();});});
+  render();
+})();
+</script>
 </body>
 </html>

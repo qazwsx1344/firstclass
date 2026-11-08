@@ -10,6 +10,66 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/subpage.css">
     <script src="js/subpage.js" defer></script>
+<style>
+/* 나만의 렌즈 찾기: 필터와 추천 상품 */
+.finder-section{padding:8px 0 80px}
+.finder-heading{margin-bottom:26px}
+.finder-heading h2{margin:0;color:#292536;font-size:clamp(26px,2.8vw,36px);font-weight:600;letter-spacing:-.03em}
+.finder-heading>div>p:last-child{margin:12px 0 0;color:#625e6a;font-size:16px;line-height:1.6}
+.finder-filterbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:24px;background:#f7f5fa;border:1px solid #eee9f5;border-radius:16px}
+.finder-filter-field{display:flex;flex-direction:column;gap:8px;color:#625e6a;font-size:13px;font-weight:600}
+.finder-filter-field select{width:100%;height:46px;padding:0 14px;border:1px solid #ded8e8;border-radius:8px;background:#fff;color:#292536;font:500 14px "Pretendard Variable",Pretendard,sans-serif}
+.finder-filter-reset{align-self:end;height:46px;border:1px solid #7863A8;border-radius:8px;background:#fff;color:#7863A8;font:600 14px "Pretendard Variable",Pretendard,sans-serif;cursor:pointer}
+.finder-filter-reset:hover{background:#7863A8;color:#fff}
+.finder-result-heading{display:flex;align-items:center;justify-content:space-between;margin:42px 0 20px}
+.finder-result-heading h3{margin:0;color:#292536;font-size:24px;font-weight:600}
+.finder-result-heading p{margin:0;color:#8b849b;font-size:14px}
+.finder-result-heading strong{color:#7863A8}
+.finder-product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:34px 20px}
+.finder-product-card{min-width:0}
+.finder-product-image{overflow:hidden;aspect-ratio:1/1.25;border-radius:18px;background:#f5f3f5}
+.finder-product-image img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.finder-product-card:hover .finder-product-image img{transform:scale(1.035)}
+.finder-product-info h4{overflow:hidden;margin:12px 0 5px;color:#292536;font-size:16px;font-weight:500;text-overflow:ellipsis;white-space:nowrap}
+.finder-product-info p{margin:0 0 4px;color:#625e6a;font-size:13px}
+.finder-product-info strong{color:#292536;font-size:14px;font-weight:600}
+.finder-empty{padding:60px 0;color:#8b849b;text-align:center}
+@media(max-width:900px){.finder-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 16px}}
+@media(max-width:640px){.finder-section{padding-bottom:56px}.finder-heading h2{font-size:24px}.finder-heading>div>p:last-child{font-size:14px}.finder-filterbar{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:14px}.finder-filter-field{font-size:12px}.finder-filter-field select{height:42px;padding:0 9px;font-size:12px}.finder-filter-reset{height:42px}.finder-result-heading{margin:30px 0 16px}.finder-result-heading h3{font-size:20px}.finder-product-grid{gap:24px 12px}.finder-product-image{border-radius:13px}.finder-product-info h4{margin-top:9px;font-size:13px}.finder-product-info p{font-size:11px}.finder-product-info strong{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.finder-product-image img{transition:none}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+ const form=document.getElementById('finder-filter');
+ const cards=Array.from(document.querySelectorAll('.finder-product-card'));
+ const count=document.getElementById('finder-result-count');
+ const empty=document.getElementById('finder-empty');
+ if(!form)return;
+ function applyFilters(){
+  const values=Object.fromEntries(new FormData(form).entries());
+  let visible=0;
+  cards.forEach(card=>{
+   const price=Number(card.dataset.price);
+   const checks=[
+    !values.style||card.dataset.style===values.style,
+    !values.wear||card.dataset.wear===values.wear,
+    !values.color||card.dataset.color===values.color,
+    !values.graphic||card.dataset.graphic===values.graphic,
+    !values.diameter||card.dataset.diameter===values.diameter,
+    !values.price||(values.price==='under25000'&&price<=25000)||(values.price==='25000to35000'&&price>25000&&price<=35000)||(values.price==='over35000'&&price>35000)
+   ];
+   const show=checks.every(Boolean);
+   card.hidden=!show;
+   if(show)visible++;
+  });
+  count.textContent=visible;
+  empty.hidden=visible!==0;
+ }
+ form.addEventListener('change',applyFilters);
+ form.addEventListener('reset',()=>requestAnimationFrame(applyFilters));
+});
+</script>
+
 <!-- lens-submenu-sync-20261106 -->
 </head>
 <body>
@@ -85,44 +145,55 @@
   </div></section>
   <div class="subpage-inner subpage-body">
     <nav class="subpage-breadcrumb" aria-label="현재 위치"><a href="index.html">HOME</a><span aria-hidden="true">/</span><span>나만의 렌즈 찾기</span></nav>
-    <section class="subpage-section" aria-labelledby="content-title">
-      <div class="subpage-section-heading"><div><p class="subpage-eyebrow">LENS FINDER</p><h2 id="content-title">나에게 맞는 렌즈 발견하기</h2><p>원하는 스타일과 분위기를 기준으로 나에게 어울리는 렌즈를 탐색해 보세요.</p></div></div>
-      <div class="subpage-card-grid"><article class="subpage-card"><div class="subpage-card-copy"><p class="subpage-card-kicker">01 / LENS FINDER</p><h3>취향으로 찾기</h3><p>선호하는 컬러와 디자인을 기준으로 렌즈를 찾아보세요.</p></div></article>
-<article class="subpage-card"><div class="subpage-card-copy"><p class="subpage-card-kicker">02 / LENS FINDER</p><h3>분위기로 찾기</h3><p>원하는 이미지와 분위기에 어울리는 렌즈를 살펴보세요.</p></div></article>
-<article class="subpage-card"><div class="subpage-card-copy"><p class="subpage-card-kicker">03 / LENS FINDER</p><h3>추천 렌즈</h3><p>나에게 맞는 렌즈를 선택할 수 있도록 추천 정보를 확인해 보세요.</p></div></article></div>
+    <section class="finder-section" aria-labelledby="finder-products-title">
+      <div class="finder-heading">
+        <div>
+          <p class="subpage-eyebrow">FIND YOUR LENS</p>
+          <h2 id="finder-products-title">취향에 맞는 렌즈 찾기</h2>
+          <p>원하는 조건을 선택하면 나에게 어울리는 렌즈를 골라볼 수 있어요.</p>
+        </div>
+      </div>
+
+      <form class="finder-filterbar" id="finder-filter" aria-label="렌즈 검색 필터">
+        <label class="finder-filter-field"><span>스타일</span><select name="style"><option value="">전체 스타일</option><option value="daily">자연스러운 데일리</option><option value="point">또렷한 포인트</option><option value="mood">분위기 있는 스타일</option></select></label>
+        <label class="finder-filter-field"><span>착용 주기</span><select name="wear"><option value="">전체</option><option value="daily">하루 착용</option><option value="monthly">한 달 착용</option></select></label>
+        <label class="finder-filter-field"><span>컬러</span><select name="color"><option value="">전체 컬러</option><option value="brown">브라운</option><option value="gray">그레이</option><option value="choco">쵸코</option><option value="black">블랙</option></select></label>
+        <label class="finder-filter-field"><span>그래픽</span><select name="graphic"><option value="">전체 그래픽</option><option value="natural">자연스러운 그래픽</option><option value="clear">선명한 그래픽</option></select></label>
+        <label class="finder-filter-field"><span>직경</span><select name="diameter"><option value="">전체 직경</option><option value="13.0">13.0mm</option><option value="13.2">13.2mm</option><option value="13.4">13.4mm</option><option value="13.5">13.5mm</option></select></label>
+        <label class="finder-filter-field"><span>가격대</span><select name="price"><option value="">전체 가격</option><option value="under25000">25,000원 이하</option><option value="25000to35000">25,000원 ~ 35,000원</option><option value="over35000">35,000원 이상</option></select></label>
+        <button class="finder-filter-reset" type="reset">초기화</button>
+      </form>
+
+      <div class="finder-result-heading"><h3>추천 렌즈</h3><p><strong id="finder-result-count">8</strong>개의 상품</p></div>
+      <div class="finder-product-grid" id="finder-product-list">
+        <article class="finder-product-card" data-style="daily" data-wear="daily" data-color="brown" data-graphic="natural" data-diameter="13.0" data-price="19000">
+          <div class="finder-product-image"><img src="img/new_01.png" alt="포그베일 원데이 브라운 렌즈"></div><div class="finder-product-info"><h4>포그베일 원데이 브라운</h4><p>13.0mm · 하루 착용</p><strong>19,000원</strong></div>
+        </article>
+        <article class="finder-product-card" data-style="mood" data-wear="monthly" data-color="gray" data-graphic="natural" data-diameter="13.4" data-price="30000">
+          <div class="finder-product-image"><img src="img/new_02.png" alt="크림앤스윗 크림그레이 렌즈"></div><div class="finder-product-info"><h4>크림앤스윗 크림그레이</h4><p>13.4mm · 한 달 착용</p><strong>30,000원</strong></div>
+        </article>
+        <article class="finder-product-card" data-style="point" data-wear="monthly" data-color="gray" data-graphic="clear" data-diameter="13.0" data-price="30000">
+          <div class="finder-product-image"><img src="img/new_03.png" alt="포그베일 그레이 렌즈"></div><div class="finder-product-info"><h4>포그베일 그레이</h4><p>13.0mm · 한 달 착용</p><strong>30,000원</strong></div>
+        </article>
+        <article class="finder-product-card" data-style="mood" data-wear="monthly" data-color="brown" data-graphic="natural" data-diameter="13.0" data-price="59000">
+          <div class="finder-product-image"><img src="img/new_04.png" alt="악마 컨택트 아이듀 미니 브라운 렌즈"></div><div class="finder-product-info"><h4>악마 컨택트 아이듀 미니 브라운(30p)</h4><p>13.0mm · 한 달 착용</p><strong>59,000원</strong></div>
+        </article>
+        <article class="finder-product-card" data-style="mood" data-wear="monthly" data-color="choco" data-graphic="clear" data-diameter="13.4" data-price="30000">
+          <div class="finder-product-image"><img src="img/PICK_img.png" alt="크림앤스윗 크림쵸코 렌즈"></div><div class="finder-product-info"><h4>크림앤스윗 크림쵸코</h4><p>13.4mm · 한 달 착용</p><strong>30,000원</strong></div>
+        </article>
+        <article class="finder-product-card" data-style="daily" data-wear="daily" data-color="choco" data-graphic="natural" data-diameter="13.4" data-price="25000">
+          <div class="finder-product-image"><img src="img/PICK_img02.png" alt="루미문 원데이 헤이즈쵸코 렌즈"></div><div class="finder-product-info"><h4>루미문 원데이 헤이즈쵸코(10p)</h4><p>13.4mm · 하루 착용</p><strong>25,000원</strong></div>
+        </article>
+        <article class="finder-product-card" data-style="point" data-wear="monthly" data-color="brown" data-graphic="clear" data-diameter="13.0" data-price="30000">
+          <div class="finder-product-image"><img src="img/PICK_img03.png" alt="글림엣지 볼드브라운 렌즈"></div><div class="finder-product-info"><h4>글림엣지 볼드브라운</h4><p>13.0mm · 한 달 착용</p><strong>30,000원</strong></div>
+        </article>
+        <article class="finder-product-card" data-style="daily" data-wear="monthly" data-color="choco" data-graphic="natural" data-diameter="13.0" data-price="30000">
+          <div class="finder-product-image"><img src="img/new_05.png" alt="미니블 틴트쵸코 렌즈"></div><div class="finder-product-info"><h4>미니블 틴트쵸코</h4><p>13.0mm · 한 달 착용</p><strong>30,000원</strong></div>
+        </article>
+      </div>
+      <p class="finder-empty" id="finder-empty" hidden>선택한 조건에 맞는 렌즈가 없습니다. 필터를 다시 선택해 주세요.</p>
     </section>
-    <section class="subpage-bottom-banner"><div><p class="subpage-eyebrow">LENS ME</p><h2>나에게 어울리는 렌즈를 렌즈미에서 찾아보세요.</h2></div><a class="subpage-home-link" href="index.html">메인으로 돌아가기</a></section>
-  </div>
-</main>
-<footer class="site-footer">
-            <div class="site-footer-inner">
-                <div class="site-footer-main">
-                    <section class="footer-company" aria-labelledby="footer-company-title">
-                        <h2 id="footer-company-title">COMPANY INFO</h2>
-                        <dl class="footer-company-info">
-                            <div><dt>대표자(성명)</dt><dd>송계진</dd></div>
-                            <div><dt>개인정보보호책임자</dt><dd>송광섭</dd></div>
-                            <div><dt>상호(법인명)</dt><dd>(주)렌즈미</dd></div>
-                            <div><dt>호스팅제공자</dt><dd>(주)비엠아이티</dd></div>
-                            <div><dt>사업자등록번호</dt><dd>132-86-07546</dd></div>
-                            <div><dt>사업자 정보확인</dt><dd>통신판매업 신고 2017-경기구리-0159 </dd></div>
-                            <div><dt>주소</dt><dd>경기도 구리시 아차산로 499(교문동, 중앙하이츠티움)비동 3층 302호</dd></div>
-                        </dl>
-                        <p class="footer-notice">
-                            콘택트렌즈는 의료기기로 온라인에서 예약 후, 오프라인 예약 매장에서 결제 및 수령 가능합니다..<br>
-                            렌즈미 제품과 관련된 모든 디자인, 이미지, 문구, 콘텐츠 등에 대한 저작권은 렌즈미에 있으며,<br>
-                            허가 없이 무단 사용, 복제, 도용 시 저작권법에 의거하여 민/형사상의 처벌을 받을 수 있습니다.<br>
-                            렌즈미는 의료기사 등에 관한 법률에 따라 온라인 판매가 이루어지지 않습니다.
-                        </p>
-                        <p class="footer-main-phone">렌즈미 본사 대표전화 1577-2160</p>
-                        <div class="footer-contact">
-                            <p>OPEN : AM 10:00 ~ PM 17:00</p>
-                            <p>LUNCH : PM 12:00 ~ PM 13:00</p>
-                            <p>SAT/HOLIDAY OFF</p>
-                            <p>제휴문의 : marketing@lens-me.com</p>
-                            <p>대표전화 : 1577-2160</p>
-                        </div>
-                    </section>
+
                     <section class="footer-social" aria-labelledby="footer-social-title">
                         <a class="footer-brand" href="#" aria-label="렌즈미 홈">LENS ME</a>
                         <h2 id="footer-social-title">SOCIAL MEDIA</h2>

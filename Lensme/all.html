@@ -47,13 +47,15 @@ document.addEventListener('DOMContentLoaded',function(){
 .all-lens-swiper .swiper-slide{height:auto}
 .all-lens-page-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:20px;row-gap:24px}
 .all-lens-page-grid .pick-card{min-width:0}
-.all-lens-pagination{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:100%;margin-top:58px;padding:10px 4px;overflow:visible}
-.all-lens-pagination .swiper-pagination-bullet{display:inline-flex;align-items:center;justify-content:center;flex:0 0 34px;width:34px;height:34px;margin:0!important;border:1px solid transparent;border-radius:8px;background:transparent;color:#625e6a;font:500 15px/1 "Pretendard Variable",Pretendard,sans-serif;opacity:1;cursor:pointer;transition:background-color .2s ease,color .2s ease,border-color .2s ease}
-.all-lens-pagination .swiper-pagination-bullet:hover{border-color:#ded8e8;color:#7863A8}
-.all-lens-pagination .swiper-pagination-bullet-active{background:#7863A8;color:#fff;font-weight:600}
-.all-lens-pagination .swiper-pagination-bullet:focus-visible{outline:2px solid #292536;outline-offset:3px}
+.all-lens-pagination{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;max-width:100%;margin-top:58px;padding:10px 4px;overflow:visible}
+.all-lens-pagination button{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:34px;padding:0 5px;border:0;border-bottom:1px solid transparent;border-radius:0;background:transparent;color:#292536;font:500 15px/1 "Pretendard Variable",Pretendard,sans-serif;cursor:pointer;transition:color .2s ease,border-color .2s ease}
+.all-lens-pagination button:hover{color:#7863A8}
+.all-lens-pagination button.is-active{border-bottom-color:#7863A8;color:#7863A8;font-weight:700}
+.all-lens-pagination button.page-arrow{font-size:23px;color:#77717f}
+.all-lens-pagination button:disabled{opacity:.3;cursor:default}
+.all-lens-pagination button:focus-visible{outline:2px solid #292536;outline-offset:3px}
 @media(max-width:1024px){.all-lens-page-grid{column-gap:16px;row-gap:22px}.all-lens-pagination{margin-top:44px}}
-@media(max-width:640px){.all-lens-page-grid{column-gap:10px;row-gap:18px}.all-lens-pagination{gap:4px;margin-top:32px}.all-lens-pagination .swiper-pagination-bullet{flex-basis:30px;width:30px;height:30px;font-size:13px}}
+@media(max-width:640px){.all-lens-page-grid{column-gap:10px;row-gap:18px}.all-lens-pagination{gap:7px;margin-top:32px}.all-lens-pagination button{min-width:25px;height:30px;font-size:13px}.all-lens-pagination button.page-arrow{font-size:20px}}
 @media(prefers-reduced-motion:reduce){.all-lens-swiper .swiper-wrapper{transition-duration:0ms!important}}
 </style>
 <script>
@@ -885,10 +887,33 @@ document.addEventListener('DOMContentLoaded',function(){
       wrapper.appendChild(empty);
     }
     if(typeof Swiper!=='undefined'){
-      new Swiper('.all-lens-swiper',{
-        slidesPerView:1,slidesPerGroup:1,spaceBetween:24,speed:600,
-        pagination:{el:'.all-lens-pagination',clickable:true}
+      var activeSwiper=new Swiper('.all-lens-swiper',{
+        slidesPerView:1,slidesPerGroup:1,spaceBetween:24,speed:600
       });
+      function drawPagination(){
+        var pageCount=activeSwiper.slides.length;
+        var current=activeSwiper.activeIndex;
+        pagination.innerHTML='';
+        if(pageCount<=1) return;
+        var prev=document.createElement('button');
+        prev.type='button';prev.className='page-arrow';prev.textContent='‹';prev.setAttribute('aria-label','이전 페이지');prev.disabled=current===0;
+        prev.addEventListener('click',function(){activeSwiper.slidePrev();});
+        pagination.appendChild(prev);
+        for(var page=0;page<pageCount;page++){
+          var pageButton=document.createElement('button');
+          pageButton.type='button';pageButton.textContent=String(page+1);
+          pageButton.setAttribute('aria-label',(page+1)+'페이지');
+          if(page===current){pageButton.className='is-active';pageButton.setAttribute('aria-current','page');}
+          pageButton.addEventListener('click',function(target){return function(){activeSwiper.slideTo(target);};}(page));
+          pagination.appendChild(pageButton);
+        }
+        var next=document.createElement('button');
+        next.type='button';next.className='page-arrow';next.textContent='›';next.setAttribute('aria-label','다음 페이지');next.disabled=current===pageCount-1;
+        next.addEventListener('click',function(){activeSwiper.slideNext();});
+        pagination.appendChild(next);
+      }
+      activeSwiper.on('slideChange',drawPagination);
+      drawPagination();
     }
   }
   Object.keys(controls).forEach(function(key){controls[key].addEventListener('change',render);});

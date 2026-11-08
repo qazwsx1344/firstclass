@@ -47,12 +47,13 @@ document.addEventListener('DOMContentLoaded',function(){
 .all-lens-swiper .swiper-slide{height:auto}
 .all-lens-page-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:20px;row-gap:24px}
 .all-lens-page-grid .pick-card{min-width:0}
-.all-lens-pagination{display:flex;align-items:center;justify-content:flex-start;gap:18px;width:100%;max-width:100%;margin-top:58px;padding:8px 4px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;-webkit-overflow-scrolling:touch;white-space:nowrap}
-.all-lens-pagination::-webkit-scrollbar{display:none}
-.all-lens-pagination .swiper-pagination-bullet{flex:0 0 10px;width:10px;height:10px;margin:0!important;border:1px solid #8b849b;border-radius:50%;background:transparent;opacity:1}
-.all-lens-pagination .swiper-pagination-bullet-active{background:#8b849b}
+.all-lens-pagination{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:100%;margin-top:58px;padding:10px 4px;overflow:visible}
+.all-lens-pagination .swiper-pagination-bullet{display:inline-flex;align-items:center;justify-content:center;flex:0 0 34px;width:34px;height:34px;margin:0!important;border:1px solid transparent;border-radius:8px;background:transparent;color:#625e6a;font:500 15px/1 "Pretendard Variable",Pretendard,sans-serif;opacity:1;cursor:pointer;transition:background-color .2s ease,color .2s ease,border-color .2s ease}
+.all-lens-pagination .swiper-pagination-bullet:hover{border-color:#ded8e8;color:#7863A8}
+.all-lens-pagination .swiper-pagination-bullet-active{background:#7863A8;color:#fff;font-weight:600}
+.all-lens-pagination .swiper-pagination-bullet:focus-visible{outline:2px solid #292536;outline-offset:3px}
 @media(max-width:1024px){.all-lens-page-grid{column-gap:16px;row-gap:22px}.all-lens-pagination{margin-top:44px}}
-@media(max-width:640px){.all-lens-page-grid{column-gap:10px;row-gap:18px}.all-lens-pagination{gap:12px;margin-top:32px}.all-lens-pagination .swiper-pagination-bullet{flex-basis:8px;width:8px;height:8px}}
+@media(max-width:640px){.all-lens-page-grid{column-gap:10px;row-gap:18px}.all-lens-pagination{gap:4px;margin-top:32px}.all-lens-pagination .swiper-pagination-bullet{flex-basis:30px;width:30px;height:30px;font-size:13px}}
 @media(prefers-reduced-motion:reduce){.all-lens-swiper .swiper-wrapper{transition-duration:0ms!important}}
 </style>
 <script>
@@ -63,7 +64,7 @@ document.addEventListener('DOMContentLoaded',function(){
     slidesPerGroup:1,
     spaceBetween:24,
     speed:600,
-    pagination:{el:'.all-lens-pagination',clickable:true}
+    pagination:{el:'.all-lens-pagination',clickable:true,renderBullet:function(index,className){return '<button type="button" class="'+className+'" aria-label="'+(index+1)+'페이지">'+(index+1)+'</button>';}}
   });
 });
 </script>

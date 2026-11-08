@@ -88,6 +88,17 @@ document.addEventListener('DOMContentLoaded',function(){
 @media(max-width:480px){.all-lens-hero{min-height:260px;background-position:center,right center;background-size:cover,auto 82%}.all-lens-hero .subpage-intro{max-width:90%}}
 </style>
 <!-- lens-submenu-sync-20261106 -->
+<style>
+/* 전체 렌즈 갤러리형 필터 */
+.all-lens-filterbar{display:flex;align-items:end;flex-wrap:wrap;gap:12px;margin-top:24px;padding:18px 20px;background:#f7f5fa;border:1px solid #eee9f5;border-radius:14px}
+.all-lens-filter-field{display:flex;flex-direction:column;gap:7px;min-width:145px;color:#625e6a;font-size:13px;font-weight:500}
+.all-lens-filter-field select{height:42px;min-width:145px;padding:0 34px 0 13px;border:1px solid #ded8e8;border-radius:8px;background:#fff;color:#292536;font:500 14px "Pretendard Variable",Pretendard,sans-serif;cursor:pointer}
+.all-lens-filter-reset{height:42px;padding:0 18px;border:1px solid #7863A8;border-radius:8px;background:#fff;color:#7863A8;font:600 14px "Pretendard Variable",Pretendard,sans-serif;cursor:pointer}
+.all-lens-filter-reset:hover{background:#7863A8;color:#fff}
+.all-lens-result-count{margin:18px 0 0;color:#625e6a;font-size:14px}
+.all-lens-page-grid .pick-card[hidden]{display:none!important}
+@media(max-width:640px){.all-lens-filterbar{gap:10px;padding:14px}.all-lens-filter-field{flex:1 1 calc(50% - 10px);min-width:0}.all-lens-filter-field select{width:100%;min-width:0}.all-lens-filter-reset{flex:1 1 100%}}
+</style>
 </head>
 <body>
 <div id="wrap">
@@ -172,10 +183,12 @@ document.addEventListener('DOMContentLoaded',function(){
         <div>
           <p class="subpage-eyebrow">LENS ME COLLECTION</p>
           <h2 id="all-products-title">렌즈 전체보기</h2>
-          <div class="all-lens-filters" role="group" aria-label="렌즈 분류 선택">
-            <button class="all-lens-filter" type="button" aria-pressed="false">컬러별</button>
-            <button class="all-lens-filter" type="button" aria-pressed="false">도수별</button>
-            <button class="all-lens-filter" type="button" aria-pressed="false">기능별</button>
+          <div class="all-lens-filterbar" aria-label="상품 필터">
+            <label class="all-lens-filter-field"><span>컬러</span><select id="filter-color"><option value="">전체 컬러</option><option value="brown">브라운</option><option value="gray">그레이</option><option value="choco">쵸코</option><option value="black">블랙</option><option value="blue">블루</option><option value="green">그린</option><option value="pink">핑크</option><option value="violet">바이올렛</option><option value="other">기타</option></select></label>
+            <label class="all-lens-filter-field"><span>직경</span><select id="filter-diameter"><option value="">전체 직경</option><option value="13.0">13.0mm</option><option value="13.2">13.2mm</option><option value="13.4">13.4mm</option><option value="13.5">13.5mm</option></select></label>
+            <label class="all-lens-filter-field"><span>착용 주기</span><select id="filter-wear"><option value="">전체 착용 주기</option><option value="하루 착용">하루 착용</option><option value="한 달 착용">한 달 착용</option></select></label>
+            <label class="all-lens-filter-field"><span>정렬</span><select id="filter-sort"><option value="default">기본순</option><option value="low">낮은 가격순</option><option value="high">높은 가격순</option></select></label>
+            <button class="all-lens-filter-reset" id="filter-reset" type="button">초기화</button>
           </div>
         </div>
       </div>
@@ -796,5 +809,95 @@ document.addEventListener('DOMContentLoaded',function(){
             </a>
         </aside>
 </div>
+<script>
+/* 전체 렌즈 필터 및 갤러리 페이지 재구성 */
+document.addEventListener('DOMContentLoaded',function(){
+  var swiperElement=document.querySelector('.all-lens-swiper');
+  var wrapper=swiperElement&&swiperElement.querySelector('.swiper-wrapper');
+  var pagination=document.querySelector('.all-lens-pagination');
+  if(!wrapper||!pagination) return;
+
+  var originalCards=Array.from(wrapper.querySelectorAll('.pick-card'));
+  var controls={
+    color:document.getElementById('filter-color'),
+    diameter:document.getElementById('filter-diameter'),
+    wear:document.getElementById('filter-wear'),
+    sort:document.getElementById('filter-sort')
+  };
+  var countNode=document.querySelector('.all-lens-count');
+  var resultNode=document.createElement('p');
+  resultNode.className='all-lens-result-count';
+  resultNode.setAttribute('aria-live','polite');
+  var filterbar=document.querySelector('.all-lens-filterbar');
+  if(filterbar) filterbar.insertAdjacentElement('afterend',resultNode);
+
+  var swiper=swiperElement.swiper;
+  if(swiper) swiper.destroy(true,true);
+
+  function getColor(name){
+    var text=name.toLowerCase();
+    if(text.includes('브라운')) return 'brown';
+    if(text.includes('그레이')||text.includes('gray')) return 'gray';
+    if(text.includes('쵸코')||text.includes('초코')||text.includes('choco')) return 'choco';
+    if(text.includes('블랙')) return 'black';
+    if(text.includes('블루')) return 'blue';
+    if(text.includes('그린')) return 'green';
+    if(text.includes('핑크')) return 'pink';
+    if(text.includes('바이올렛')||text.includes('퍼플')) return 'violet';
+    return 'other';
+  }
+  function getPrice(card){
+    return Number((card.querySelector('.pick-price')?.textContent||'').replace(/[^0-9]/g,''))||0;
+  }
+  function render(){
+    var selectedColor=controls.color.value;
+    var selectedDiameter=controls.diameter.value;
+    var selectedWear=controls.wear.value;
+    var visible=originalCards.filter(function(card){
+      var name=card.querySelector('h3')?.textContent||'';
+      var diameter=card.querySelector('.pick-size')?.textContent||'';
+      var wear=card.querySelector('.pick-date')?.textContent||'';
+      return (!selectedColor||getColor(name)===selectedColor)
+        &&(!selectedDiameter||diameter.includes(selectedDiameter))
+        &&(!selectedWear||wear.includes(selectedWear));
+    });
+    if(controls.sort.value==='low') visible.sort(function(a,b){return getPrice(a)-getPrice(b);});
+    if(controls.sort.value==='high') visible.sort(function(a,b){return getPrice(b)-getPrice(a);});
+
+    wrapper.innerHTML='';
+    for(var i=0;i<visible.length;i+=20){
+      var slide=document.createElement('div');
+      slide.className='swiper-slide';
+      var grid=document.createElement('div');
+      grid.className='all-lens-page-grid';
+      visible.slice(i,i+20).forEach(function(card){grid.appendChild(card);});
+      slide.appendChild(grid);
+      wrapper.appendChild(slide);
+    }
+    var total=visible.length;
+    if(countNode) countNode.textContent=total+'개';
+    resultNode.textContent='총 '+total+'개 상품';
+    pagination.innerHTML='';
+    if(total===0){
+      var empty=document.createElement('p');
+      empty.className='all-lens-empty';
+      empty.textContent='선택한 조건에 맞는 상품이 없습니다.';
+      wrapper.appendChild(empty);
+    }
+    if(typeof Swiper!=='undefined'){
+      new Swiper('.all-lens-swiper',{
+        slidesPerView:1,slidesPerGroup:1,spaceBetween:24,speed:600,
+        pagination:{el:'.all-lens-pagination',clickable:true}
+      });
+    }
+  }
+  Object.keys(controls).forEach(function(key){controls[key].addEventListener('change',render);});
+  document.getElementById('filter-reset')?.addEventListener('click',function(){
+    Object.keys(controls).forEach(function(key){controls[key].value=key==='sort'?'default':'';});
+    render();
+  });
+  render();
+});
+</script>
 </body>
 </html>

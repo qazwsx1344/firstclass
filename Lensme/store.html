@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded',function(){
  const markers=L.layerGroup().addTo(map);
  const select=document.getElementById('store-region'),list=document.getElementById('store-map-items'),status=document.getElementById('store-map-status'),title=document.getElementById('store-list-title');
  function showRegion(regionName){
-  markers.clearLayers();
+  // 지역 선택 시 전국 지역 핀은 유지하고, 지도 중심과 매장 목록만 변경
   const center=regionCenters[regionName];if(!center)return;
   map.setView([center[0],center[1]],center[2]);
   const filtered=stores.filter(s=>s[0]===regionName);

@@ -11,6 +11,17 @@
     <link rel="stylesheet" href="css/subpage.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
+.store-tabs{display:flex;gap:28px;margin:0 0 24px;border-bottom:1px solid #e9e4ef}
+.store-tab{position:relative;padding:0 2px 14px;border:0;background:none;color:#8b8495;font:600 16px "Pretendard Variable",sans-serif;cursor:pointer}
+.store-tab.is-active{color:#7863A8}.store-tab.is-active:after{position:absolute;right:0;bottom:-1px;left:0;height:3px;background:#7863A8;content:""}
+.store-tab span{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;margin-left:4px;padding:0 5px;border-radius:99px;background:#f1edf7;color:#7863A8;font-size:11px}
+.store-favorites-heading{margin:8px 0 18px}.store-favorites-heading h3{margin:0 0 6px;color:#292536;font-size:20px}.store-favorites-heading p{margin:0;color:#81798f;font-size:13px}
+.favorite-store-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.favorite-store-card{padding:18px;border:1px solid #eee9f5;border-radius:14px;background:#fff}
+.favorite-store-card strong{display:block;margin-bottom:8px;color:#292536}.favorite-store-card span{display:block;margin-top:4px;color:#777181;font-size:13px;line-height:1.5}
+.store-favorite-btn{float:right;border:0;background:transparent;color:#7863A8;font-size:20px;cursor:pointer}
+.store-map-item{position:relative;padding-right:42px}
+@media(max-width:640px){.favorite-store-items{grid-template-columns:1fr}.store-tabs{gap:22px}}
 .store-map-section{margin-top:34px}
 .store-map-tools{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:16px}
 .store-region-select{height:44px;min-width:180px;padding:0 14px;border:1px solid #ded8e8;border-radius:8px;background:#fff;color:#292536;font:500 14px "Pretendard Variable",sans-serif}
@@ -107,6 +118,11 @@
     <nav class="subpage-breadcrumb" aria-label="현재 위치"><a href="index.html">HOME</a><span aria-hidden="true">/</span><span>매장찾기</span></nav>
     <section class="subpage-section" aria-labelledby="content-title">
       <div class="subpage-section-heading"><div><p class="subpage-eyebrow">FIND A STORE</p><h2 id="content-title">내 주변 렌즈미 매장</h2><p>방문하려는 지역이나 매장명을 기준으로 가까운 매장을 찾아보세요.</p></div></div>
+      <div class="store-tabs" role="tablist" aria-label="매장 보기 전환">
+        <button type="button" class="store-tab is-active" id="store-tab-search" role="tab" aria-selected="true" aria-controls="store-search-panel">매장찾기</button>
+        <button type="button" class="store-tab" id="store-tab-favorites" role="tab" aria-selected="false" aria-controls="store-favorites-panel">관심매장 <span id="favorite-count">0</span></button>
+      </div>
+      <div id="store-search-panel" role="tabpanel" aria-labelledby="store-tab-search">
       <section class="store-map-section" aria-label="전국 렌즈미 매장 지도">
         <div class="store-map-tools">
           <label class="sr-only" for="store-region">지역 선택</label>
@@ -134,7 +150,11 @@
             </div>
           </aside>
         </div>
-      </section>
+      </div>
+      <div id="store-favorites-panel" role="tabpanel" aria-labelledby="store-tab-favorites" hidden>
+        <div class="store-favorites-heading"><h3>내 관심매장</h3><p>하트 버튼을 눌러 저장한 매장을 모아볼 수 있어요.</p></div>
+        <div id="favorite-store-items" class="favorite-store-items"><p class="store-map-note">아직 저장한 관심매장이 없습니다.</p></div>
+      </div>
     </section>
   </div>
 </main>
@@ -279,6 +299,37 @@ document.addEventListener('DOMContentLoaded',function(){
  '광주':[35.1595,126.8526,11],'전북':[35.7175,127.153,8],'전남':[34.8679,126.991,8],'대구':[35.8714,128.6014,10],
  '경북':[36.4919,128.8889,8],'부산':[35.1796,129.0756,10],'울산':[35.5384,129.3114,10],'경남':[35.4606,128.2132,8],'제주':[33.4996,126.5312,10]
  };
+ const favoriteKey='lensmeFavoriteStores';
+ let favorites=JSON.parse(localStorage.getItem(favoriteKey)||'[]');
+ const searchTab=document.getElementById('store-tab-search'),favoriteTab=document.getElementById('store-tab-favorites');
+ const searchPanel=document.getElementById('store-search-panel'),favoritePanel=document.getElementById('store-favorites-panel');
+ const favoriteItems=document.getElementById('favorite-store-items'),favoriteCount=document.getElementById('favorite-count');
+ function updateFavoriteUI(){
+  favoriteCount.textContent=favorites.length;
+  favoriteItems.innerHTML=favorites.length?favorites.map(key=>{const s=stores.find(x=>x[1]===key);return s?'<article class="favorite-store-card"><button type="button" class="store-favorite-btn" data-favorite="'+s[1]+'" aria-label="관심매장 해제">♥</button><strong>'+s[1]+'</strong><span>'+s[2]+'</span><span>'+(s[3]||'전화번호 정보 없음')+'</span><span>'+(s[4]||'영업시간 정보 없음')+'</span></article>':''}).join(''):'<p class="store-map-note">아직 저장한 관심매장이 없습니다. 매장찾기에서 하트 버튼을 눌러 추가해 보세요.</p>';
+ }
+ function setTab(tab){
+  const isFavorites=tab==='favorites';
+  searchPanel.hidden=isFavorites;favoritePanel.hidden=!isFavorites;
+  searchTab.classList.toggle('is-active',!isFavorites);favoriteTab.classList.toggle('is-active',isFavorites);
+  searchTab.setAttribute('aria-selected',String(!isFavorites));favoriteTab.setAttribute('aria-selected',String(isFavorites));
+  if(isFavorites)updateFavoriteUI();else setTimeout(()=>map.invalidateSize(),100);
+ }
+ searchTab.addEventListener('click',()=>setTab('search'));
+ favoriteTab.addEventListener('click',()=>setTab('favorites'));
+ document.addEventListener('click',function(e){
+  const btn=e.target.closest('[data-favorite]');if(!btn)return;
+  const name=btn.getAttribute('data-favorite');
+  favorites=favorites.includes(name)?favorites.filter(x=>x!==name):favorites.concat(name);
+  localStorage.setItem(favoriteKey,JSON.stringify(favorites));
+  updateFavoriteUI();
+  if(btn.classList.contains('store-favorite-btn')&&btn.closest('.store-map-item'))renderCurrentRegion();
+ });
+ let currentRegion='';
+ function renderCurrentRegion(){
+  const filtered=stores.filter(s=>s[0]===currentRegion);
+  list.innerHTML=filtered.map(s=>'<div class="store-map-item"><button type="button" class="store-favorite-btn" data-favorite="'+s[1]+'" aria-label="관심매장 '+(favorites.includes(s[1])?'해제':'추가')+'">'+(favorites.includes(s[1])?'♥':'♡')+'</button><strong>'+s[1]+'</strong><span>'+s[2]+'</span><span>'+(s[3]||'전화번호 정보 없음')+'</span><span>'+(s[4]||'영업시간 정보 없음')+'</span></div>').join('');
+ }
  const map=L.map('lensme-store-map',{scrollWheelZoom:true,wheelDebounceTime:40,wheelPxPerZoomLevel:100}).setView([36.2,127.8],7);
  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
  const markers=L.layerGroup().addTo(map);
@@ -290,8 +341,9 @@ document.addEventListener('DOMContentLoaded',function(){
   const filtered=stores.filter(s=>s[0]===regionName);
   status.textContent=regionName+' 지역 · '+filtered.length+'개 지점 정보 확인';
   title.textContent=regionName+' 렌즈미 매장';
+  currentRegion=regionName;
   if(filtered.length){
-   list.innerHTML=filtered.map(s=>'<div class="store-map-item"><strong>'+s[1]+'</strong><span>'+s[2]+'</span><span>'+(s[3]||'전화번호 정보 없음')+'</span><span>'+(s[4]||'영업시간 정보 없음')+'</span></div>').join('');
+   renderCurrentRegion();
   }else list.innerHTML='<p class="store-map-note">현재 검색 결과에서 '+regionName+' 지역의 매장 정보를 확인하지 못했습니다. 공식 매장 목록에서 추가 확인이 필요합니다.</p>';
  }
  select.addEventListener('change',function(){

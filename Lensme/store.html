@@ -308,7 +308,24 @@ document.addEventListener('DOMContentLoaded',function(){
  '경북':[36.4919,128.8889,8],'부산':[35.1796,129.0756,10],'울산':[35.5384,129.3114,10],'경남':[35.4606,128.2132,8],'제주':[33.4996,126.5312,10]
  };
  const favoriteKey='lensmeFavoriteStores';
- let favorites=JSON.parse(localStorage.getItem(favoriteKey)||'[]');
+ // 관심매장은 브라우저 저장소에 보관해 새로고침 후에도 유지
+ function readFavorites(){
+  try{
+   const saved=localStorage.getItem(favoriteKey);
+   if(saved!==null){const parsed=JSON.parse(saved);return Array.isArray(parsed)?parsed:[];}
+  }catch(error){console.warn('관심매장 저장 정보를 읽지 못했습니다.',error);}
+  try{
+   const sessionSaved=sessionStorage.getItem(favoriteKey);
+   const parsed=sessionSaved?JSON.parse(sessionSaved):[];
+   return Array.isArray(parsed)?parsed:[];
+  }catch(error){return [];}
+ }
+ function saveFavorites(){
+  const value=JSON.stringify(favorites);
+  try{localStorage.setItem(favoriteKey,value);}catch(error){console.warn('로컬 저장소 기록 실패',error);}
+  try{sessionStorage.setItem(favoriteKey,value);}catch(error){}
+ }
+ let favorites=readFavorites();
  const searchTab=document.getElementById('store-tab-search'),favoriteTab=document.getElementById('store-tab-favorites');
  const searchPanel=document.getElementById('store-search-panel'),favoritePanel=document.getElementById('store-favorites-panel');
  const favoriteItems=document.getElementById('favorite-store-items'),favoriteCount=document.getElementById('favorite-count');
@@ -341,7 +358,7 @@ document.addEventListener('DOMContentLoaded',function(){
   const name=btn.getAttribute('data-favorite');
   favorites=favorites.includes(name)?favorites.filter(x=>x!==name):favorites.concat(name);
   if(defaultStore===name&&!favorites.includes(name)){defaultStore='';localStorage.removeItem(defaultKey);}
-  localStorage.setItem(favoriteKey,JSON.stringify(favorites));
+  saveFavorites();
   updateFavoriteUI();
   if(btn.closest('.store-map-item'))renderCurrentRegion();
  });

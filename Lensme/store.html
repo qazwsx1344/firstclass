@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="../font/css/pretendardvariable.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/subpage.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+.store-map-section{margin-top:34px}
+.store-map-tools{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:16px}
+.store-region-select{height:44px;min-width:180px;padding:0 14px;border:1px solid #ded8e8;border-radius:8px;background:#fff;color:#292536;font:500 14px "Pretendard Variable",sans-serif}
+.store-map-note{margin:0;color:#81798f;font-size:13px;line-height:1.6}
+.store-map-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.8fr);gap:18px;align-items:stretch}
+#lensme-store-map{width:100%;height:520px;border:1px solid #eee9f5;border-radius:18px;z-index:1;background:#f5f1fa}
+.store-map-list{max-height:520px;overflow:auto;padding:18px;border:1px solid #eee9f5;border-radius:18px;background:#fff}
+.store-map-list h3{margin:0 0 14px;color:#292536;font-size:18px}
+.store-map-item{display:block;width:100%;padding:14px 2px;border:0;border-bottom:1px solid #f0edf4;background:transparent;text-align:left;cursor:pointer}
+.store-map-item strong{display:block;margin-bottom:5px;color:#292536;font-size:14px}
+.store-map-item span{display:block;color:#777181;font-size:12px;line-height:1.5}
+.store-map-item:hover strong{color:#7863A8}
+.store-map-status{margin:0 0 12px;color:#7863A8;font-size:13px;font-weight:600}
+.store-map-disclaimer{margin-top:12px;padding:12px 14px;border-radius:10px;background:#f7f4fb;color:#777181;font-size:12px;line-height:1.6}
+.leaflet-popup-content-wrapper{border-radius:12px}
+@media(max-width:800px){.store-map-layout{grid-template-columns:1fr}#lensme-store-map{height:390px}.store-map-list{max-height:340px}}
+@media(max-width:640px){.store-map-tools{align-items:stretch}.store-region-select{width:100%}#lensme-store-map{height:340px;border-radius:14px}.store-map-list{border-radius:14px}}
+</style>
     <script src="js/subpage.js" defer></script>
 <!-- lens-submenu-sync-20261106 -->
 </head>
@@ -87,7 +107,35 @@
     <nav class="subpage-breadcrumb" aria-label="현재 위치"><a href="index.html">HOME</a><span aria-hidden="true">/</span><span>매장찾기</span></nav>
     <section class="subpage-section" aria-labelledby="content-title">
       <div class="subpage-section-heading"><div><p class="subpage-eyebrow">FIND A STORE</p><h2 id="content-title">내 주변 렌즈미 매장</h2><p>방문하려는 지역이나 매장명을 기준으로 가까운 매장을 찾아보세요.</p></div></div>
-      <div class="subpage-card-grid"><article class="subpage-card"><div class="subpage-card-copy"><p class="subpage-card-kicker">01 / FIND A STORE</p><h3>지역으로 찾기</h3><p>원하는 지역을 기준으로 렌즈미 매장을 찾아보세요.</p></div></article>
+      <section class="store-map-section" aria-label="전국 렌즈미 매장 지도">
+        <div class="store-map-tools">
+          <label class="sr-only" for="store-region">지역 선택</label>
+          <select class="store-region-select" id="store-region">
+            <option value="all">전국 전체 보기</option>
+            <option value="서울">서울특별시</option><option value="경기">경기도</option><option value="인천">인천광역시</option>
+            <option value="강원">강원특별자치도</option><option value="대전">대전광역시</option><option value="세종">세종특별자치시</option>
+            <option value="충북">충청북도</option><option value="충남">충청남도</option><option value="광주">광주광역시</option>
+            <option value="전북">전북특별자치도</option><option value="전남">전라남도</option><option value="대구">대구광역시</option>
+            <option value="경북">경상북도</option><option value="부산">부산광역시</option><option value="울산">울산광역시</option>
+            <option value="경남">경상남도</option><option value="제주">제주특별자치도</option>
+          </select>
+          <p class="store-map-note">지역을 선택하면 해당 지역의 매장 위치를 확인할 수 있어요.</p>
+        </div>
+        <div class="store-map-layout">
+          <div>
+            <div id="lensme-store-map" role="application" aria-label="전국 렌즈미 매장 위치 지도"></div>
+            <p class="store-map-disclaimer">현재는 지도와 지역 선택 UI를 먼저 구성한 시안입니다. 핀은 각 지역의 대표 좌표를 표시하며 개별 매장의 정확한 주소 좌표가 아닙니다. 실제 전국 매장 핀으로 교체하려면 최신 공식 매장 주소 데이터 연결이 필요합니다.</p>
+          </div>
+          <aside class="store-map-list" aria-label="지역별 매장 정보">
+            <p class="store-map-status" id="store-map-status">전국 지역 위치</p>
+            <h3 id="store-list-title">지역별 위치 안내</h3>
+            <div id="store-map-items">
+              <p class="store-map-note">지도에서 지역 핀을 선택하거나 위의 지역을 선택해 주세요.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+      <div class="subpage-card-grid" style="margin-top:34px"><article class="subpage-card"><div class="subpage-card-copy"><p class="subpage-card-kicker">01 / FIND A STORE</p><h3>지역으로 찾기</h3><p>지역을 선택해 가까운 렌즈미 매장을 확인해 보세요.</p></div></article>
 <article class="subpage-card"><div class="subpage-card-copy"><p class="subpage-card-kicker">02 / FIND A STORE</p><h3>매장 이용 안내</h3><p>방문 전 매장 위치와 운영 정보를 확인해 보세요.</p></div></article></div>
     </section>
     <section class="subpage-bottom-banner"><div><p class="subpage-eyebrow">LENS ME</p><h2>나에게 어울리는 렌즈를 렌즈미에서 찾아보세요.</h2></div><a class="subpage-home-link" href="index.html">메인으로 돌아가기</a></section>
@@ -169,5 +217,43 @@
             </a>
         </aside>
 </div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+ if(!window.L||!document.getElementById('lensme-store-map'))return;
+ const regions=[
+  {name:'서울',lat:37.5665,lng:126.9780,zoom:11,stores:[['강남CGV점','서울 강남구 강남대로 438 2층 211호','02-501-2162'],['선릉점','서울 강남구 선릉로 520','02-558-4977'],['홍대점','서울 마포구 어울마당로 110-1','02-333-6189'],['건대점','서울 광진구 능동로 139','02-2205-4488']]},
+  {name:'경기',lat:37.4138,lng:127.5183,zoom:9,stores:[['구리점','경기 구리시 경춘로 224','031-556-1000'],['분당서현점','경기 성남시 분당구 황새울로360번길 22','031-702-5009'],['수원영통점','경기 수원시 영통구 반달로7번길 6','031-205-5950']]},
+  {name:'인천',lat:37.4563,lng:126.7052,zoom:10,stores:[['구월점','인천 남동구 인하로 497-15','032-432-7677'],['송도점','인천 연수구 송도과학로28번길 50','032-816-1022']]},
+  {name:'강원',lat:37.8228,lng:128.1555,zoom:8,stores:[]},
+  {name:'대전',lat:36.3504,lng:127.3845,zoom:11,stores:[['대전점','대전 중구 대종로480번길 41','042-223-9880']]},
+  {name:'세종',lat:36.4800,lng:127.2890,zoom:11,stores:[]},{name:'충북',lat:36.6357,lng:127.4912,zoom:9,stores:[]},
+  {name:'충남',lat:36.6588,lng:126.6728,zoom:8,stores:[]},{name:'광주',lat:35.1595,lng:126.8526,zoom:11,stores:[['광주신창점','광주 광산구 신창로 118','062-954-0087']]},
+  {name:'전북',lat:35.7175,lng:127.1530,zoom:8,stores:[]},{name:'전남',lat:34.8679,lng:126.9910,zoom:8,stores:[]},
+  {name:'대구',lat:35.8714,lng:128.6014,zoom:10,stores:[['계명대점','대구 달서구 계대동문로 1','053-583-4641']]},
+  {name:'경북',lat:36.4919,lng:128.8889,zoom:8,stores:[]},{name:'부산',lat:35.1796,lng:129.0756,zoom:10,stores:[['서면점','부산 부산진구 중앙대로 690-1','051-802-0518'],['부산대점','부산 금정구 금정로68번길 34','051-517-6834']]},
+  {name:'울산',lat:35.5384,lng:129.3114,zoom:10,stores:[['울산삼산점','울산 남구 돋질로306번길 32','052-260-7714']]},
+  {name:'경남',lat:35.4606,lng:128.2132,zoom:8,stores:[]},{name:'제주',lat:33.4996,lng:126.5312,zoom:10,stores:[]}
+ ];
+ const map=L.map('lensme-store-map',{scrollWheelZoom:false}).setView([36.2,127.8],7);
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+ const markers=L.layerGroup().addTo(map);
+ const select=document.getElementById('store-region'),list=document.getElementById('store-map-items'),status=document.getElementById('store-map-status'),title=document.getElementById('store-list-title');
+ function showRegion(region){
+  markers.clearLayers();
+  const marker=L.marker([region.lat,region.lng]).addTo(markers).bindPopup('<strong>'+region.name+' 지역</strong><br>지역 대표 위치');
+  marker.openPopup();map.setView([region.lat,region.lng],region.zoom);
+  status.textContent=region.name+' 지역';title.textContent='확인 가능한 매장 예시';
+  if(region.stores.length){
+   list.innerHTML=region.stores.map(s=>'<div class="store-map-item"><strong>'+s[0]+'</strong><span>'+s[1]+'</span><span>'+s[2]+'</span></div>').join('');
+  }else list.innerHTML='<p class="store-map-note">이 지역의 매장별 주소 데이터는 추가 확인이 필요합니다.</p>';
+ }
+ select.addEventListener('change',function(){
+  if(this.value==='all'){markers.clearLayers();map.setView([36.2,127.8],7);status.textContent='전국 지역 위치';title.textContent='지역별 위치 안내';list.innerHTML='<p class="store-map-note">지역을 선택하면 확인 가능한 매장 정보를 볼 수 있어요.</p>';return;}
+  const region=regions.find(r=>r.name===this.value);if(region)showRegion(region);
+ });
+ regions.forEach(r=>L.circleMarker([r.lat,r.lng],{radius:7,color:'#7863A8',weight:2,fillColor:'#AC97DC',fillOpacity:.9}).addTo(markers).bindPopup('<strong>'+r.name+'</strong><br>지역 대표 위치').on('click',()=>{select.value=r.name;showRegion(r);}));
+});
+</script>
 </body>
 </html>

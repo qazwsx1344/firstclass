@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded',function(){
  let defaultStore=localStorage.getItem(defaultKey)||'';
  function updateFavoriteUI(){
   favoriteCount.textContent=favorites.length;
-  favoriteItems.innerHTML=favorites.length?favorites.map(key=>{const s=stores.find(x=>x[1]===key);return s?'<article class="favorite-store-card '+(defaultStore===s[1]?'is-default':'')+'"><button type="button" class="store-favorite-btn" data-favorite="'+s[1]+'" aria-label="관심매장 해제">♥</button><strong>'+s[1]+'</strong>'+(defaultStore===s[1]?'<span class="default-store-label">기본매장</span>':'')+'<span>'+s[2]+'</span><span>'+(s[3]||'전화번호 정보 없음')+'</span><span>'+(s[4]||'영업시간 정보 없음')+'</span><button type="button" class="set-default-store" data-set-default="'+s[1]+'" '+(defaultStore===s[1]?'disabled':'')+'>'+(defaultStore===s[1]?'기본매장으로 설정됨':'기본매장으로 설정')+'</button></article>':''}).join(''):'<p class="store-map-note">아직 저장한 관심매장이 없습니다. 매장찾기에서 하트 버튼을 눌러 추가해 보세요.</p>';
+  favoriteItems.innerHTML=favorites.length?favorites.map(key=>{const s=stores.find(x=>x[1]===key);return s?'<article class="favorite-store-card '+(defaultStore===s[1]?'is-default':'')+'"><button type="button" class="store-favorite-btn" data-favorite="'+s[1]+'" aria-label="관심매장 해제">♥</button><strong>'+s[1]+'</strong>'+(defaultStore===s[1]?'<span class="default-store-label">기본매장</span>':'')+'<span>'+s[2]+'</span><span>'+(s[3]||'전화번호 정보 없음')+'</span><span>'+(s[4]||'영업시간 정보 없음')+'</span><button type="button" class="set-default-store" data-set-default="'+s[1]+'" '+(defaultStore===s[1]?'disabled':'')+'>'+(defaultStore===s[1]?'기본매장 취소':'기본매장으로 설정')+'</button></article>':''}).join(''):'<p class="store-map-note">아직 저장한 관심매장이 없습니다. 매장찾기에서 하트 버튼을 눌러 추가해 보세요.</p>';
  }
  function setTab(tab){
   const isFavorites=tab==='favorites';
@@ -325,7 +325,12 @@ document.addEventListener('DOMContentLoaded',function(){
  favoriteTab.addEventListener('click',()=>setTab('favorites'));
  document.addEventListener('click',function(e){
   const setBtn=e.target.closest('[data-set-default]');
-  if(setBtn){defaultStore=setBtn.getAttribute('data-set-default');localStorage.setItem(defaultKey,defaultStore);updateFavoriteUI();return;}
+  if(setBtn){
+   const selectedStore=setBtn.getAttribute('data-set-default');
+   if(defaultStore===selectedStore){defaultStore='';localStorage.removeItem(defaultKey);}
+   else{defaultStore=selectedStore;localStorage.setItem(defaultKey,defaultStore);}
+   updateFavoriteUI();return;
+  }
   const btn=e.target.closest('[data-favorite]');if(!btn)return;
   const name=btn.getAttribute('data-favorite');
   favorites=favorites.includes(name)?favorites.filter(x=>x!==name):favorites.concat(name);

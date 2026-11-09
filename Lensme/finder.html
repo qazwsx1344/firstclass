@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="css/subpage.css">
     <script src="js/subpage.js" defer></script>
 <style>
-/* 나만의 렌즈 찾기 배너 이미지 */
-.subpage-hero{background-image:linear-gradient(90deg,#f5f1fa 0%,rgba(245,241,250,.96) 34%,rgba(245,241,250,.48) 58%,rgba(245,241,250,0) 100%),url("img/finder_hero.jpg");background-position:center right;background-repeat:no-repeat;background-size:cover}
-@media(max-width:640px){.subpage-hero{background-position:62% center;background-image:linear-gradient(90deg,rgba(245,241,250,.96) 0%,rgba(245,241,250,.82) 58%,rgba(245,241,250,.35) 100%),url("img/finder_hero.jpg")}}
+/* 나만의 렌즈 찾기 배너 이미지: 전체 렌즈·온라인 전용과 동일한 높이 */
+.subpage-hero{box-sizing:border-box;height:340px;min-height:340px;padding:0;background-image:linear-gradient(90deg,#f5f1fa 0%,rgba(245,241,250,.96) 34%,rgba(245,241,250,.48) 58%,rgba(245,241,250,0) 100%),url("img/finder_hero.jpg");background-position:center right;background-repeat:no-repeat;background-size:cover}
+@media(max-width:768px){.subpage-hero{height:300px;min-height:300px}}
+@media(max-width:480px){.subpage-hero{height:260px;min-height:260px;background-position:62% center;background-image:linear-gradient(90deg,rgba(245,241,250,.96) 0%,rgba(245,241,250,.82) 58%,rgba(245,241,250,.35) 100%),url("img/finder_hero.jpg")}}
 
 /* 나만의 렌즈 찾기: 필터와 추천 상품 */
 .finder-section{padding:8px 0 80px}

@@ -29,6 +29,8 @@
 .favorite-store-card strong{display:block;margin-bottom:8px;color:#292536}.favorite-store-card span{display:block;margin-top:4px;color:#777181;font-size:13px;line-height:1.5}
 .store-favorite-btn{float:right;border:0;background:transparent;color:#7863A8;font-size:20px;cursor:pointer}
 .store-map-item{position:relative;padding-right:42px}
+.store-reserve-btn{display:inline-block;margin-top:10px;padding:5px 11px;border:1px solid #7863A8;border-radius:5px;background:#fff;color:#7863A8;font:500 12px/1.4 "Pretendard Variable",sans-serif;cursor:pointer}
+.store-reserve-btn:hover{background:#7863A8;color:#fff}
 @media(max-width:640px){.favorite-store-items{grid-template-columns:1fr}.store-tabs{gap:22px}}
 .store-map-section{margin-top:34px}
 .store-map-tools{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:16px}
@@ -344,6 +346,8 @@ document.addEventListener('DOMContentLoaded',function(){
  searchTab.addEventListener('click',()=>setTab('search'));
  favoriteTab.addEventListener('click',()=>setTab('favorites'));
  document.addEventListener('click',function(e){
+  const reserveBtn=e.target.closest('[data-store-reserve]');
+  if(reserveBtn){alert('예약 기능은 연결 준비 중입니다.');return;}
   const cancelBtn=e.target.closest('[data-cancel-default]');
   if(cancelBtn){defaultStore='';localStorage.removeItem(defaultKey);updateFavoriteUI();return;}
   const setBtn=e.target.closest('[data-set-default]');

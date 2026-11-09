@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded',function(){
   if(this.value==='all'){markers.clearLayers();map.setView([36.2,127.8],7);status.textContent='공식 페이지에서 확인한 지점 정보';title.textContent='지역을 선택해 매장 확인';list.innerHTML='<p class="store-map-note">지역을 선택하면 해당 지역의 확인된 매장명과 주소를 볼 수 있어요.</p>';return;}
   showRegion(this.value);
  });
- regions.forEach(r=>L.circleMarker([r.lat,r.lng],{radius:7,color:'#7863A8',weight:2,fillColor:'#AC97DC',fillOpacity:.9}).addTo(markers).bindPopup('<strong>'+r.name+'</strong><br>지역 대표 위치').on('click',()=>{select.value=r.name;showRegion(r);}));
+ Object.keys(regionCenters).forEach(name=>{const p=regionCenters[name];L.circleMarker([p[0],p[1]],{radius:7,color:'#7863A8',weight:2,fillColor:'#AC97DC',fillOpacity:.9}).addTo(markers).bindPopup('<strong>'+name+'</strong><br>지역 선택 후 매장 목록 확인').on('click',()=>{select.value=name;showRegion(name);});});
 });
 </script>
 </body>

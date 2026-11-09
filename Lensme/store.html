@@ -18,7 +18,7 @@
 .store-favorites-heading{margin:8px 0 18px}.store-favorites-heading h3{margin:0 0 6px;color:#292536;font-size:20px}.store-favorites-heading p{margin:0;color:#81798f;font-size:13px}
 .favorite-store-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .set-default-store{margin-top:12px;padding:9px 14px;border:1px solid #7863A8;border-radius:999px;background:#fff;color:#7863A8;font:600 13px "Pretendard Variable",sans-serif;cursor:pointer}
-.set-default-store:disabled{background:#f1edf7;color:#7863A8;cursor:default}
+.set-default-store[aria-pressed="true"]{background:#f1edf7;color:#7863A8}
 .default-store-label{display:inline-block!important;width:max-content;margin:6px 0;padding:4px 9px;border-radius:999px;background:#f1edf7;color:#7863A8!important;font-size:11px!important;font-weight:700}
 .favorite-store-card.is-default{border-color:#AC97DC;background:#fcfaff}
 .favorite-store-card{padding:18px;border:1px solid #eee9f5;border-radius:14px;background:#fff}
@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded',function(){
  let defaultStore=localStorage.getItem(defaultKey)||'';
  function updateFavoriteUI(){
   favoriteCount.textContent=favorites.length;
-  favoriteItems.innerHTML=favorites.length?favorites.map(key=>{const s=stores.find(x=>x[1]===key);return s?'<article class="favorite-store-card '+(defaultStore===s[1]?'is-default':'')+'"><button type="button" class="store-favorite-btn" data-favorite="'+s[1]+'" aria-label="관심매장 해제">♥</button><strong>'+s[1]+'</strong>'+(defaultStore===s[1]?'<span class="default-store-label">기본매장</span>':'')+'<span>'+s[2]+'</span><span>'+(s[3]||'전화번호 정보 없음')+'</span><span>'+(s[4]||'영업시간 정보 없음')+'</span><button type="button" class="set-default-store" data-set-default="'+s[1]+'" '+(defaultStore===s[1]?'disabled':'')+'>'+(defaultStore===s[1]?'기본매장 취소':'기본매장으로 설정')+'</button></article>':''}).join(''):'<p class="store-map-note">아직 저장한 관심매장이 없습니다. 매장찾기에서 하트 버튼을 눌러 추가해 보세요.</p>';
+  favoriteItems.innerHTML=favorites.length?favorites.map(key=>{const s=stores.find(x=>x[1]===key);return s?'<article class="favorite-store-card '+(defaultStore===s[1]?'is-default':'')+'"><button type="button" class="store-favorite-btn" data-favorite="'+s[1]+'" aria-label="관심매장 해제">♥</button><strong>'+s[1]+'</strong>'+(defaultStore===s[1]?'<span class="default-store-label">기본매장</span>':'')+'<span>'+s[2]+'</span><span>'+(s[3]||'전화번호 정보 없음')+'</span><span>'+(s[4]||'영업시간 정보 없음')+'</span><button type="button" class="set-default-store" data-set-default="'+s[1]+'" aria-pressed="'+(defaultStore===s[1]?'true':'false')+'">+(defaultStore===s[1]?'기본매장 취소':'기본매장으로 설정')+'</button></article>':''}).join(''):'<p class="store-map-note">아직 저장한 관심매장이 없습니다. 매장찾기에서 하트 버튼을 눌러 추가해 보세요.</p>';
  }
  function setTab(tab){
   const isFavorites=tab==='favorites';

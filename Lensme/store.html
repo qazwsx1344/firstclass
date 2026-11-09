@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded',function(){
  '광주':[35.1595,126.8526,11],'전북':[35.7175,127.153,8],'전남':[34.8679,126.991,8],'대구':[35.8714,128.6014,10],
  '경북':[36.4919,128.8889,8],'부산':[35.1796,129.0756,10],'울산':[35.5384,129.3114,10],'경남':[35.4606,128.2132,8],'제주':[33.4996,126.5312,10]
  };
- const map=L.map('lensme-store-map',{scrollWheelZoom:false}).setView([36.2,127.8],7);
+ const map=L.map('lensme-store-map',{scrollWheelZoom:true,wheelDebounceTime:40,wheelPxPerZoomLevel:100}).setView([36.2,127.8],7);
  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
  const markers=L.layerGroup().addTo(map);
  const select=document.getElementById('store-region'),list=document.getElementById('store-map-items'),status=document.getElementById('store-map-status'),title=document.getElementById('store-list-title');

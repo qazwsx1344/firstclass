@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded",function(){
   const description=document.getElementById("coupon-result-description");
   const count=document.getElementById("coupon-result-count");
   const copy={
-    all:["현재 진행 중인 쿠폰","수험생을 위한 렌즈미 쿠폰 행사를 확인해 보세요."],
+    all:["전체 쿠폰","수능 이벤트와 렌즈 구매 혜택을 한곳에서 확인해 보세요."],
     lens:["렌즈 구매 혜택","렌즈 구매와 관련된 혜택을 모아 확인해 보세요."],
     event:["이벤트 쿠폰","진행 중인 이벤트와 수험생 혜택을 확인해 보세요."]
   };
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded",function(){
       });
       let visible=0;
       cards.forEach(function(card){
-        const show=filter==="all"?card.dataset.category==="event":card.dataset.category===filter;
+        const show=filter==="all"||card.dataset.category===filter;
         card.hidden=!show;
         if(show) visible++;
       });
@@ -216,6 +216,10 @@ document.addEventListener("DOMContentLoaded",function(){
         <article class="coupon-image-card" data-category="event">
           <div class="coupon-art coupon-art-exam"><span class="coupon-art-kicker">LENS ME SPECIAL EVENT</span><strong>수능 끝!<br>수험생 혜택</strong><span class="coupon-art-sub">수험생을 위한 특별한 쿠폰 행사</span><span class="coupon-art-stamp">SPECIAL<br>COUPON</span></div>
           <div class="coupon-image-copy"><span class="coupon-image-label">EVENT COUPON</span><h4>수험생 응원 쿠폰</h4><p>자세한 사용 방법은 이벤트 안내를 확인해 주세요.</p><a href="https://www.lens-me.com/shop/board.php?ps_bbscuid=17&amp;ps_mode=view&amp;ps_uid=7813" target="_blank" rel="noopener">이벤트 자세히 보기 <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="coupon-image-card" data-category="event">
+          <div class="coupon-art coupon-art-exam"><span class="coupon-art-kicker">LENS ME SPECIAL EVENT</span><strong>1+1<br>이벤트</strong><span class="coupon-art-sub">함께 누리는 렌즈미 이벤트 혜택</span><span class="coupon-art-stamp">1+1<br>EVENT</span></div>
+          <div class="coupon-image-copy"><span class="coupon-image-label">EVENT COUPON</span><h4>1+1 이벤트</h4><p>진행 여부와 적용 제품 및 조건을 확인해 주세요.</p><a href="https://www.lens-me.com/" target="_blank" rel="noopener">이벤트 자세히 보기 <span aria-hidden="true">↗</span></a></div>
         </article>
         <article class="coupon-image-card" data-category="lens" hidden>
           <div class="coupon-art coupon-art-lens"><span class="coupon-art-kicker">LENS ME BENEFIT</span><strong>렌즈 구매<br>혜택 모아보기</strong><span class="coupon-art-sub">제품별 혜택과 적용 조건 확인</span><span class="coupon-art-stamp">LENS<br>BENEFIT</span></div>

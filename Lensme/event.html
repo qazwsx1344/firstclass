@@ -57,6 +57,71 @@ document.addEventListener("DOMContentLoaded",function(){
   });
 });
 </script>
+<style>
+.coupon-filter{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 34px;padding-bottom:18px;border-bottom:1px solid #e9e4ef}
+.coupon-filter-button{padding:12px 22px;border:1px solid #ded6e9;border-radius:999px;background:#fff;color:#756d82;font:600 14px "Pretendard Variable",sans-serif;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.coupon-filter-button:hover{border-color:#9b83c5;color:#7863A8}
+.coupon-filter-button.is-active{border-color:#7863A8;background:#7863A8;color:#fff}
+.coupon-result-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px}
+.coupon-result-heading h3{margin:0 0 7px;color:#292536;font-size:22px}
+.coupon-result-heading p{margin:0;color:#81798f;font-size:14px}
+.coupon-result-count{padding:7px 11px;border-radius:999px;background:#f1edf7;color:#7863A8;font-size:10px;font-weight:700;letter-spacing:.1em}
+.coupon-image-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.coupon-image-card{overflow:hidden;border:1px solid #eee9f5;border-radius:16px;background:#fff;transition:transform .2s,box-shadow .2s}
+.coupon-image-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(70,52,100,.09)}
+.coupon-image-card[hidden]{display:none}
+.coupon-art{position:relative;display:flex;min-height:245px;overflow:hidden;flex-direction:column;justify-content:center;padding:28px;background:linear-gradient(135deg,#f4effb 0%,#e8ddf7 58%,#d8c9ee 100%);color:#35294a}
+.coupon-art:before,.coupon-art:after{position:absolute;content:"";border:1px solid rgba(120,99,168,.18);border-radius:50%}
+.coupon-art:before{width:210px;height:210px;right:-60px;top:-75px}
+.coupon-art:after{width:150px;height:150px;right:-28px;bottom:-90px}
+.coupon-art-kicker{position:relative;z-index:1;margin-bottom:18px;color:#7863A8;font-size:10px;font-weight:800;letter-spacing:.13em}
+.coupon-art strong{position:relative;z-index:1;font-size:clamp(25px,2.4vw,34px);line-height:1.2;letter-spacing:-.05em}
+.coupon-art-sub{position:relative;z-index:1;margin-top:13px;color:#6f657e;font-size:12px}
+.coupon-art-stamp{position:absolute;right:20px;bottom:20px;display:flex;width:66px;height:66px;align-items:center;justify-content:center;border:1px dashed rgba(120,99,168,.65);border-radius:50%;color:#7863A8;text-align:center;font-size:9px;font-weight:800;line-height:1.4;transform:rotate(-12deg)}
+.coupon-art-lens{background:linear-gradient(135deg,#f7f3fb,#e7e0f1 60%,#d6cbe8)}
+.coupon-image-copy{padding:20px 21px 22px}
+.coupon-image-label{color:#907bb8;font-size:10px;font-weight:800;letter-spacing:.1em}
+.coupon-image-copy h4{margin:8px 0;color:#292536;font-size:18px}
+.coupon-image-copy p{min-height:38px;margin:0 0 16px;color:#81798f;font-size:13px;line-height:1.5}
+.coupon-image-copy a{display:inline-flex;align-items:center;gap:7px;color:#7863A8;font-size:13px;font-weight:700;text-decoration:none}
+.coupon-image-copy a:hover{text-decoration:underline}
+.coupon-footnote{margin:18px 0 0;color:#9a93a3;font-size:12px;line-height:1.6}
+@media(max-width:900px){.coupon-image-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.coupon-filter{gap:7px;margin-bottom:26px}.coupon-filter-button{flex:1;padding:11px 9px;font-size:12px}.coupon-result-heading h3{font-size:19px}.coupon-image-grid{grid-template-columns:1fr;gap:16px}.coupon-art{min-height:210px}.coupon-image-copy{padding:18px}}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  const buttons=document.querySelectorAll(".coupon-filter-button");
+  const cards=document.querySelectorAll(".coupon-image-card");
+  const title=document.getElementById("coupon-result-title");
+  const description=document.getElementById("coupon-result-description");
+  const count=document.getElementById("coupon-result-count");
+  const copy={
+    all:["현재 진행 중인 쿠폰","수험생을 위한 렌즈미 쿠폰 행사를 확인해 보세요."],
+    lens:["렌즈 구매 혜택","렌즈 구매와 관련된 혜택을 모아 확인해 보세요."],
+    event:["이벤트 쿠폰","진행 중인 이벤트와 수험생 혜택을 확인해 보세요."]
+  };
+  buttons.forEach(function(button){
+    button.addEventListener("click",function(){
+      const filter=button.dataset.couponFilter;
+      buttons.forEach(function(item){
+        const active=item===button;
+        item.classList.toggle("is-active",active);
+        item.setAttribute("aria-pressed",String(active));
+      });
+      let visible=0;
+      cards.forEach(function(card){
+        const show=filter==="all"?card.dataset.category==="event":card.dataset.category===filter;
+        card.hidden=!show;
+        if(show) visible++;
+      });
+      title.textContent=copy[filter][0];
+      description.textContent=copy[filter][1];
+      count.textContent=String(visible).padStart(2,"0")+" COUPONS";
+    });
+  });
+});
+</script>
 </head>
 <body>
 <div id="wrap">
@@ -132,28 +197,40 @@ document.addEventListener("DOMContentLoaded",function(){
   <div class="subpage-inner subpage-body">
     <nav class="subpage-breadcrumb" aria-label="현재 위치"><a href="index.html">HOME</a><span aria-hidden="true">/</span><span>쿠폰</span></nav>
     <section class="subpage-section coupon-section" aria-labelledby="content-title">
-      <div class="subpage-section-heading"><div><p class="subpage-eyebrow">LENS ME COUPON</p><h2 id="content-title">쿠폰 혜택</h2><p>원하는 메뉴를 선택해 쿠폰 혜택과 이용 방법을 확인해 보세요.</p></div></div>
-      <div class="coupon-tabs" role="tablist" aria-label="쿠폰 메뉴">
-        <button class="coupon-tab is-active" id="available-coupons-tab" type="button" role="tab" aria-selected="true" aria-controls="available-coupons-panel">사용 가능한 쿠폰</button>
-        <button class="coupon-tab" id="coupon-guide-tab" type="button" role="tab" aria-selected="false" aria-controls="coupon-guide-panel">쿠폰 이용 안내</button>
+      <div class="subpage-section-heading"><div><p class="subpage-eyebrow">LENS ME COUPON</p><h2 id="content-title">쿠폰 혜택</h2><p>렌즈미에서 진행하는 다양한 쿠폰 혜택을 확인해 보세요.</p></div></div>
+      <div class="coupon-filter" role="group" aria-label="쿠폰 종류 선택">
+        <button type="button" class="coupon-filter-button is-active" data-coupon-filter="all" aria-pressed="true">전체 쿠폰</button>
+        <button type="button" class="coupon-filter-button" data-coupon-filter="lens" aria-pressed="false">렌즈 구매 혜택</button>
+        <button type="button" class="coupon-filter-button" data-coupon-filter="event" aria-pressed="false">이벤트 쿠폰</button>
       </div>
-      <div class="coupon-panel" id="available-coupons-panel" role="tabpanel" aria-labelledby="available-coupons-tab">
-        <div class="coupon-panel-heading"><div><h3>사용 가능한 쿠폰</h3><p>렌즈미에서 제공하는 쿠폰 혜택을 확인해 보세요.</p></div><span class="coupon-count">쿠폰 유형 3개</span></div>
-        <div class="coupon-list">
-          <article class="coupon-card"><div class="coupon-card-copy"><p class="coupon-card-type">회원 혜택</p><h4>회원 혜택 쿠폰</h4><p>회원 대상 쿠폰 혜택을 확인해 보세요.</p><span class="coupon-condition">발급 대상 및 사용 조건은 쿠폰별 상이</span></div><span class="coupon-card-arrow" aria-hidden="true">›</span></article>
-          <article class="coupon-card"><div class="coupon-card-copy"><p class="coupon-card-type">구매 혜택</p><h4>렌즈 구매 혜택</h4><p>렌즈 구매 시 적용 가능한 혜택을 확인해 보세요.</p><span class="coupon-condition">일부 상품 및 매장 적용 여부 확인 필요</span></div><span class="coupon-card-arrow" aria-hidden="true">›</span></article>
-          <article class="coupon-card"><div class="coupon-card-copy"><p class="coupon-card-type">이벤트 혜택</p><h4>이벤트 쿠폰</h4><p>진행 중인 이벤트와 함께 제공되는 쿠폰 혜택입니다.</p><span class="coupon-condition">이벤트 기간 및 사용 조건 확인 필요</span></div><span class="coupon-card-arrow" aria-hidden="true">›</span></article>
-        </div>
-        <p class="coupon-bottom-notice">쿠폰의 발급 대상, 할인 내용, 유효기간 및 사용 가능 매장은 쿠폰별 운영 조건에 따라 달라질 수 있습니다.</p>
+      <div class="coupon-result-heading"><div><h3 id="coupon-result-title">현재 진행 중인 쿠폰</h3><p id="coupon-result-description">수험생을 위한 렌즈미 쿠폰 행사를 확인해 보세요.</p></div><span class="coupon-result-count" id="coupon-result-count">03 COUPONS</span></div>
+      <div class="coupon-image-grid" id="coupon-image-grid">
+        <article class="coupon-image-card" data-category="event">
+          <div class="coupon-art coupon-art-exam"><span class="coupon-art-kicker">LENS ME SPECIAL EVENT</span><strong>수능 끝!<br>수험생 혜택</strong><span class="coupon-art-sub">수험생을 위한 특별한 쿠폰 행사</span><span class="coupon-art-stamp">SPECIAL<br>COUPON</span></div>
+          <div class="coupon-image-copy"><span class="coupon-image-label">EVENT COUPON</span><h4>수능 끝 할인 시작!</h4><p>고생한 수험생을 위한 렌즈미 이벤트</p><a href="https://www.lens-me.com/shop/board.php?ps_bbscuid=17&amp;ps_mode=view&amp;ps_uid=7813" target="_blank" rel="noopener">이벤트 자세히 보기 <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="coupon-image-card" data-category="event">
+          <div class="coupon-art coupon-art-exam"><span class="coupon-art-kicker">LENS ME SPECIAL EVENT</span><strong>수능 끝!<br>수험생 혜택</strong><span class="coupon-art-sub">수험생을 위한 특별한 쿠폰 행사</span><span class="coupon-art-stamp">SPECIAL<br>COUPON</span></div>
+          <div class="coupon-image-copy"><span class="coupon-image-label">EVENT COUPON</span><h4>수험생 특별 혜택</h4><p>이벤트 내용과 적용 조건을 확인해 보세요.</p><a href="https://www.lens-me.com/shop/board.php?ps_bbscuid=17&amp;ps_mode=view&amp;ps_uid=7813" target="_blank" rel="noopener">이벤트 자세히 보기 <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="coupon-image-card" data-category="event">
+          <div class="coupon-art coupon-art-exam"><span class="coupon-art-kicker">LENS ME SPECIAL EVENT</span><strong>수능 끝!<br>수험생 혜택</strong><span class="coupon-art-sub">수험생을 위한 특별한 쿠폰 행사</span><span class="coupon-art-stamp">SPECIAL<br>COUPON</span></div>
+          <div class="coupon-image-copy"><span class="coupon-image-label">EVENT COUPON</span><h4>수험생 응원 쿠폰</h4><p>자세한 사용 방법은 이벤트 안내를 확인해 주세요.</p><a href="https://www.lens-me.com/shop/board.php?ps_bbscuid=17&amp;ps_mode=view&amp;ps_uid=7813" target="_blank" rel="noopener">이벤트 자세히 보기 <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="coupon-image-card" data-category="lens" hidden>
+          <div class="coupon-art coupon-art-lens"><span class="coupon-art-kicker">LENS ME BENEFIT</span><strong>렌즈 구매<br>혜택 모아보기</strong><span class="coupon-art-sub">제품별 혜택과 적용 조건 확인</span><span class="coupon-art-stamp">LENS<br>BENEFIT</span></div>
+          <div class="coupon-image-copy"><span class="coupon-image-label">LENS BENEFIT</span><h4>렌즈 구매 혜택</h4><p>렌즈 구매와 관련된 혜택을 모아 확인해 보세요.</p><a href="https://www.lens-me.com/" target="_blank" rel="noopener">공식 홈페이지 보기 <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="coupon-image-card" data-category="lens" hidden>
+          <div class="coupon-art coupon-art-lens"><span class="coupon-art-kicker">LENS ME BENEFIT</span><strong>나에게 맞는<br>렌즈 혜택</strong><span class="coupon-art-sub">구매 전 적용 가능한 혜택 확인</span><span class="coupon-art-stamp">LENS<br>BENEFIT</span></div>
+          <div class="coupon-image-copy"><span class="coupon-image-label">LENS BENEFIT</span><h4>제품별 구매 혜택</h4><p>제품별 진행 여부와 적용 조건은 매장에서 확인해 주세요.</p><a href="https://www.lens-me.com/" target="_blank" rel="noopener">공식 홈페이지 보기 <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="coupon-image-card" data-category="lens" hidden>
+          <div class="coupon-art coupon-art-lens"><span class="coupon-art-kicker">LENS ME BENEFIT</span><strong>렌즈 쇼핑<br>혜택 안내</strong><span class="coupon-art-sub">렌즈 구매 전 혜택을 확인하세요</span><span class="coupon-art-stamp">LENS<br>BENEFIT</span></div>
+          <div class="coupon-image-copy"><span class="coupon-image-label">LENS BENEFIT</span><h4>구매 혜택 안내</h4><p>쿠폰 및 프로모션 적용 가능 여부를 확인해 주세요.</p><a href="https://www.lens-me.com/" target="_blank" rel="noopener">공식 홈페이지 보기 <span aria-hidden="true">↗</span></a></div>
+        </article>
       </div>
-      <div class="coupon-panel" id="coupon-guide-panel" role="tabpanel" aria-labelledby="coupon-guide-tab" hidden>
-        <div class="coupon-panel-heading"><div><h3>쿠폰 이용 안내</h3><p>쿠폰을 사용하기 전에 아래 내용을 확인해 주세요.</p></div></div>
-        <ol class="coupon-guide-list">
-          <li><span>01</span><div><strong>쿠폰 확인</strong><p>사용 가능한 쿠폰의 혜택과 발급 조건을 확인합니다.</p></div></li>
-          <li><span>02</span><div><strong>사용 조건 확인</strong><p>쿠폰별 유효기간, 적용 상품 및 사용 가능 매장을 확인합니다.</p></div></li>
-          <li><span>03</span><div><strong>매장에서 사용</strong><p>쿠폰 사용 가능 여부를 확인한 뒤 매장에서 결제 및 수령 절차를 진행합니다.</p></div></li>
-        </ol>
-      </div>
+      <p class="coupon-footnote">※ 실제 쿠폰 발급 여부, 할인 금액 및 사용 조건은 렌즈미 공식 이벤트 안내를 기준으로 확인해 주세요.</p>
     </section>
     
   </div>

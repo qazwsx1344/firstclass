@@ -31,13 +31,25 @@
 .coupon-condition{display:block;color:#a19aaa;font-size:10px;line-height:1.5}
 .coupon-card-arrow{position:absolute;right:14px;top:12px;color:#a995cf;font-size:22px}
 .coupon-prototype-note{margin:18px 0 0;color:#9a93a3;font-size:12px}
+.coupon-highlight{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:0 0 24px;padding:24px 28px;border:1px solid #e9e2f1;border-radius:16px;background:linear-gradient(105deg,#f5f1fa 0%,#fbf9fd 62%,#fff 100%)}
+.coupon-highlight-copy{min-width:0}
+.coupon-highlight-label{margin:0 0 8px;color:#907bb8;font-size:11px;font-weight:700;letter-spacing:.12em}
+.coupon-highlight h3{margin:0 0 7px;color:#292536;font-size:21px}
+.coupon-highlight p:last-child{margin:0;color:#777181;font-size:13px;line-height:1.6}
+.coupon-highlight-mark{display:flex;width:64px;height:64px;flex:0 0 64px;align-items:center;justify-content:center;border-radius:50%;background:#7863A8;color:#fff;font-size:27px}
+.coupon-info-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:24px}
+.coupon-info-item{display:flex;align-items:flex-start;gap:11px;padding:17px;border:1px solid #eee9f5;border-radius:12px;background:#fff}
+.coupon-info-number{display:flex;width:28px;height:28px;flex:0 0 28px;align-items:center;justify-content:center;border-radius:50%;background:#f1edf7;color:#7863A8;font-size:12px;font-weight:700}
+.coupon-info-item strong{display:block;margin:2px 0 5px;color:#393344;font-size:13px}
+.coupon-info-item p{margin:0;color:#81798f;font-size:11px;line-height:1.5}
+.coupon-bottom-notice{margin:20px 0 0;padding:15px 18px;border-radius:10px;background:#f5f1fa;color:#777181;font-size:12px;line-height:1.65}
 .coupon-guide-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none}
 .coupon-guide-list li{display:flex;gap:14px;padding:22px;border:1px solid #e9e2f1;border-radius:12px;background:#fff}
 .coupon-guide-list li>span{color:#907bb8;font-size:20px;font-weight:700}
 .coupon-guide-list strong{display:block;margin:2px 0 8px;color:#292536;font-size:15px}
 .coupon-guide-list p{margin:0;color:#777181;font-size:13px;line-height:1.6}
 @media(max-width:900px){.coupon-list,.coupon-guide-list{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.coupon-tabs{gap:6px}.coupon-tab{flex:1;padding:13px 8px;font-size:13px}.coupon-panel{padding:20px 14px}.coupon-panel-heading{align-items:flex-start}.coupon-panel-heading h3{font-size:19px}.coupon-count{font-size:9px}.coupon-list,.coupon-guide-list{grid-template-columns:1fr}.coupon-card{min-height:150px}.coupon-guide-list li{padding:18px}}
+@media(max-width:640px){.coupon-highlight{gap:12px;margin-bottom:18px;padding:18px 16px}.coupon-highlight h3{font-size:17px}.coupon-highlight p:last-child{font-size:12px}.coupon-highlight-mark{width:48px;height:48px;flex-basis:48px;font-size:21px}.coupon-info-strip{grid-template-columns:1fr;gap:8px;margin-top:18px}.coupon-info-item{padding:14px}.coupon-tabs{gap:6px}.coupon-tab{flex:1;padding:13px 8px;font-size:13px}.coupon-panel{padding:20px 14px}.coupon-panel-heading{align-items:flex-start}.coupon-panel-heading h3{font-size:19px}.coupon-count{font-size:9px}.coupon-list,.coupon-guide-list{grid-template-columns:1fr}.coupon-card{min-height:150px}.coupon-guide-list li{padding:18px}}
 </style>
 <script>
 document.addEventListener("DOMContentLoaded",function(){
@@ -137,6 +149,14 @@ document.addEventListener("DOMContentLoaded",function(){
         <button class="coupon-tab is-active" id="available-coupons-tab" type="button" role="tab" aria-selected="true" aria-controls="available-coupons-panel">사용 가능한 쿠폰</button>
         <button class="coupon-tab" id="coupon-guide-tab" type="button" role="tab" aria-selected="false" aria-controls="coupon-guide-panel">쿠폰 이용 안내</button>
       </div>
+      <div class="coupon-highlight">
+        <div class="coupon-highlight-copy">
+          <p class="coupon-highlight-label">LENS ME BENEFIT</p>
+          <h3>렌즈미의 다양한 혜택을 확인해 보세요</h3>
+          <p>회원 혜택부터 이벤트 쿠폰까지, 나에게 적용할 수 있는 혜택을 한눈에 살펴볼 수 있어요.</p>
+        </div>
+        <span class="coupon-highlight-mark" aria-hidden="true">%</span>
+      </div>
       <div class="coupon-panel" id="available-coupons-panel" role="tabpanel" aria-labelledby="available-coupons-tab">
         <div class="coupon-panel-heading"><div><h3>사용 가능한 쿠폰</h3><p>렌즈미에서 제공하는 쿠폰 혜택을 확인해 보세요.</p></div><span class="coupon-count">COUPON LINEUP</span></div>
         <div class="coupon-list">
@@ -144,7 +164,12 @@ document.addEventListener("DOMContentLoaded",function(){
           <article class="coupon-card"><div class="coupon-card-mark">LENS ME<br>BENEFIT</div><div class="coupon-card-copy"><p class="coupon-card-type">LENS BENEFIT</p><h4>렌즈 구매 혜택</h4><p>렌즈 구매 시 적용 가능한 혜택을 확인해 보세요.</p><span class="coupon-condition">일부 상품 및 매장 적용 여부 확인 필요</span></div><span class="coupon-card-arrow" aria-hidden="true">›</span></article>
           <article class="coupon-card"><div class="coupon-card-mark">LENS ME<br>BENEFIT</div><div class="coupon-card-copy"><p class="coupon-card-type">EVENT BENEFIT</p><h4>이벤트 쿠폰</h4><p>진행 중인 이벤트와 함께 제공되는 쿠폰 혜택입니다.</p><span class="coupon-condition">이벤트 기간 및 사용 조건 확인 필요</span></div><span class="coupon-card-arrow" aria-hidden="true">›</span></article>
         </div>
-        <p class="coupon-prototype-note">※ 쿠폰 종류와 상세 조건은 실제 발급 및 운영 정책에 맞게 연결해야 합니다.</p>
+        <div class="coupon-info-strip" aria-label="쿠폰 확인 순서">
+          <div class="coupon-info-item"><span class="coupon-info-number">01</span><div><strong>혜택 종류 확인</strong><p>회원·구매·이벤트 혜택을 구분해 살펴보세요.</p></div></div>
+          <div class="coupon-info-item"><span class="coupon-info-number">02</span><div><strong>사용 조건 확인</strong><p>적용 대상과 유효기간을 꼭 확인해 주세요.</p></div></div>
+          <div class="coupon-info-item"><span class="coupon-info-number">03</span><div><strong>사용 가능 매장 확인</strong><p>방문 전 매장에서 사용 가능 여부를 확인하세요.</p></div></div>
+        </div>
+        <p class="coupon-bottom-notice">쿠폰의 발급 대상, 할인 내용, 유효기간 및 사용 가능 매장은 쿠폰별 운영 조건에 따라 달라질 수 있습니다.</p>
       </div>
       <div class="coupon-panel" id="coupon-guide-panel" role="tabpanel" aria-labelledby="coupon-guide-tab" hidden>
         <div class="coupon-panel-heading"><div><h3>쿠폰 이용 안내</h3><p>쿠폰을 사용하기 전에 아래 내용을 확인해 주세요.</p></div></div>

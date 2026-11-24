@@ -101,25 +101,34 @@ document.addEventListener("DOMContentLoaded",function(){
     lens:["렌즈 구매 혜택","렌즈 구매와 관련된 혜택을 모아 확인해 보세요."],
     event:["이벤트 쿠폰","진행 중인 이벤트와 수험생 혜택을 확인해 보세요."]
   };
+
+  function applyCouponFilter(filter){
+    buttons.forEach(function(button){
+      const active=button.dataset.couponFilter===filter;
+      button.classList.toggle("is-active",active);
+      button.setAttribute("aria-pressed",String(active));
+    });
+
+    let visible=0;
+    cards.forEach(function(card){
+      const show=filter==="all"||card.dataset.category===filter;
+      card.hidden=!show;
+      if(show) visible++;
+    });
+
+    title.textContent=copy[filter][0];
+    description.textContent=copy[filter][1];
+    count.textContent=String(visible).padStart(2,"0")+" COUPONS";
+  }
+
   buttons.forEach(function(button){
     button.addEventListener("click",function(){
-      const filter=button.dataset.couponFilter;
-      buttons.forEach(function(item){
-        const active=item===button;
-        item.classList.toggle("is-active",active);
-        item.setAttribute("aria-pressed",String(active));
-      });
-      let visible=0;
-      cards.forEach(function(card){
-        const show=filter==="all"||card.dataset.category===filter;
-        card.hidden=!show;
-        if(show) visible++;
-      });
-      title.textContent=copy[filter][0];
-      description.textContent=copy[filter][1];
-      count.textContent=String(visible).padStart(2,"0")+" COUPONS";
+      applyCouponFilter(button.dataset.couponFilter);
     });
   });
+
+  // 새로고침해도 전체 쿠폰이 기본으로 모두 표시되도록 초기 상태 적용
+  applyCouponFilter("all");
 });
 </script>
 </head>

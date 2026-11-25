@@ -636,3 +636,47 @@
 }
 .brand-history-viewport { scroll-snap-type:none; }
 .brand-history-viewport.is-dragging { scroll-behavior:auto; }
+
+
+/* Visibility safeguard: keep timeline navigation visible above the viewport */
+.brand-history-section .brand-history-controls {
+  position: relative;
+  z-index: 10;
+  display: flex !important;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.brand-history-section .brand-history-controls button.brand-history-nav {
+  position: relative;
+  display: inline-flex !important;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  visibility: visible !important;
+  opacity: 1;
+  color: #625087;
+  border: 1px solid #b9a7d8;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgba(75, 54, 110, .10);
+  line-height: 1;
+}
+.brand-history-section .brand-history-controls button.brand-history-next {
+  gap: 10px;
+  padding: 0 18px;
+}
+.brand-history-section .brand-history-controls button.brand-history-nav:disabled {
+  opacity: .45 !important;
+}
+@media (max-width: 640px) {
+  .brand-history-section .brand-history-controls {
+    justify-content: center;
+    margin-top: 4px;
+  }
+}

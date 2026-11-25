@@ -124,11 +124,23 @@
   <section class="brand-section brand-section--soft" aria-labelledby="brand-products-title">
     <div class="brand-inner">
       <div class="brand-section-head"><p class="brand-eyebrow">LENS COLLECTION</p><h2 id="brand-products-title">다양한 취향을 담은 렌즈</h2><p>자연스러운 컬러부터 포인트가 되는 디자인까지, 렌즈미의 제품을 둘러보세요.</p></div>
-      <div class="brand-products">
-        <div class="brand-product"><img src="img/7.jpg" alt="렌즈미 렌즈 이미지 1"></div>
-        <div class="brand-product"><img src="img/8.jpg" alt="렌즈미 렌즈 이미지 2"></div>
-        <div class="brand-product"><img src="img/9.png" alt="렌즈미 렌즈 이미지 3"></div>
-        <div class="brand-product"><img src="img/2.png" alt="렌즈미 렌즈 이미지 4"></div>
+      <div class="brand-products" aria-label="렌즈미 브랜드와 매장 이미지">
+        <button class="brand-product" type="button" aria-pressed="false">
+          <img src="img/7.jpg" alt="렌즈미 매장 제품 진열">
+          <span class="brand-product-caption">다양한 렌즈를 만나는 공간</span>
+        </button>
+        <button class="brand-product" type="button" aria-pressed="false">
+          <img src="img/8.jpg" alt="렌즈미 매장 내부">
+          <span class="brand-product-caption">직접 살펴보는 매장 경험</span>
+        </button>
+        <button class="brand-product" type="button" aria-pressed="false">
+          <img src="img/9.png" alt="렌즈미 브랜드 매장 외관">
+          <span class="brand-product-caption">가까운 곳에서 만나는 렌즈미</span>
+        </button>
+        <button class="brand-product" type="button" aria-pressed="false">
+          <img src="img/2.png" alt="렌즈미 렌즈 스타일 이미지">
+          <span class="brand-product-caption">나만의 스타일 찾기</span>
+        </button>
       </div>
     </div>
   </section>
@@ -224,5 +236,19 @@
             </a>
         </aside>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  const products=document.querySelectorAll(".brand-product");
+  products.forEach(function(product){
+    product.addEventListener("click",function(){
+      products.forEach(function(item){
+        const selected=item===product;
+        item.classList.toggle("is-selected",selected);
+        item.setAttribute("aria-pressed",String(selected));
+      });
+    });
+  });
+});
+</script>
 </body>
 </html>

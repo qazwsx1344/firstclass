@@ -326,3 +326,59 @@
   .brand-history-card, .brand-history-image img { transition: none; }
   .brand-history-card { opacity: 1; transform: translate(-50%, 0) scale(1); }
 }
+
+
+/* History: one milestone per view, revealed as the user drags horizontally */
+.brand-history-viewport {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  touch-action: pan-x pan-y;
+}
+.brand-history-viewport::-webkit-scrollbar { display: none; }
+.brand-history-viewport.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  user-select: none;
+}
+.brand-history-track {
+  width: 100%;
+  min-width: 100%;
+  padding: 0;
+}
+.brand-history-item {
+  flex: 0 0 100%;
+  width: 100%;
+  min-height: 600px;
+  scroll-snap-align: start;
+}
+.brand-history-card {
+  width: min(64%, 560px);
+  padding: clamp(24px, 3vw, 38px);
+  transform: translate(-50%, 48px);
+}
+.brand-history-item.is-bottom .brand-history-card {
+  transform: translate(-50%, -48px);
+}
+.brand-history-item.is-visible .brand-history-card,
+.brand-history-item.is-visible.is-bottom .brand-history-card {
+  transform: translate(-50%, 0);
+}
+.brand-history-card h3 { font-size: clamp(21px, 2vw, 27px); }
+.brand-history-card p { font-size: clamp(15px, 1.25vw, 17px); }
+.brand-history-image { aspect-ratio: 16 / 8; }
+.brand-history-hint { justify-content: flex-end; }
+@media (max-width: 640px) {
+  .brand-history-item {
+    flex-basis: 100%;
+    width: 100%;
+    min-height: 510px;
+  }
+  .brand-history-card { width: 86%; padding: 20px; }
+  .brand-history-image { aspect-ratio: 16 / 9; }
+}

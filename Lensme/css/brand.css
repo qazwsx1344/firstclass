@@ -439,3 +439,90 @@
 @media (prefers-reduced-motion: reduce) {
   .brand-history-card { transition: none; }
 }
+
+
+/* Brand history: horizontal timeline with progressive left-to-right reveal */
+.brand-history-viewport {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 24px 4px 22px;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-x pan-y;
+  overscroll-behavior-x: contain;
+  scroll-behavior: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #a78fd2 #f0edf5;
+}
+.brand-history-viewport.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+.brand-history-track {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: max-content;
+  min-width: 100%;
+  max-width: none;
+  gap: 0;
+  padding: 0 5vw;
+  will-change: auto;
+}
+.brand-history-track::before {
+  top: 50%;
+  right: 0;
+  left: 0;
+}
+.brand-history-item {
+  position: relative;
+  flex: 0 0 clamp(290px, 30vw, 390px);
+  width: clamp(290px, 30vw, 390px);
+  min-width: 0;
+  min-height: 590px;
+}
+.brand-history-item::before { top: 50%; }
+.brand-history-card {
+  visibility: visible;
+  width: min(82%, 330px);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity .5s ease,
+    transform .75s cubic-bezier(.16, 1, .3, 1),
+    box-shadow .25s ease;
+}
+.brand-history-item.is-top .brand-history-card {
+  top: auto;
+  bottom: calc(50% + 30px);
+  transform: translate(-50%, 44px);
+}
+.brand-history-item.is-bottom .brand-history-card {
+  top: calc(50% + 30px);
+  bottom: auto;
+  transform: translate(-50%, -44px);
+}
+.brand-history-item.is-visible .brand-history-card {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+.brand-history-year { font-size: 27px; }
+.brand-history-card h3 { font-size: 21px; }
+.brand-history-card p { font-size: 15px; }
+.brand-history-image { aspect-ratio: 16 / 9; }
+@media (max-width: 640px) {
+  .brand-history-item {
+    flex-basis: 82vw;
+    width: 82vw;
+    min-height: 520px;
+  }
+  .brand-history-card { width: 86%; }
+  .brand-history-year { font-size: 24px; }
+  .brand-history-card h3 { font-size: 19px; }
+  .brand-history-card p { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-history-card { transition: none; opacity: 1; transform: translate(-50%, 0); }
+}

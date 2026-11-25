@@ -154,3 +154,175 @@
   .brand-product { border-width: 2px; border-color: #cdbce7; border-radius: 18px; }
   .brand-product-caption { padding: 42px 14px 16px; font-size: 15px; }
 }
+
+
+/* Horizontal brand history timeline */
+.brand-history-section {
+  padding: clamp(76px, 8vw, 116px) 0;
+  overflow: hidden;
+  background: #fff;
+}
+.brand-history-hint {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: -12px 0 18px;
+  color: #7863A8;
+  font-size: 14px;
+  font-weight: 600;
+}
+.brand-history-arrow {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d9cbed;
+  border-radius: 50%;
+  font-size: 20px;
+}
+.brand-history-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 24px 4px 18px;
+  scrollbar-color: #a78fd2 #f0edf5;
+  scrollbar-width: thin;
+  cursor: grab;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+}
+.brand-history-viewport:active { cursor: grabbing; }
+.brand-history-track {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: max-content;
+  min-width: 100%;
+  gap: 0;
+  padding: 0 5vw;
+}
+.brand-history-track::before {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: #d9cbed;
+  content: "";
+  transform: translateY(-50%);
+}
+.brand-history-item {
+  position: relative;
+  display: flex;
+  flex: 0 0 clamp(260px, 27vw, 360px);
+  width: clamp(260px, 27vw, 360px);
+  min-height: 570px;
+  justify-content: center;
+  scroll-snap-align: center;
+}
+.brand-history-item::before {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 13px;
+  height: 13px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #7863A8;
+  box-shadow: 0 0 0 2px #b9a7d8;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+.brand-history-card {
+  position: absolute;
+  left: 50%;
+  display: flex;
+  width: min(82%, 280px);
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 22px;
+  border: 1px solid #e5deef;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 8px 26px rgba(52, 38, 78, .07);
+  opacity: 0;
+  transform: translate(-50%, 26px) scale(.94);
+  transition: opacity .55s ease, transform .65s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease;
+}
+.brand-history-item.is-top .brand-history-card {
+  bottom: calc(50% + 28px);
+}
+.brand-history-item.is-bottom .brand-history-card {
+  top: calc(50% + 28px);
+  transform: translate(-50%, -26px) scale(.94);
+}
+.brand-history-item.is-visible .brand-history-card {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+.brand-history-item.is-visible.is-bottom .brand-history-card {
+  transform: translate(-50%, 0) scale(1);
+}
+.brand-history-item:hover .brand-history-card {
+  box-shadow: 0 16px 36px rgba(86, 65, 130, .16);
+}
+.brand-history-year {
+  display: inline-block;
+  margin-bottom: 9px;
+  color: #7863A8;
+  font-size: 25px;
+  font-weight: 750;
+  letter-spacing: -.04em;
+}
+.brand-history-card h3 {
+  margin: 0 0 8px;
+  color: #292536;
+  font-size: 19px;
+  font-weight: 700;
+}
+.brand-history-card p {
+  min-height: 48px;
+  margin: 0 0 16px;
+  color: #706b78;
+  font-size: 14px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+.brand-history-image {
+  width: 100%;
+  aspect-ratio: 1.55 / 1;
+  overflow: hidden;
+  border-radius: 13px;
+  background: #eeeaf4;
+}
+.brand-history-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+.brand-history-card:hover .brand-history-image img { transform: scale(1.06); }
+
+@media (max-width: 640px) {
+  .brand-history-section { padding: 60px 0; }
+  .brand-history-hint { font-size: 12px; }
+  .brand-history-viewport { padding: 16px 0 22px; }
+  .brand-history-track { padding: 0 7vw; }
+  .brand-history-item {
+    flex-basis: 78vw;
+    width: 78vw;
+    min-height: 500px;
+  }
+  .brand-history-card { width: 86%; padding: 18px; border-radius: 17px; }
+  .brand-history-year { font-size: 23px; }
+  .brand-history-card h3 { font-size: 18px; }
+  .brand-history-card p { font-size: 13px; }
+  .brand-history-item::before { width: 11px; height: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-history-card, .brand-history-image img { transition: none; }
+  .brand-history-card { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}

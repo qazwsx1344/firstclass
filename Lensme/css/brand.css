@@ -888,3 +888,18 @@
     font-size: 13px;
   }
 }
+
+
+/* Match the previous button circle to the next button's arrow circle */
+.brand-history-section .brand-history-controls button.brand-history-prev {
+  box-sizing: border-box;
+  flex: 0 0 34px !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  max-height: 34px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+}

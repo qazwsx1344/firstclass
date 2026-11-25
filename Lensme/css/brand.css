@@ -1071,3 +1071,24 @@
     line-height: 1.6;
   }
 }
+
+
+/* Hero image: fill the existing frame edge-to-edge without changing its size or position */
+.brand-hero .brand-hero-frame {
+  position: relative;
+  overflow: hidden;
+}
+.brand-hero .brand-hero-image,
+.brand-hero .brand-hero-image img {
+  width: 100% !important;
+  height: 100% !important;
+}
+.brand-hero .brand-hero-image {
+  inset: 0 !important;
+}
+.brand-hero .brand-hero-image img {
+  display: block;
+  max-width: none;
+  object-fit: cover !important;
+  object-position: center center;
+}

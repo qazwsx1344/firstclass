@@ -152,7 +152,7 @@
         <h2 id="brand-history-title">렌즈미가 걸어온 시간</h2>
         <p>렌즈미의 시작부터 지금까지, 브랜드의 순간들을 가로로 살펴보세요.</p>
       </div>
-      <button class="brand-history-hint" type="button" aria-label="다음 연혁 보기"><span>다음 연혁 보기</span><span class="brand-history-arrow" aria-hidden="true">→</span></button>
+      <div class="brand-history-controls" aria-label="연혁 이동"><button class="brand-history-nav brand-history-prev" type="button" aria-label="이전 연혁 보기">←</button><button class="brand-history-hint brand-history-nav brand-history-next" type="button" aria-label="다음 연혁 보기"><span>다음 연혁 보기</span><span class="brand-history-arrow" aria-hidden="true">→</span></button></div>
       <div class="brand-history-viewport" tabindex="0" aria-label="렌즈미 연혁. 좌우로 스크롤할 수 있습니다.">
         <div class="brand-history-track">
           <article class="brand-history-item is-top">
@@ -335,47 +335,74 @@ document.addEventListener("DOMContentLoaded",function(){
   if(historyViewport){
     const historyItems=Array.from(historyViewport.querySelectorAll(".brand-history-item"));
     const historyTrack=historyViewport.querySelector(".brand-history-track");
+    const nextButton=document.querySelector(".brand-history-next");
+    const prevButton=document.querySelector(".brand-history-prev");
 
     if(historyItems.length && historyTrack){
       let dragging=false;
-      let startX=0;
-      let startScroll=0;
-      let lastX=0;
-      let lastTime=0;
-      let velocity=0;
-      let frame=0;
-      let targetScroll=0;
-      let dragFrame=0;
+      let pointerStartX=0;
+      let scrollStart=0;
+      let animationFrame=0;
+      let activeIndex=0;
+      let scrollAnimation=0;
 
-      historyItems.forEach(function(item,index){
-        item.classList.toggle("is-visible",index===0);
-      });
-
-      const historyNextButton=document.querySelector(".brand-history-hint");
-      let currentHistoryIndex=0;
-
-      function goToNextMilestone(){
-        const nextIndex=Math.min(currentHistoryIndex+1,historyItems.length-1);
-        if(nextIndex===currentHistoryIndex) return;
-        currentHistoryIndex=nextIndex;
-        const item=historyItems[nextIndex];
-        const targetLeft=item.offsetLeft + item.offsetWidth/2 - historyViewport.clientWidth/2;
-        historyViewport.scrollTo({left:Math.max(0,targetLeft),behavior:"smooth"});
-        item.classList.add("is-visible");
+      function itemTarget(index){
+        const item=historyItems[index];
+        return Math.max(0,Math.min(
+          item.offsetLeft + item.offsetWidth/2 - historyViewport.clientWidth/2,
+          historyViewport.scrollWidth-historyViewport.clientWidth
+        ));
       }
 
-      if(historyNextButton){
-        historyNextButton.addEventListener("click",goToNextMilestone);
+      function updateActiveIndex(){
+        const center=historyViewport.scrollLeft+historyViewport.clientWidth/2;
+        let closest=0;
+        let distance=Infinity;
+        historyItems.forEach(function(item,index){
+          const itemCenter=item.offsetLeft+item.offsetWidth/2;
+          const currentDistance=Math.abs(center-itemCenter);
+          if(currentDistance<distance){distance=currentDistance;closest=index;}
+        });
+        activeIndex=closest;
+        historyItems.forEach(function(item,index){
+          if(index<=activeIndex) item.classList.add("is-visible");
+        });
+        if(prevButton) prevButton.disabled=activeIndex===0;
+        if(nextButton) nextButton.disabled=activeIndex===historyItems.length-1;
       }
 
       function revealMilestones(){
-        const revealLine=historyViewport.scrollLeft + historyViewport.clientWidth * .72;
+        const revealLine=historyViewport.scrollLeft+historyViewport.clientWidth*.72;
         historyItems.forEach(function(item,index){
-          if(index===0 || item.offsetLeft < revealLine){
-            item.classList.add("is-visible");
-          }
+          if(index===0 || item.offsetLeft<revealLine) item.classList.add("is-visible");
         });
+        updateActiveIndex();
       }
+
+      function moveToIndex(index){
+        const bounded=Math.max(0,Math.min(index,historyItems.length-1));
+        activeIndex=bounded;
+        const from=historyViewport.scrollLeft;
+        const to=itemTarget(bounded);
+        cancelAnimationFrame(scrollAnimation);
+        const duration=950;
+        const startTime=performance.now();
+        function animate(now){
+          const progress=Math.min(1,(now-startTime)/duration);
+          const eased=progress<.5
+            ? 4*progress*progress*progress
+            : 1-Math.pow(-2*progress+2,3)/2;
+          historyViewport.scrollLeft=from+(to-from)*eased;
+          revealMilestones();
+          if(progress<1) scrollAnimation=requestAnimationFrame(animate);
+          else {historyViewport.scrollLeft=to;scrollAnimation=0;revealMilestones();}
+        }
+        scrollAnimation=requestAnimationFrame(animate);
+        historyItems[bounded].classList.add("is-visible");
+      }
+
+      if(nextButton) nextButton.addEventListener("click",function(){moveToIndex(activeIndex+1);});
+      if(prevButton) prevButton.addEventListener("click",function(){moveToIndex(activeIndex-1);});
 
       historyViewport.addEventListener("scroll",revealMilestones,{passive:true});
       window.addEventListener("resize",revealMilestones);
@@ -383,78 +410,30 @@ document.addEventListener("DOMContentLoaded",function(){
       historyViewport.addEventListener("pointerdown",function(event){
         if(event.pointerType!=="mouse" || event.button!==0) return;
         dragging=true;
-        startX=event.clientX;
-        startScroll=historyViewport.scrollLeft;
-        targetScroll=startScroll;
-        lastX=event.clientX;
-        lastTime=performance.now();
-        velocity=0;
-        cancelAnimationFrame(frame);
-        cancelAnimationFrame(dragFrame);
+        pointerStartX=event.clientX;
+        scrollStart=historyViewport.scrollLeft;
+        cancelAnimationFrame(scrollAnimation);
+        scrollAnimation=0;
         historyViewport.classList.add("is-dragging");
         historyViewport.setPointerCapture(event.pointerId);
       });
 
       historyViewport.addEventListener("pointermove",function(event){
         if(!dragging) return;
-        const now=performance.now();
-        const elapsed=Math.max(1,now-lastTime);
-        velocity=(lastX-event.clientX)/elapsed;
-        lastX=event.clientX;
-        lastTime=now;
-        targetScroll=Math.max(0,Math.min(
-          historyViewport.scrollWidth-historyViewport.clientWidth,
-          startScroll-(event.clientX-startX)
-        ));
-
-        if(!dragFrame){
-          function followPointer(){
-            if(!dragging){dragFrame=0;return;}
-            const distance=targetScroll-historyViewport.scrollLeft;
-            historyViewport.scrollLeft+=distance*.22;
-            revealMilestones();
-            if(Math.abs(distance)>.5){
-              dragFrame=requestAnimationFrame(followPointer);
-            }else{
-              historyViewport.scrollLeft=targetScroll;
-              dragFrame=0;
-            }
-          }
-          dragFrame=requestAnimationFrame(followPointer);
-        }
+        historyViewport.scrollLeft=scrollStart-(event.clientX-pointerStartX);
+        revealMilestones();
       });
 
       function endHistoryDrag(){
         if(!dragging) return;
         dragging=false;
         historyViewport.classList.remove("is-dragging");
-        cancelAnimationFrame(dragFrame);
-        dragFrame=0;
-        historyViewport.scrollLeft=targetScroll;
-
-        /* Gentle, short momentum after release */
-        let speed=Math.max(-.32,Math.min(.32,velocity));
-        let previous=performance.now();
-        function coast(now){
-          const elapsed=Math.min(32,now-previous);
-          previous=now;
-          historyViewport.scrollLeft+=speed*elapsed*3.2;
-          speed*=Math.pow(.94,elapsed/16);
-          revealMilestones();
-          const atStart=historyViewport.scrollLeft<=0;
-          const atEnd=historyViewport.scrollLeft>=historyViewport.scrollWidth-historyViewport.clientWidth;
-          if(Math.abs(speed)>.018 && !atStart && !atEnd){
-            frame=requestAnimationFrame(coast);
-          }else{
-            frame=0;
-          }
-        }
-        if(Math.abs(speed)>.035) frame=requestAnimationFrame(coast);
+        updateActiveIndex();
       }
-
       historyViewport.addEventListener("pointerup",endHistoryDrag);
       historyViewport.addEventListener("pointercancel",endHistoryDrag);
       historyViewport.addEventListener("lostpointercapture",endHistoryDrag);
+      historyItems.forEach(function(item,index){item.classList.toggle("is-visible",index===0);});
       revealMilestones();
     }
   }

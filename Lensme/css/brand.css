@@ -903,3 +903,9 @@
   padding: 0 !important;
   border-radius: 50% !important;
 }
+
+
+/* Rounded pill shape for the online-to-store action buttons */
+.brand-experience-actions .brand-cta-link {
+  border-radius: 999px;
+}

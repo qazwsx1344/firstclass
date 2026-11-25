@@ -295,26 +295,28 @@
 document.addEventListener("DOMContentLoaded",function(){
   const brandStory=document.querySelector(".brand-story");
   if(brandStory){
-    const revealSections=Array.from(brandStory.children).filter(function(section){
-      return section.tagName==="SECTION";
-    });
-    brandStory.classList.add("is-scroll-reveal-ready");
+    const revealSections=Array.from(brandStory.querySelectorAll(":scope > section"));
+    const reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if("IntersectionObserver" in window){
-      const sectionObserver=new IntersectionObserver(function(entries){
+    if(reduceMotion || !("IntersectionObserver" in window)){
+      revealSections.forEach(section=>section.classList.add("is-scroll-revealed"));
+    }else{
+      brandStory.classList.add("is-scroll-reveal-ready");
+      const sectionObserver=new IntersectionObserver(function(entries,observer){
         entries.forEach(function(entry){
           if(entry.isIntersecting){
             entry.target.classList.add("is-scroll-revealed");
-            sectionObserver.unobserve(entry.target);
+            observer.unobserve(entry.target);
           }
         });
       },{
-        threshold:0.12,
-        rootMargin:"0px 0px -8% 0px"
+        threshold:0,
+        rootMargin:"0px 0px -10% 0px"
       });
-      revealSections.forEach(function(section){sectionObserver.observe(section);});
-    }else{
-      revealSections.forEach(function(section){section.classList.add("is-scroll-revealed");});
+      revealSections.forEach(function(section){
+        section.classList.remove("is-scroll-revealed");
+        sectionObserver.observe(section);
+      });
     }
   }
 

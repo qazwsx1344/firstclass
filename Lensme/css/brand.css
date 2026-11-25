@@ -548,3 +548,25 @@
     transition: none;
   }
 }
+
+
+/* Reliable scroll reveal: trigger when any part of a section enters the viewport */
+.brand-story.is-scroll-reveal-ready > section {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform;
+}
+.brand-story.is-scroll-reveal-ready > section.is-scroll-revealed {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-story.is-scroll-reveal-ready > section,
+  .brand-story.is-scroll-reveal-ready > section.is-scroll-revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}

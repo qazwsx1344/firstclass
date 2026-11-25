@@ -344,6 +344,8 @@ document.addEventListener("DOMContentLoaded",function(){
       let lastTime=0;
       let velocity=0;
       let frame=0;
+      let targetScroll=0;
+      let dragFrame=0;
 
       historyItems.forEach(function(item,index){
         item.classList.toggle("is-visible",index===0);
@@ -366,10 +368,12 @@ document.addEventListener("DOMContentLoaded",function(){
         dragging=true;
         startX=event.clientX;
         startScroll=historyViewport.scrollLeft;
+        targetScroll=startScroll;
         lastX=event.clientX;
         lastTime=performance.now();
         velocity=0;
         cancelAnimationFrame(frame);
+        cancelAnimationFrame(dragFrame);
         historyViewport.classList.add("is-dragging");
         historyViewport.setPointerCapture(event.pointerId);
       });
@@ -381,33 +385,54 @@ document.addEventListener("DOMContentLoaded",function(){
         velocity=(lastX-event.clientX)/elapsed;
         lastX=event.clientX;
         lastTime=now;
-        const target=startScroll-(event.clientX-startX);
-        cancelAnimationFrame(frame);
-        frame=requestAnimationFrame(function(){
-          historyViewport.scrollLeft=target;
-          revealMilestones();
-        });
+        targetScroll=Math.max(0,Math.min(
+          historyViewport.scrollWidth-historyViewport.clientWidth,
+          startScroll-(event.clientX-startX)
+        ));
+
+        if(!dragFrame){
+          function followPointer(){
+            if(!dragging){dragFrame=0;return;}
+            const distance=targetScroll-historyViewport.scrollLeft;
+            historyViewport.scrollLeft+=distance*.22;
+            revealMilestones();
+            if(Math.abs(distance)>.5){
+              dragFrame=requestAnimationFrame(followPointer);
+            }else{
+              historyViewport.scrollLeft=targetScroll;
+              dragFrame=0;
+            }
+          }
+          dragFrame=requestAnimationFrame(followPointer);
+        }
       });
 
       function endHistoryDrag(){
         if(!dragging) return;
         dragging=false;
         historyViewport.classList.remove("is-dragging");
-        cancelAnimationFrame(frame);
-        let speed=Math.max(-1.1,Math.min(1.1,velocity));
+        cancelAnimationFrame(dragFrame);
+        dragFrame=0;
+        historyViewport.scrollLeft=targetScroll;
+
+        /* Gentle, short momentum after release */
+        let speed=Math.max(-.32,Math.min(.32,velocity));
         let previous=performance.now();
         function coast(now){
           const elapsed=Math.min(32,now-previous);
           previous=now;
-          historyViewport.scrollLeft+=speed*elapsed*12;
-          speed*=Math.pow(.90,elapsed/16);
+          historyViewport.scrollLeft+=speed*elapsed*3.2;
+          speed*=Math.pow(.94,elapsed/16);
           revealMilestones();
-          if(Math.abs(speed)>.025 && historyViewport.scrollLeft>0 &&
-             historyViewport.scrollLeft<historyViewport.scrollWidth-historyViewport.clientWidth){
+          const atStart=historyViewport.scrollLeft<=0;
+          const atEnd=historyViewport.scrollLeft>=historyViewport.scrollWidth-historyViewport.clientWidth;
+          if(Math.abs(speed)>.018 && !atStart && !atEnd){
             frame=requestAnimationFrame(coast);
+          }else{
+            frame=0;
           }
         }
-        if(Math.abs(speed)>.06) frame=requestAnimationFrame(coast);
+        if(Math.abs(speed)>.035) frame=requestAnimationFrame(coast);
       }
 
       historyViewport.addEventListener("pointerup",endHistoryDrag);

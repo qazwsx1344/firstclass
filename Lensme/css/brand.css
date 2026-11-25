@@ -570,3 +570,27 @@
     will-change: auto;
   }
 }
+
+/* History timeline next-step button */
+.brand-history-hint {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+.brand-history-hint:hover .brand-history-arrow,
+.brand-history-hint:focus-visible .brand-history-arrow {
+  color: #fff;
+  border-color: #7863A8;
+  background: #7863A8;
+  transform: translateX(4px);
+}
+.brand-history-arrow {
+  transition: color .25s ease, background .25s ease, border-color .25s ease, transform .25s ease;
+}
+.brand-history-hint:focus-visible {
+  outline: 2px solid #7863A8;
+  outline-offset: 5px;
+}

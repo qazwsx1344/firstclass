@@ -680,3 +680,86 @@
     margin-top: 4px;
   }
 }
+
+
+/* FINAL FIX: horizontal history layout and visible navigation controls.
+   Overrides the older one-card-per-screen rules above. */
+.brand-history-section .brand-history-controls {
+  display: flex !important;
+  position: relative !important;
+  z-index: 20 !important;
+  width: 100%;
+  min-height: 48px;
+  margin: 0 0 18px !important;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.brand-history-section .brand-history-controls .brand-history-nav {
+  display: inline-flex !important;
+  position: relative !important;
+  min-width: 46px;
+  min-height: 46px;
+  padding: 0 16px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #b9a7d8 !important;
+  border-radius: 999px;
+  background: #fff !important;
+  color: #625087 !important;
+  font: inherit;
+  font-weight: 600;
+  visibility: visible !important;
+  opacity: 1;
+  cursor: pointer;
+}
+.brand-history-section .brand-history-controls .brand-history-nav:disabled {
+  opacity: .35 !important;
+  cursor: default;
+}
+.brand-history-section .brand-history-viewport {
+  display: block;
+  width: 100%;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-snap-type: none !important;
+  scroll-behavior: auto;
+  cursor: grab;
+}
+.brand-history-section .brand-history-track {
+  display: flex !important;
+  flex-wrap: nowrap;
+  width: max-content !important;
+  min-width: 100%;
+  gap: 28px;
+  padding: 0 3px 18px;
+}
+.brand-history-section .brand-history-item {
+  position: relative;
+  flex: 0 0 min(76vw, 820px) !important;
+  width: min(76vw, 820px) !important;
+  min-width: 0;
+  min-height: 600px;
+}
+.brand-history-section .brand-history-card {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.brand-history-section .brand-history-item.is-visible .brand-history-card {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+@media (max-width: 640px) {
+  .brand-history-section .brand-history-controls { justify-content: center; }
+  .brand-history-section .brand-history-item {
+    flex-basis: 84vw !important;
+    width: 84vw !important;
+    min-height: 510px;
+  }
+  .brand-history-section .brand-history-track { gap: 16px; }
+}

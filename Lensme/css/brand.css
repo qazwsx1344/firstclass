@@ -382,3 +382,60 @@
   .brand-history-card { width: 86%; padding: 20px; }
   .brand-history-image { aspect-ratio: 16 / 9; }
 }
+
+
+/* Refined history interaction: one milestone per drag, smooth release */
+.brand-history-viewport {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+.brand-history-viewport.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+.brand-history-track {
+  display: flex;
+  gap: 0;
+  min-width: 0;
+  max-width: none;
+  padding: 0;
+  will-change: transform;
+}
+.brand-history-item {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 0;
+  scroll-snap-align: none;
+}
+.brand-history-card {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity .45s ease,
+    transform .65s cubic-bezier(.16, 1, .3, 1),
+    box-shadow .25s ease,
+    visibility .45s;
+}
+.brand-history-item.is-active .brand-history-card {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.brand-history-item.is-active.is-top .brand-history-card {
+  transform: translate(-50%, 0);
+}
+.brand-history-item.is-active.is-bottom .brand-history-card {
+  transform: translate(-50%, 0);
+}
+.brand-history-item:not(.is-active) .brand-history-card {
+  transition: opacity .25s ease, transform .45s ease, visibility .25s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-history-card { transition: none; }
+}

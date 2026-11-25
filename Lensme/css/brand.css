@@ -1293,3 +1293,29 @@
     width: min(90%, 560px) !important;
   }
 }
+
+
+/* Final alignment: center the hero's .brand-inner container exactly like the following section */
+.brand-hero .brand-hero-content {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(90%, 1320px) !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  text-align: left !important;
+  box-sizing: border-box !important;
+}
+@media (max-width: 640px) {
+  .brand-hero .brand-hero-content {
+    width: min(90%, 560px) !important;
+  }
+}

@@ -305,48 +305,111 @@ document.addEventListener("DOMContentLoaded",function(){
   });
 
   const historyViewport=document.querySelector(".brand-history-viewport");
-  if(historyViewport){
+  const historyTrack=historyViewport ? historyViewport.querySelector(".brand-history-track") : null;
+  const historyItems=historyViewport ? Array.from(historyViewport.querySelectorAll(".brand-history-item")) : [];
+
+  if(historyViewport && historyTrack && historyItems.length){
+    let pageWidth=historyViewport.clientWidth;
+    let activeIndex=0;
+    let pointerStartX=0;
+    let pointerStartScroll=0;
+    let lastPointerX=0;
+    let lastPointerTime=0;
+    let velocity=0;
     let isDragging=false;
-    let startX=0;
-    let startScrollLeft=0;
+    let dragFrame=0;
+    let pendingScroll=0;
+
+    function setHistoryPageWidths(){
+      pageWidth=historyViewport.clientWidth;
+      historyItems.forEach(function(item){
+        item.style.width=pageWidth+"px";
+        item.style.flexBasis=pageWidth+"px";
+      });
+      historyTrack.style.width=(pageWidth*historyItems.length)+"px";
+      historyViewport.scrollLeft=activeIndex*pageWidth;
+    }
+
+    function showHistoryItem(index){
+      activeIndex=Math.max(0,Math.min(index,historyItems.length-1));
+      historyItems.forEach(function(item,i){
+        item.classList.toggle("is-active",i===activeIndex);
+        if(i===activeIndex) item.classList.add("is-visible");
+      });
+    }
+
+    function goToHistoryItem(index){
+      showHistoryItem(index);
+      historyViewport.scrollTo({
+        left:activeIndex*pageWidth,
+        behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+      });
+    }
+
+    setHistoryPageWidths();
+    showHistoryItem(0);
+    window.addEventListener("resize",setHistoryPageWidths);
 
     historyViewport.addEventListener("pointerdown",function(event){
       if(event.pointerType!=="mouse" || event.button!==0) return;
       isDragging=true;
-      startX=event.clientX;
-      startScrollLeft=historyViewport.scrollLeft;
+      pointerStartX=event.clientX;
+      pointerStartScroll=historyViewport.scrollLeft;
+      lastPointerX=event.clientX;
+      lastPointerTime=performance.now();
+      velocity=0;
+      cancelAnimationFrame(dragFrame);
       historyViewport.classList.add("is-dragging");
       historyViewport.setPointerCapture(event.pointerId);
     });
 
     historyViewport.addEventListener("pointermove",function(event){
       if(!isDragging) return;
-      historyViewport.scrollLeft=startScrollLeft-(event.clientX-startX);
+      const now=performance.now();
+      const deltaX=event.clientX-pointerStartX;
+      const elapsed=Math.max(1,now-lastPointerTime);
+      velocity=(event.clientX-lastPointerX)/elapsed;
+      lastPointerX=event.clientX;
+      lastPointerTime=now;
+      pendingScroll=pointerStartScroll-deltaX;
+      cancelAnimationFrame(dragFrame);
+      dragFrame=requestAnimationFrame(function(){
+        historyViewport.scrollLeft=pendingScroll;
+      });
     });
 
-    function stopHistoryDrag(){
+    function finishHistoryDrag(){
+      if(!isDragging) return;
       isDragging=false;
       historyViewport.classList.remove("is-dragging");
-    }
-    historyViewport.addEventListener("pointerup",stopHistoryDrag);
-    historyViewport.addEventListener("pointercancel",stopHistoryDrag);
-    historyViewport.addEventListener("lostpointercapture",stopHistoryDrag);
-  }
+      cancelAnimationFrame(dragFrame);
 
-  const historyItems=document.querySelectorAll(".brand-history-item");
-  if(historyItems.length){historyItems[0].classList.add("is-visible");}
-  if("IntersectionObserver" in window){
-    const historyObserver=new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add("is-visible");
-          historyObserver.unobserve(entry.target);
-        }
-      });
-    },{root:historyViewport,threshold:.35});
-    historyItems.forEach(function(item){historyObserver.observe(item);});
-  }else{
-    historyItems.forEach(function(item){item.classList.add("is-visible");});
+      const moved=historyViewport.scrollLeft-pointerStartScroll;
+      const distanceThreshold=pageWidth*0.18;
+      let nextIndex=activeIndex;
+
+      if(moved>distanceThreshold || (moved>24 && velocity<-.45)){
+        nextIndex=activeIndex+1;
+      }else if(moved< -distanceThreshold || (moved< -24 && velocity>.45)){
+        nextIndex=activeIndex-1;
+      }
+      goToHistoryItem(nextIndex);
+    }
+
+    historyViewport.addEventListener("pointerup",finishHistoryDrag);
+    historyViewport.addEventListener("pointercancel",finishHistoryDrag);
+    historyViewport.addEventListener("lostpointercapture",finishHistoryDrag);
+
+    historyViewport.addEventListener("scroll",function(){
+      if(isDragging) return;
+      const nearestIndex=Math.round(historyViewport.scrollLeft/pageWidth);
+      if(nearestIndex!==activeIndex) showHistoryItem(nearestIndex);
+    },{passive:true});
+
+    historyViewport.addEventListener("keydown",function(event){
+      if(event.key==="ArrowRight"){event.preventDefault();goToHistoryItem(activeIndex+1);}
+      if(event.key==="ArrowLeft"){event.preventDefault();goToHistoryItem(activeIndex-1);}
+    });
   }
 });
 </script>

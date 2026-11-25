@@ -152,7 +152,7 @@
         <h2 id="brand-history-title">렌즈미가 걸어온 시간</h2>
         <p>렌즈미의 시작부터 지금까지, 브랜드의 순간들을 가로로 살펴보세요.</p>
       </div>
-      <div class="brand-history-hint" aria-hidden="true"><span>좌우로 스크롤해 연혁 보기</span><span class="brand-history-arrow">→</span></div>
+      <div class="brand-history-hint" aria-hidden="true"><span>마우스로 드래그해 다음 연혁 보기</span><span class="brand-history-arrow">→</span></div>
       <div class="brand-history-viewport" tabindex="0" aria-label="렌즈미 연혁. 좌우로 스크롤할 수 있습니다.">
         <div class="brand-history-track">
           <article class="brand-history-item is-top">
@@ -306,12 +306,31 @@ document.addEventListener("DOMContentLoaded",function(){
 
   const historyViewport=document.querySelector(".brand-history-viewport");
   if(historyViewport){
-    historyViewport.addEventListener("wheel",function(event){
-      if(Math.abs(event.deltaY)>Math.abs(event.deltaX) && historyViewport.scrollWidth>historyViewport.clientWidth){
-        event.preventDefault();
-        historyViewport.scrollLeft+=event.deltaY;
-      }
-    },{passive:false});
+    let isDragging=false;
+    let startX=0;
+    let startScrollLeft=0;
+
+    historyViewport.addEventListener("pointerdown",function(event){
+      if(event.pointerType!=="mouse" || event.button!==0) return;
+      isDragging=true;
+      startX=event.clientX;
+      startScrollLeft=historyViewport.scrollLeft;
+      historyViewport.classList.add("is-dragging");
+      historyViewport.setPointerCapture(event.pointerId);
+    });
+
+    historyViewport.addEventListener("pointermove",function(event){
+      if(!isDragging) return;
+      historyViewport.scrollLeft=startScrollLeft-(event.clientX-startX);
+    });
+
+    function stopHistoryDrag(){
+      isDragging=false;
+      historyViewport.classList.remove("is-dragging");
+    }
+    historyViewport.addEventListener("pointerup",stopHistoryDrag);
+    historyViewport.addEventListener("pointercancel",stopHistoryDrag);
+    historyViewport.addEventListener("lostpointercapture",stopHistoryDrag);
   }
 
   const historyItems=document.querySelectorAll(".brand-history-item");

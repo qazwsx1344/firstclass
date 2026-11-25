@@ -152,7 +152,7 @@
         <h2 id="brand-history-title">렌즈미가 걸어온 시간</h2>
         <p>렌즈미의 시작부터 지금까지, 브랜드의 순간들을 가로로 살펴보세요.</p>
       </div>
-      <div class="brand-history-hint" aria-hidden="true"><span>마우스로 드래그해 다음 연혁 보기</span><span class="brand-history-arrow">→</span></div>
+      <button class="brand-history-hint" type="button" aria-label="다음 연혁 보기"><span>다음 연혁 보기</span><span class="brand-history-arrow" aria-hidden="true">→</span></button>
       <div class="brand-history-viewport" tabindex="0" aria-label="렌즈미 연혁. 좌우로 스크롤할 수 있습니다.">
         <div class="brand-history-track">
           <article class="brand-history-item is-top">
@@ -350,6 +350,23 @@ document.addEventListener("DOMContentLoaded",function(){
       historyItems.forEach(function(item,index){
         item.classList.toggle("is-visible",index===0);
       });
+
+      const historyNextButton=document.querySelector(".brand-history-hint");
+      let currentHistoryIndex=0;
+
+      function goToNextMilestone(){
+        const nextIndex=Math.min(currentHistoryIndex+1,historyItems.length-1);
+        if(nextIndex===currentHistoryIndex) return;
+        currentHistoryIndex=nextIndex;
+        const item=historyItems[nextIndex];
+        const targetLeft=item.offsetLeft + item.offsetWidth/2 - historyViewport.clientWidth/2;
+        historyViewport.scrollTo({left:Math.max(0,targetLeft),behavior:"smooth"});
+        item.classList.add("is-visible");
+      }
+
+      if(historyNextButton){
+        historyNextButton.addEventListener("click",goToNextMilestone);
+      }
 
       function revealMilestones(){
         const revealLine=historyViewport.scrollLeft + historyViewport.clientWidth * .72;

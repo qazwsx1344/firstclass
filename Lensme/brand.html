@@ -293,6 +293,31 @@
 </div>
 <script>
 document.addEventListener("DOMContentLoaded",function(){
+  const brandStory=document.querySelector(".brand-story");
+  if(brandStory){
+    const revealSections=Array.from(brandStory.children).filter(function(section){
+      return section.tagName==="SECTION";
+    });
+    brandStory.classList.add("is-scroll-reveal-ready");
+
+    if("IntersectionObserver" in window){
+      const sectionObserver=new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add("is-scroll-revealed");
+            sectionObserver.unobserve(entry.target);
+          }
+        });
+      },{
+        threshold:0.12,
+        rootMargin:"0px 0px -8% 0px"
+      });
+      revealSections.forEach(function(section){sectionObserver.observe(section);});
+    }else{
+      revealSections.forEach(function(section){section.classList.add("is-scroll-revealed");});
+    }
+  }
+
   const products=document.querySelectorAll(".brand-product");
   products.forEach(function(product){
     product.addEventListener("click",function(){

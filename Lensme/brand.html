@@ -144,6 +144,61 @@
       </div>
     </div>
   </section>
+  <!-- 브랜드 연혁 가로 타임라인: 문구와 연도는 교체용 예시 콘텐츠 -->
+  <section class="brand-history-section" aria-labelledby="brand-history-title">
+    <div class="brand-inner">
+      <div class="brand-section-head">
+        <p class="brand-eyebrow">LENS ME HISTORY</p>
+        <h2 id="brand-history-title">렌즈미가 걸어온 시간</h2>
+        <p>렌즈미의 시작부터 지금까지, 브랜드의 순간들을 가로로 살펴보세요.</p>
+      </div>
+      <div class="brand-history-hint" aria-hidden="true"><span>좌우로 스크롤해 연혁 보기</span><span class="brand-history-arrow">→</span></div>
+      <div class="brand-history-viewport" tabindex="0" aria-label="렌즈미 연혁. 좌우로 스크롤할 수 있습니다.">
+        <div class="brand-history-track">
+          <article class="brand-history-item is-top">
+            <div class="brand-history-card">
+              <span class="brand-history-year">2011</span>
+              <h3>렌즈미의 시작</h3>
+              <p>브랜드의 첫걸음을 소개하는 문구를 입력해 주세요.</p>
+              <div class="brand-history-image"><img src="img/7.jpg" alt="렌즈미 브랜드 연혁 이미지 예시 1"></div>
+            </div>
+          </article>
+          <article class="brand-history-item is-bottom">
+            <div class="brand-history-card">
+              <span class="brand-history-year">2016</span>
+              <h3>새로운 도약</h3>
+              <p>매장과 브랜드가 성장한 순간을 입력해 주세요.</p>
+              <div class="brand-history-image"><img src="img/8.jpg" alt="렌즈미 브랜드 연혁 이미지 예시 2"></div>
+            </div>
+          </article>
+          <article class="brand-history-item is-top">
+            <div class="brand-history-card">
+              <span class="brand-history-year">2019</span>
+              <h3>브랜드 경험 확장</h3>
+              <p>새로운 서비스나 변화를 소개하는 문구를 입력해 주세요.</p>
+              <div class="brand-history-image"><img src="img/9.png" alt="렌즈미 브랜드 연혁 이미지 예시 3"></div>
+            </div>
+          </article>
+          <article class="brand-history-item is-bottom">
+            <div class="brand-history-card">
+              <span class="brand-history-year">2022</span>
+              <h3>다양한 만남</h3>
+              <p>렌즈미의 주요 활동을 소개하는 문구를 입력해 주세요.</p>
+              <div class="brand-history-image"><img src="img/3.png" alt="렌즈미 브랜드 연혁 이미지 예시 4"></div>
+            </div>
+          </article>
+          <article class="brand-history-item is-top">
+            <div class="brand-history-card">
+              <span class="brand-history-year">2026</span>
+              <h3>오늘의 렌즈미</h3>
+              <p>현재 렌즈미의 모습과 앞으로의 방향을 입력해 주세요.</p>
+              <div class="brand-history-image"><img src="img/10.jpg" alt="렌즈미 브랜드 연혁 이미지 예시 5"></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="brand-section" aria-labelledby="brand-experience-title">
     <div class="brand-inner">
       <div class="brand-section-head"><p class="brand-eyebrow">ONLINE TO OFFLINE</p><h2 id="brand-experience-title">온라인에서 매장까지 이어지는 경험</h2><p>원하는 렌즈를 온라인에서 살펴보고, 가까운 매장을 선택해 예약할 수 있습니다.</p></div>
@@ -248,6 +303,31 @@ document.addEventListener("DOMContentLoaded",function(){
       });
     });
   });
+
+  const historyViewport=document.querySelector(".brand-history-viewport");
+  if(historyViewport){
+    historyViewport.addEventListener("wheel",function(event){
+      if(Math.abs(event.deltaY)>Math.abs(event.deltaX) && historyViewport.scrollWidth>historyViewport.clientWidth){
+        event.preventDefault();
+        historyViewport.scrollLeft+=event.deltaY;
+      }
+    },{passive:false});
+  }
+
+  const historyItems=document.querySelectorAll(".brand-history-item");
+  if("IntersectionObserver" in window){
+    const historyObserver=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add("is-visible");
+          historyObserver.unobserve(entry.target);
+        }
+      });
+    },{root:historyViewport,threshold:.35});
+    historyItems.forEach(function(item){historyObserver.observe(item);});
+  }else{
+    historyItems.forEach(function(item){item.classList.add("is-visible");});
+  }
 });
 </script>
 </body>

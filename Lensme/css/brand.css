@@ -526,3 +526,25 @@
 @media (prefers-reduced-motion: reduce) {
   .brand-history-card { transition: none; opacity: 1; transform: translate(-50%, 0); }
 }
+
+
+/* Scroll-triggered section reveal: fade from 0% to full opacity */
+.brand-story.is-scroll-reveal-ready > section {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity .85s ease,
+    transform .85s cubic-bezier(.2, .7, .2, 1);
+}
+.brand-story.is-scroll-reveal-ready > section.is-scroll-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-story.is-scroll-reveal-ready > section,
+  .brand-story.is-scroll-reveal-ready > section.is-scroll-revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

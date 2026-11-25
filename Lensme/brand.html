@@ -305,111 +305,82 @@ document.addEventListener("DOMContentLoaded",function(){
   });
 
   const historyViewport=document.querySelector(".brand-history-viewport");
-  const historyTrack=historyViewport ? historyViewport.querySelector(".brand-history-track") : null;
-  const historyItems=historyViewport ? Array.from(historyViewport.querySelectorAll(".brand-history-item")) : [];
+  if(historyViewport){
+    const historyItems=Array.from(historyViewport.querySelectorAll(".brand-history-item"));
+    if(historyItems.length){
+      historyItems[0].classList.add("is-visible");
 
-  if(historyViewport && historyTrack && historyItems.length){
-    let pageWidth=historyViewport.clientWidth;
-    let activeIndex=0;
-    let pointerStartX=0;
-    let pointerStartScroll=0;
-    let lastPointerX=0;
-    let lastPointerTime=0;
-    let velocity=0;
-    let isDragging=false;
-    let dragFrame=0;
-    let pendingScroll=0;
-
-    function setHistoryPageWidths(){
-      pageWidth=historyViewport.clientWidth;
-      historyItems.forEach(function(item){
-        item.style.width=pageWidth+"px";
-        item.style.flexBasis=pageWidth+"px";
-      });
-      historyTrack.style.width=(pageWidth*historyItems.length)+"px";
-      historyViewport.scrollLeft=activeIndex*pageWidth;
-    }
-
-    function showHistoryItem(index){
-      activeIndex=Math.max(0,Math.min(index,historyItems.length-1));
-      historyItems.forEach(function(item,i){
-        item.classList.toggle("is-active",i===activeIndex);
-        if(i===activeIndex) item.classList.add("is-visible");
-      });
-    }
-
-    function goToHistoryItem(index){
-      showHistoryItem(index);
-      historyViewport.scrollTo({
-        left:activeIndex*pageWidth,
-        behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
-      });
-    }
-
-    setHistoryPageWidths();
-    showHistoryItem(0);
-    window.addEventListener("resize",setHistoryPageWidths);
-
-    historyViewport.addEventListener("pointerdown",function(event){
-      if(event.pointerType!=="mouse" || event.button!==0) return;
-      isDragging=true;
-      pointerStartX=event.clientX;
-      pointerStartScroll=historyViewport.scrollLeft;
-      lastPointerX=event.clientX;
-      lastPointerTime=performance.now();
-      velocity=0;
-      cancelAnimationFrame(dragFrame);
-      historyViewport.classList.add("is-dragging");
-      historyViewport.setPointerCapture(event.pointerId);
-    });
-
-    historyViewport.addEventListener("pointermove",function(event){
-      if(!isDragging) return;
-      const now=performance.now();
-      const deltaX=event.clientX-pointerStartX;
-      const elapsed=Math.max(1,now-lastPointerTime);
-      velocity=(event.clientX-lastPointerX)/elapsed;
-      lastPointerX=event.clientX;
-      lastPointerTime=now;
-      pendingScroll=pointerStartScroll-deltaX;
-      cancelAnimationFrame(dragFrame);
-      dragFrame=requestAnimationFrame(function(){
-        historyViewport.scrollLeft=pendingScroll;
-      });
-    });
-
-    function finishHistoryDrag(){
-      if(!isDragging) return;
-      isDragging=false;
-      historyViewport.classList.remove("is-dragging");
-      cancelAnimationFrame(dragFrame);
-
-      const moved=historyViewport.scrollLeft-pointerStartScroll;
-      const distanceThreshold=pageWidth*0.18;
-      let nextIndex=activeIndex;
-
-      if(moved>distanceThreshold || (moved>24 && velocity<-.45)){
-        nextIndex=activeIndex+1;
-      }else if(moved< -distanceThreshold || (moved< -24 && velocity>.45)){
-        nextIndex=activeIndex-1;
+      if("IntersectionObserver" in window){
+        const historyObserver=new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(entry.isIntersecting){
+              entry.target.classList.add("is-visible");
+              historyObserver.unobserve(entry.target);
+            }
+          });
+        },{root:historyViewport,threshold:0.22});
+        historyItems.slice(1).forEach(function(item){historyObserver.observe(item);});
+      }else{
+        historyItems.forEach(function(item){item.classList.add("is-visible");});
       }
-      goToHistoryItem(nextIndex);
+
+      let dragging=false;
+      let startX=0;
+      let startScroll=0;
+      let lastX=0;
+      let lastTime=0;
+      let velocity=0;
+      let frame=0;
+
+      historyViewport.addEventListener("pointerdown",function(event){
+        if(event.pointerType!=="mouse" || event.button!==0) return;
+        dragging=true;
+        startX=event.clientX;
+        startScroll=historyViewport.scrollLeft;
+        lastX=event.clientX;
+        lastTime=performance.now();
+        velocity=0;
+        cancelAnimationFrame(frame);
+        historyViewport.classList.add("is-dragging");
+        historyViewport.setPointerCapture(event.pointerId);
+      });
+
+      historyViewport.addEventListener("pointermove",function(event){
+        if(!dragging) return;
+        const now=performance.now();
+        const elapsed=Math.max(1,now-lastTime);
+        velocity=(lastX-event.clientX)/elapsed;
+        lastX=event.clientX;
+        lastTime=now;
+        const target=startScroll-(event.clientX-startX);
+        cancelAnimationFrame(frame);
+        frame=requestAnimationFrame(function(){
+          historyViewport.scrollLeft=target;
+        });
+      });
+
+      function endDrag(){
+        if(!dragging) return;
+        dragging=false;
+        historyViewport.classList.remove("is-dragging");
+        cancelAnimationFrame(frame);
+        let speed=Math.max(-1.4,Math.min(1.4,velocity));
+        let previous=performance.now();
+        function coast(now){
+          const elapsed=Math.min(32,now-previous);
+          previous=now;
+          historyViewport.scrollLeft+=speed*elapsed*16;
+          speed*=Math.pow(.92,elapsed/16);
+          if(Math.abs(speed)>.025 && historyViewport.scrollLeft < historyViewport.scrollWidth-historyViewport.clientWidth){
+            frame=requestAnimationFrame(coast);
+          }
+        }
+        if(Math.abs(speed)>.08) frame=requestAnimationFrame(coast);
+      }
+      historyViewport.addEventListener("pointerup",endDrag);
+      historyViewport.addEventListener("pointercancel",endDrag);
+      historyViewport.addEventListener("lostpointercapture",endDrag);
     }
-
-    historyViewport.addEventListener("pointerup",finishHistoryDrag);
-    historyViewport.addEventListener("pointercancel",finishHistoryDrag);
-    historyViewport.addEventListener("lostpointercapture",finishHistoryDrag);
-
-    historyViewport.addEventListener("scroll",function(){
-      if(isDragging) return;
-      const nearestIndex=Math.round(historyViewport.scrollLeft/pageWidth);
-      if(nearestIndex!==activeIndex) showHistoryItem(nearestIndex);
-    },{passive:true});
-
-    historyViewport.addEventListener("keydown",function(event){
-      if(event.key==="ArrowRight"){event.preventDefault();goToHistoryItem(activeIndex+1);}
-      if(event.key==="ArrowLeft"){event.preventDefault();goToHistoryItem(activeIndex-1);}
-    });
   }
 });
 </script>

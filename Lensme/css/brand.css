@@ -1236,3 +1236,30 @@
   visibility: visible !important;
   transform: none !important;
 }
+
+
+/* Align only the brand hero copy with the shared .brand-inner grid used by the next section */
+.brand-hero .brand-hero-content {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: min(90%, 1320px) !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  text-align: left !important;
+  box-sizing: border-box;
+}
+@media (max-width: 640px) {
+  .brand-hero .brand-hero-content {
+    width: min(90%, 560px) !important;
+    padding: 0 !important;
+  }
+}

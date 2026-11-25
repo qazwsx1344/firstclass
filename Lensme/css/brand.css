@@ -1263,3 +1263,33 @@
     padding: 0 !important;
   }
 }
+
+
+/* Precise left alignment: use the same centered content gutter as the next .brand-inner section */
+.brand-hero .brand-hero-frame {
+  position: relative !important;
+}
+.brand-hero .brand-hero-content {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: max(5%, calc((100% - 1320px) / 2)) !important;
+  right: auto !important;
+  width: min(90%, 1320px) !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  text-align: left !important;
+  box-sizing: border-box !important;
+}
+@media (max-width: 640px) {
+  .brand-hero .brand-hero-content {
+    left: 5% !important;
+    width: min(90%, 560px) !important;
+  }
+}

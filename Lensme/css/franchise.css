@@ -780,3 +780,46 @@
   }
   .franchise-inquiry-form .franchise-button{transition:none}
 }
+
+
+/* 01 / WHY LENS-ME — clear separation from hero and card surfaces */
+.franchise-advantages{
+  background:#fff !important;
+  padding-top:112px !important;
+  padding-bottom:104px !important;
+}
+.franchise-advantages .franchise-section-heading{
+  margin-bottom:30px;
+}
+.franchise-advantages .franchise-info-card{
+  background:#fff !important;
+  border:1px solid rgba(120,99,168,.16) !important;
+  border-radius:24px !important;
+  box-shadow:0 10px 30px rgba(76,58,112,.08) !important;
+  padding:18px !important;
+  transition:transform .28s ease, box-shadow .28s ease;
+}
+.franchise-advantages .franchise-info-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 16px 36px rgba(76,58,112,.13) !important;
+}
+.franchise-advantages .franchise-card-image{
+  border-radius:17px !important;
+  overflow:hidden;
+}
+.franchise-advantages .franchise-card-copy{
+  padding:4px 2px 2px !important;
+}
+@media(max-width:680px){
+  .franchise-advantages{
+    padding-top:72px !important;
+    padding-bottom:64px !important;
+  }
+  .franchise-advantages .franchise-info-card{
+    border-radius:20px !important;
+    padding:14px !important;
+  }
+  .franchise-advantages .franchise-card-image{
+    border-radius:15px !important;
+  }
+}

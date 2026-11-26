@@ -14,7 +14,10 @@
 <style>
 /* 온라인 전용 렌즈 페이지 전용 레이아웃 */
 .online-lens-hero{box-sizing:border-box;position:relative;isolation:isolate;height:340px;min-height:340px;padding:0;background-color:#f5f1fa;background-image:url("img/lensme-store-ai-03.png");background-repeat:no-repeat;background-position:center;background-size:cover}
+.online-lens-hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(90deg,rgba(247,243,251,.98) 0%,rgba(247,243,251,.94) 27%,rgba(247,243,251,.78) 43%,rgba(247,243,251,.38) 61%,rgba(247,243,251,0) 82%)}
 .online-lens-hero .subpage-inner{position:relative;z-index:1}
+.online-lens-hero .subpage-eyebrow,.online-lens-hero h1{color:#292536}
+.online-lens-hero .subpage-intro{color:#514b60}
 .online-lens-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 .online-lens-tab{box-sizing:border-box;min-width:100px;height:40px;padding:0 18px;border:1px solid #7863A8;border-radius:999px;background:#7863A8;color:#fff;font:600 14px/1 "Pretendard Variable",Pretendard,sans-serif;cursor:pointer;transition:background-color .18s ease,color .18s ease}
 .online-lens-tab:hover,.online-lens-tab:focus-visible,.online-lens-tab.is-active{background:#fff;color:#7863A8}

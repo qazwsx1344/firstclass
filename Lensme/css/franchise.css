@@ -492,3 +492,102 @@
   .franchise-cost-placeholder{border-radius:18px}
   .franchise-hero-image{border-radius:20px}
 }
+
+
+/* HERO UPDATE: match the full-width subpage header banners */
+.franchise-hero{
+  position:relative;
+  display:flex;
+  align-items:center;
+  box-sizing:border-box;
+  width:100%;
+  height:340px;
+  min-height:340px;
+  padding:0;
+  overflow:hidden;
+  isolation:isolate;
+  background:#f5f1fa;
+}
+.franchise-hero .franchise-inner{
+  position:relative;
+  z-index:2;
+  display:flex;
+  width:min(92%,1480px);
+  height:100%;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  margin:0 auto;
+}
+.franchise-hero .franchise-inner>.franchise-eyebrow,
+.franchise-hero .franchise-inner>h1,
+.franchise-hero .franchise-inner>.franchise-hero-desc{
+  position:relative;
+  z-index:2;
+  max-width:620px;
+}
+.franchise-hero .franchise-inner>h1{
+  margin:12px 0 0;
+  font-size:clamp(32px,3.2vw,48px);
+  line-height:1.2;
+}
+.franchise-hero .franchise-inner>.franchise-hero-desc{
+  margin:18px 0 0;
+  font-size:clamp(15px,1.5vw,18px);
+  line-height:1.6;
+}
+.franchise-hero-grid{
+  position:absolute;
+  z-index:0;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  margin:0;
+}
+.franchise-hero-cta{display:none !important}
+.franchise-hero-image{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  min-height:0;
+  border-radius:0;
+  background:#eee8f8;
+}
+.franchise-hero-image::after{
+  position:absolute;
+  inset:0;
+  display:block;
+  content:"";
+  pointer-events:none;
+  background:linear-gradient(90deg,
+    rgba(247,243,251,.98) 0%,
+    rgba(247,243,251,.94) 27%,
+    rgba(247,243,251,.78) 43%,
+    rgba(247,243,251,.38) 61%,
+    rgba(247,243,251,0) 82%);
+}
+.franchise-hero-image img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+@media(max-width:768px){
+  .franchise-hero{height:300px;min-height:300px}
+  .franchise-hero .franchise-inner{width:92%}
+  .franchise-hero .franchise-inner>h1{max-width:520px;font-size:clamp(29px,6vw,36px)}
+  .franchise-hero .franchise-inner>.franchise-hero-desc{max-width:440px;font-size:14px}
+  .franchise-hero-image img{object-position:60% center}
+  .franchise-hero-image::after{
+    background:linear-gradient(90deg,rgba(247,243,251,.97) 0%,rgba(247,243,251,.86) 48%,rgba(247,243,251,.2) 100%);
+  }
+}
+@media(max-width:480px){
+  .franchise-hero{height:260px;min-height:260px}
+  .franchise-hero .franchise-inner>h1{font-size:29px}
+  .franchise-hero .franchise-inner>.franchise-hero-desc{max-width:310px}
+}

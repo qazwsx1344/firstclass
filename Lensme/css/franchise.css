@@ -593,40 +593,61 @@
 }
 
 
-/* BUSINESS MODEL — manually draggable horizontal step cards */
+/* BUSINESS MODEL — staggered entrance + manual horizontal drag */
 .franchise-business-model .franchise-flow-list{
   display:flex;
-  width:min(1400px,calc(100% - 100px));
+  width:min(1280px,calc(100% - 144px));
   max-width:100%;
-  gap:20px;
+  gap:18px;
   overflow-x:auto;
   overflow-y:hidden;
-  margin-top:32px;
-  padding:8px 4px 22px;
+  margin:30px auto 0;
+  padding:12px 4px 22px;
   box-sizing:border-box;
   list-style:none;
   cursor:grab;
   user-select:none;
   -webkit-user-select:none;
+  -webkit-overflow-scrolling:touch;
   touch-action:pan-x pan-y;
   scrollbar-width:thin;
-  scrollbar-color:#ad96dc #eee8f7;
+  scrollbar-color:#a58bd3 #eee8f7;
+  scroll-snap-type:x mandatory;
   scroll-behavior:auto;
 }
 .franchise-business-model .franchise-flow-list.is-dragging{
   cursor:grabbing;
-  scroll-behavior:auto;
 }
 .franchise-business-model .franchise-flow-list li{
-  flex:0 0 calc((100% - 40px)/3);
-  min-width:260px;
-  min-height:250px;
+  flex:0 0 calc((100% - 36px)/3);
+  min-width:250px;
+  min-height:220px;
   box-sizing:border-box;
   scroll-snap-align:start;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.franchise-business-model .franchise-flow-list li:hover{
+  transform:translateY(-4px);
+}
+.franchise-business-model.is-flow-reveal-ready .franchise-flow-list li{
+  opacity:0;
+  transform:translateY(22px);
+}
+.franchise-business-model.is-flow-revealed .franchise-flow-list li{
+  animation:franchiseFlowCardIn .65s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.franchise-business-model.is-flow-revealed .franchise-flow-list li:nth-child(1){animation-delay:0s}
+.franchise-business-model.is-flow-revealed .franchise-flow-list li:nth-child(2){animation-delay:.16s}
+.franchise-business-model.is-flow-revealed .franchise-flow-list li:nth-child(3){animation-delay:.32s}
+.franchise-business-model.is-flow-revealed .franchise-flow-list li:nth-child(4){animation-delay:.48s}
+.franchise-business-model.is-flow-revealed .franchise-flow-list li:nth-child(5){animation-delay:.64s}
+@keyframes franchiseFlowCardIn{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:translateY(0)}
 }
 .franchise-flow-drag-hint{
-  width:min(1400px,calc(100% - 100px));
-  margin:12px auto 0;
+  width:min(1280px,calc(100% - 144px));
+  margin:10px auto 0;
   color:#7863a8;
   font-size:14px;
   line-height:1.6;
@@ -645,7 +666,7 @@
 @media(max-width:1000px){
   .franchise-business-model .franchise-flow-list,
   .franchise-flow-drag-hint{width:calc(100% - 64px)}
-  .franchise-business-model .franchise-flow-list li{flex-basis:calc((100% - 20px)/2)}
+  .franchise-business-model .franchise-flow-list li{flex-basis:calc((100% - 18px)/2)}
 }
 @media(max-width:680px){
   .franchise-business-model .franchise-flow-list,
@@ -659,5 +680,10 @@
   .franchise-flow-drag-hint{font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){
-  .franchise-business-model .franchise-flow-list{scroll-behavior:auto}
+  .franchise-business-model.is-flow-revealed .franchise-flow-list li{
+    animation:none;
+    opacity:1;
+    transform:none;
+  }
+  .franchise-business-model .franchise-flow-list li{transition:none}
 }

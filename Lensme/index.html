@@ -733,16 +733,14 @@
             }
         });
 
-        /* BEST/NEW: Swiper 대신 CSS keyframes로 끊김 없는 무한 흐름 */
+        /* BEST/NEW: 기존 카드 크기는 CSS로 유지하고 상품 목록만 이어 붙임 */
         const bestNewTrack = document.querySelector('.best-new-swiper .swiper-wrapper');
         if (bestNewTrack && !bestNewTrack.dataset.marqueeReady) {
             const originalSlides = Array.from(bestNewTrack.children);
             originalSlides.forEach((slide) => {
                 const clone = slide.cloneNode(true);
                 clone.setAttribute('aria-hidden', 'true');
-                clone.querySelectorAll('button, a').forEach((control) => {
-                    control.setAttribute('tabindex', '-1');
-                });
+                clone.querySelectorAll('button, a').forEach((control) => control.setAttribute('tabindex', '-1'));
                 bestNewTrack.appendChild(clone);
             });
             bestNewTrack.dataset.marqueeReady = 'true';

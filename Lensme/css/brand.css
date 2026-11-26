@@ -1474,3 +1474,22 @@
     scroll-behavior: auto !important;
   }
 }
+
+
+/* History card visibility: give the upper/lower milestone cards enough vertical room */
+.brand-history-section .brand-history-item {
+  min-height: 780px !important;
+}
+.brand-history-section .brand-history-viewport {
+  padding-top: 34px;
+  padding-bottom: 34px;
+}
+@media (max-width: 640px) {
+  .brand-history-section .brand-history-item {
+    min-height: 720px !important;
+  }
+  .brand-history-section .brand-history-viewport {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+}

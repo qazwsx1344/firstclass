@@ -225,8 +225,9 @@
       <form class="franchise-inquiry-form" id="franchise-inquiry-form">
         <label>이름 / 업체명<input type="text" name="name" placeholder="이름 또는 업체명을 입력해 주세요" required></label>
         <label>연락처<input type="tel" name="phone" placeholder="연락 가능한 전화번호를 입력해 주세요" required></label>
-        <label>희망 지역 및 문의 내용<textarea name="message" rows="5" placeholder="희망 지역과 문의 내용을 입력해 주세요" required></textarea></label>
-        <label class="franchise-consent"><input type="checkbox" name="consent" required><span>작성한 내용이 이메일 문의에 포함되는 것에 동의합니다.</span></label>
+        <label>희망 지역<input type="text" name="region" placeholder="예: 서울 강남구" required></label>
+        <label>문의 내용<textarea name="message" rows="5" placeholder="궁금한 점이나 문의 내용을 입력해 주세요" required></textarea></label>
+        <label class="franchise-consent"><input type="checkbox" name="consent" required disabled><span>작성한 내용이 이메일 문의에 포함되는 것에 동의합니다.</span></label>
         <button class="franchise-button franchise-button-dark" type="submit">이메일로 상담 문의하기 <span aria-hidden="true">↗</span></button>
         <p class="franchise-form-note">버튼을 누르면 기본 이메일 앱에서 문의 메일 초안이 열립니다. 실제 접수·저장 기능은 연결되어 있지 않습니다.</p>
       </form>
@@ -333,6 +334,23 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   var form = document.getElementById("franchise-inquiry-form");
   if (!form) return;
+  var consent = form.querySelector('input[name="consent"]');
+  var requiredFields = Array.from(form.querySelectorAll('input[required]:not([type="checkbox"]), textarea[required]'));
+
+  function updateConsentAvailability() {
+    var allFieldsCompleted = requiredFields.every(function (field) {
+      return field.value.trim().length > 0 && field.checkValidity();
+    });
+    consent.disabled = !allFieldsCompleted;
+    if (!allFieldsCompleted) consent.checked = false;
+  }
+
+  requiredFields.forEach(function (field) {
+    field.addEventListener("input", updateConsentAvailability);
+    field.addEventListener("change", updateConsentAvailability);
+  });
+  updateConsentAvailability();
+
   form.addEventListener("submit", function (event) {
     event.preventDefault();
     if (!form.reportValidity()) return;
@@ -341,7 +359,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var body = [
       "이름 / 업체명: " + data.get("name"),
       "연락처: " + data.get("phone"),
-      "희망 지역 및 문의 내용:",
+      "희망 지역: " + data.get("region"),
+      "문의 내용:",
       data.get("message")
     ].join("\n");
     window.location.href = "mailto:marketing@lens-me.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);

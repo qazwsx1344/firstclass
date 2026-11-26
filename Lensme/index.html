@@ -798,30 +798,45 @@
             if (!submenu) return;
 
             link.addEventListener('click', (event) => {
-                if (window.matchMedia('(max-width: 1024px)').matches) {
-                    event.preventDefault();
-                    const isExpanded = link.getAttribute('aria-expanded') === 'true';
-                    navItems.forEach((otherItem) => {
-                        const otherLink = otherItem.querySelector(':scope > a');
-                        if (otherLink && otherItem.querySelector('.nav-submenu')) {
-                            otherLink.setAttribute('aria-expanded', 'false');
-                            otherItem.classList.remove('is-expanded');
-                        }
-                    });
-                    link.setAttribute('aria-expanded', String(!isExpanded));
-                    item.classList.toggle('is-expanded', !isExpanded);
+                event.preventDefault();
+                const isExpanded = link.getAttribute('aria-expanded') === 'true';
+
+                navItems.forEach((otherItem) => {
+                    const otherLink = otherItem.querySelector(':scope > a');
+                    if (otherLink && otherItem.querySelector('.nav-submenu')) {
+                        otherLink.setAttribute('aria-expanded', 'false');
+                        otherItem.classList.remove('is-expanded');
+                    }
+                });
+
+                if (!isExpanded) {
+                    link.setAttribute('aria-expanded', 'true');
+                    item.classList.add('is-expanded');
+                    navigation.classList.add('nav-menu-open');
+                } else {
+                    navigation.classList.remove('nav-menu-open');
                 }
             });
         });
 
-        window.addEventListener('resize', () => {
-            if (window.matchMedia('(min-width: 1025px)').matches) {
+        document.addEventListener('click', (event) => {
+            if (!navigation.contains(event.target)) {
                 navItems.forEach((item) => {
                     item.classList.remove('is-expanded');
                     const link = item.querySelector(':scope > a');
                     if (link) link.setAttribute('aria-expanded', 'false');
                 });
+                navigation.classList.remove('nav-menu-open');
             }
+        });
+
+        window.addEventListener('resize', () => {
+            navItems.forEach((item) => {
+                item.classList.remove('is-expanded');
+                const link = item.querySelector(':scope > a');
+                if (link) link.setAttribute('aria-expanded', 'false');
+            });
+            navigation.classList.remove('nav-menu-open');
         });
     </script>
 </body>

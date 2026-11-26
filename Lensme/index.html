@@ -56,7 +56,7 @@
                         </ul>
                     </div>
                     <div class="nav-item">
-                        <a href="#" aria-expanded="false">매장찾기</a>
+                        <a href="https://qazwsx1344.github.io/firstclass/Lensme/store.html" aria-expanded="false">매장찾기</a>
                         <ul class="nav-submenu">
                             <li><a href="store.html">매장찾기</a></li>
                         </ul>
@@ -781,6 +781,25 @@
             heartButton.querySelector('img').src = nextLiked
                 ? 'img/ant_heart_in.svg'
                 : 'img/ant_heart_out.svg';
+        });
+
+        /* PICK 상품 하트: 버튼 클릭 시 카드 링크 이동을 막고 하트 상태만 변경 */
+        document.querySelector('.pick-section')?.addEventListener('click', (event) => {
+            const heartButton = event.target.closest('.best-new-heart');
+            if (!heartButton) return;
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            const isLiked = heartButton.getAttribute('aria-pressed') === 'true';
+            const nextLiked = !isLiked;
+            heartButton.setAttribute('aria-pressed', String(nextLiked));
+            heartButton.setAttribute('aria-label', nextLiked ? '좋아요 취소' : '좋아요');
+            heartButton.classList.toggle('is-liked', nextLiked);
+            const heartImage = heartButton.querySelector('img');
+            if (heartImage) {
+                heartImage.src = nextLiked ? 'img/ant_heart_in.svg' : 'img/ant_heart_out.svg';
+            }
         });
 
         const menuButton = document.querySelector('.mobile-menu-button');

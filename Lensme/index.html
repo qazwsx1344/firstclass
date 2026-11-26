@@ -733,27 +733,20 @@
             }
         });
 
-        const bestNewSwiper = new Swiper('.best-new-swiper', {
-            slidesPerView: 4,
-            spaceBetween: 20,
-            loop: true,
-            speed: 4200,
-            freeMode: {
-                enabled: true,
-                momentum: false
-            },
-            autoplay: {
-                delay: 0,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true
-            },
-            breakpoints: {
-                0: { slidesPerView: 1.35, spaceBetween: 14 },
-                480: { slidesPerView: 2, spaceBetween: 16 },
-                768: { slidesPerView: 3, spaceBetween: 18 },
-                1200: { slidesPerView: 4, spaceBetween: 20 }
-            }
-        });
+        /* BEST/NEW: Swiper 대신 CSS keyframes로 끊김 없는 무한 흐름 */
+        const bestNewTrack = document.querySelector('.best-new-swiper .swiper-wrapper');
+        if (bestNewTrack && !bestNewTrack.dataset.marqueeReady) {
+            const originalSlides = Array.from(bestNewTrack.children);
+            originalSlides.forEach((slide) => {
+                const clone = slide.cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                clone.querySelectorAll('button, a').forEach((control) => {
+                    control.setAttribute('tabindex', '-1');
+                });
+                bestNewTrack.appendChild(clone);
+            });
+            bestNewTrack.dataset.marqueeReady = 'true';
+        }
 
 
 
@@ -776,19 +769,19 @@
             }
         });
 
-        document.querySelectorAll('.best-new-heart').forEach((heartButton) => {
-            heartButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                const isLiked = heartButton.getAttribute('aria-pressed') === 'true';
-                const nextLiked = !isLiked;
-                heartButton.setAttribute('aria-pressed', String(nextLiked));
-                heartButton.setAttribute('aria-label', nextLiked ? '좋아요 취소' : '좋아요');
-                heartButton.classList.toggle('is-liked', nextLiked);
-                heartButton.querySelector('img').src = nextLiked
-                    ? 'img/ant_heart_in.svg'
-                    : 'img/ant_heart_out.svg';
-            });
+        document.querySelector('.best-new-swiper')?.addEventListener('click', (event) => {
+            const heartButton = event.target.closest('.best-new-heart');
+            if (!heartButton || heartButton.closest('[aria-hidden="true"]')) return;
+            event.preventDefault();
+            event.stopPropagation();
+            const isLiked = heartButton.getAttribute('aria-pressed') === 'true';
+            const nextLiked = !isLiked;
+            heartButton.setAttribute('aria-pressed', String(nextLiked));
+            heartButton.setAttribute('aria-label', nextLiked ? '좋아요 취소' : '좋아요');
+            heartButton.classList.toggle('is-liked', nextLiked);
+            heartButton.querySelector('img').src = nextLiked
+                ? 'img/ant_heart_in.svg'
+                : 'img/ant_heart_out.svg';
         });
 
         const menuButton = document.querySelector('.mobile-menu-button');

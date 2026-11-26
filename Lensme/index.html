@@ -811,7 +811,36 @@
             navigation.classList.toggle('is-open', !isExpanded);
         });
 
-        /* GNB 서브메뉴는 CSS hover/focus 상태로 표시합니다. */
+        /* 데스크톱은 hover, 모바일은 상위 메뉴 클릭으로 서브메뉴 표시 */
+        const navItems = navigation.querySelectorAll('.nav-item');
+        navItems.forEach((item) => {
+            const link = item.querySelector(':scope > a');
+            const submenu = item.querySelector(':scope > .nav-submenu');
+            if (!link || !submenu) return;
+
+            link.addEventListener('click', (event) => {
+                if (!window.matchMedia('(max-width: 1024px)').matches) return;
+                event.preventDefault();
+                const willOpen = !item.classList.contains('is-expanded');
+                navItems.forEach((otherItem) => {
+                    otherItem.classList.remove('is-expanded');
+                    const otherLink = otherItem.querySelector(':scope > a');
+                    if (otherLink) otherLink.setAttribute('aria-expanded', 'false');
+                });
+                item.classList.toggle('is-expanded', willOpen);
+                link.setAttribute('aria-expanded', String(willOpen));
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.matchMedia('(min-width: 1025px)').matches) {
+                navItems.forEach((item) => {
+                    item.classList.remove('is-expanded');
+                    const link = item.querySelector(':scope > a');
+                    if (link) link.setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
     </script>
 </body>
 </html>

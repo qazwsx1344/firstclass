@@ -591,3 +591,73 @@
   .franchise-hero .franchise-inner>h1{font-size:29px}
   .franchise-hero .franchise-inner>.franchise-hero-desc{max-width:310px}
 }
+
+
+/* BUSINESS MODEL — manually draggable horizontal step cards */
+.franchise-business-model .franchise-flow-list{
+  display:flex;
+  width:min(1400px,calc(100% - 100px));
+  max-width:100%;
+  gap:20px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  margin-top:32px;
+  padding:8px 4px 22px;
+  box-sizing:border-box;
+  list-style:none;
+  cursor:grab;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:pan-x pan-y;
+  scrollbar-width:thin;
+  scrollbar-color:#ad96dc #eee8f7;
+  scroll-behavior:auto;
+}
+.franchise-business-model .franchise-flow-list.is-dragging{
+  cursor:grabbing;
+  scroll-behavior:auto;
+}
+.franchise-business-model .franchise-flow-list li{
+  flex:0 0 calc((100% - 40px)/3);
+  min-width:260px;
+  min-height:250px;
+  box-sizing:border-box;
+  scroll-snap-align:start;
+}
+.franchise-flow-drag-hint{
+  width:min(1400px,calc(100% - 100px));
+  margin:12px auto 0;
+  color:#7863a8;
+  font-size:14px;
+  line-height:1.6;
+  text-align:right;
+}
+.franchise-flow-drag-hint span{
+  display:inline-block;
+  margin-left:6px;
+  font-size:18px;
+}
+.franchise-business-model .franchise-flow-list:focus-visible{
+  outline:2px solid rgba(120,99,168,.45);
+  outline-offset:4px;
+  border-radius:18px;
+}
+@media(max-width:1000px){
+  .franchise-business-model .franchise-flow-list,
+  .franchise-flow-drag-hint{width:calc(100% - 64px)}
+  .franchise-business-model .franchise-flow-list li{flex-basis:calc((100% - 20px)/2)}
+}
+@media(max-width:680px){
+  .franchise-business-model .franchise-flow-list,
+  .franchise-flow-drag-hint{width:calc(100% - 40px)}
+  .franchise-business-model .franchise-flow-list{gap:14px}
+  .franchise-business-model .franchise-flow-list li{
+    flex-basis:84%;
+    min-width:250px;
+    min-height:220px;
+  }
+  .franchise-flow-drag-hint{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .franchise-business-model .franchise-flow-list{scroll-behavior:auto}
+}

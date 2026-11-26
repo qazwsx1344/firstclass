@@ -2247,52 +2247,41 @@ body {
 }
 
 
-/* BEST/NEW — continuous autoplay ticker; preserve existing card/image sizing */
+/* BEST/NEW — full-width continuous product stream */
 .best-new-swiper{
-  width:100%;
+  width:100vw !important;
+  max-width:none !important;
+  margin-left:calc(50% - 50vw) !important;
   overflow:hidden !important;
   position:relative;
 }
 .best-new-swiper .swiper-wrapper{
-  display:flex;
-  flex-wrap:nowrap;
+  display:flex !important;
+  flex-wrap:nowrap !important;
   align-items:stretch;
-  width:max-content;
+  width:max-content !important;
   gap:20px;
-  transform:translate3d(0,0,0);
   transition:none !important;
-  animation:bestNewContinuousFlow 38s linear infinite !important;
+  animation:bestNewContinuousFlow 42s linear infinite !important;
   will-change:transform;
 }
 .best-new-swiper .swiper-slide{
-  flex:0 0 calc((min(92vw,1480px) - 60px) / 4);
-  width:calc((min(92vw,1480px) - 60px) / 4);
-  max-width:355px;
+  flex:0 0 clamp(250px,17vw,320px) !important;
+  width:clamp(250px,17vw,320px) !important;
+  max-width:none !important;
   min-width:0;
   height:auto;
 }
-.best-new-swiper:hover .swiper-wrapper{
-  animation-play-state:paused !important;
-}
+.best-new-swiper:hover .swiper-wrapper{animation-play-state:paused !important}
 @keyframes bestNewContinuousFlow{
   from{transform:translate3d(0,0,0)}
-  to{transform:translate3d(calc(-50% - 10px),0,0)}
+  to{transform:translate3d(-50%,0,0)}
 }
 @media(max-width:767px){
-  .best-new-swiper .swiper-wrapper{
-    gap:14px;
-    animation-duration:34s !important;
-  }
-  .best-new-swiper .swiper-slide{
-    flex:0 0 72vw;
-    width:72vw;
-    max-width:none;
-  }
+  .best-new-swiper .swiper-wrapper{gap:14px;animation-duration:38s !important}
+  .best-new-swiper .swiper-slide{flex-basis:72vw !important;width:72vw !important}
 }
 @media(prefers-reduced-motion:reduce){
-  .best-new-swiper .swiper-wrapper{
-    animation:none !important;
-    transform:none !important;
-  }
+  .best-new-swiper .swiper-wrapper{animation:none !important;transform:none !important}
   .best-new-swiper{overflow-x:auto !important}
 }

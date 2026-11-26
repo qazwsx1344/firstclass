@@ -155,3 +155,134 @@
 @media(prefers-reduced-motion:reduce){
   .franchise-button,.franchise-info-card,.franchise-card-image img,.franchise-gallery-grid img{transition:none}
 }
+
+
+/* Visibility enhancement: keep the current Figma layout, increase scale and readability */
+.franchise-inner,
+.franchise-section>.franchise-section-heading,
+.franchise-section>.franchise-card-grid,
+.franchise-section>.franchise-flow-list,
+.franchise-section>.franchise-gallery-grid,
+.franchise-section>.franchise-opening-list,
+.franchise-section>.franchise-cost-panel,
+.franchise-section>.franchise-faq-list,
+.franchise-section>.franchise-disclaimer,
+.franchise-inquiry-section{
+  width:min(1400px,calc(100% - 100px));
+}
+.franchise-hero{padding:84px 0}
+.franchise-hero .franchise-inner>h1{font-size:clamp(40px,3.4vw,54px);line-height:1.22}
+.franchise-hero-desc{font-size:18px;line-height:1.8}
+.franchise-eyebrow{font-size:14px}
+.franchise-hero-grid{grid-template-columns:minmax(390px,.82fr) minmax(0,1.18fr);gap:36px;margin-top:30px}
+.franchise-hero-cta{gap:20px;padding:34px}
+.franchise-hero-cta h2{font-size:30px}
+.franchise-hero-cta p{font-size:17px;line-height:1.8}
+.franchise-hero-cta .franchise-button{width:240px;min-height:60px;font-size:16px}
+.franchise-hero-image{height:500px;min-height:500px}
+.franchise-section{padding-top:92px;padding-bottom:92px}
+.franchise-section-heading{margin-bottom:30px}
+.franchise-section-heading .franchise-eyebrow{margin-bottom:18px}
+.franchise-section-heading h2{font-size:42px;line-height:1.3}
+.franchise-section-heading>p:last-child{font-size:18px;line-height:1.8}
+.franchise-card-grid{gap:24px}
+.franchise-card-grid-four{gap:20px}
+.franchise-info-card,.franchise-card-grid-four .franchise-info-card{padding:22px}
+.franchise-card-image{height:270px}
+.franchise-card-grid-four .franchise-card-image{height:245px}
+.franchise-card-copy>span{font-size:12px;margin-top:16px}
+.franchise-card-copy h3,.franchise-card-grid-four .franchise-card-copy h3{font-size:24px;margin:10px 0}
+.franchise-card-copy p{font-size:16px;line-height:1.8}
+.franchise-disclaimer{font-size:14px;line-height:1.8}
+.franchise-flow-list{gap:16px;margin-top:30px}
+.franchise-flow-list li{min-height:230px;padding:20px}
+.franchise-flow-list li>span,.franchise-opening-list li>span{font-size:15px}
+.franchise-flow-list li i{width:68px;height:68px;margin:16px 0 14px;font-size:30px}
+.franchise-flow-list h3,.franchise-opening-list h3{font-size:21px}
+.franchise-flow-list p,.franchise-opening-list p{font-size:15px;line-height:1.8}
+.franchise-gallery-grid{gap:28px}
+.franchise-gallery-grid figure{height:360px}
+.franchise-gallery-grid figcaption{padding:22px;font-size:12px}
+.franchise-gallery-grid figcaption span{font-size:16px}
+.franchise-opening-list{gap:16px;margin-top:30px}
+.franchise-opening-list li{min-height:210px;padding:20px}
+.franchise-opening-list h3{margin-top:42px;font-size:19px}
+.franchise-cost-panel{gap:48px;padding:26px 0 36px}
+.franchise-cost-panel h3{font-size:30px}
+.franchise-cost-panel p{font-size:17px;line-height:1.9}
+.franchise-cost-placeholder{min-height:250px}
+.franchise-cost-placeholder span{font-size:12px}
+.franchise-cost-placeholder strong{font-size:26px}
+.franchise-cost-placeholder small{font-size:15px}
+.franchise-faq-list summary{padding:24px 50px 24px 8px;font-size:18px}
+.franchise-faq-list summary:after{font-size:26px}
+.franchise-faq-list details p{padding:0 50px 24px 8px;font-size:16px;line-height:1.85}
+.franchise-inquiry-section{gap:76px;margin-bottom:100px}
+.franchise-inquiry-heading h2{font-size:44px}
+.franchise-inquiry-heading>p:not(.franchise-eyebrow){font-size:18px;line-height:1.8}
+.franchise-contact-info a{font-size:18px}
+.franchise-inquiry-form{gap:20px}
+.franchise-inquiry-form>label:not(.franchise-consent){font-size:14px}
+.franchise-inquiry-form input[type="text"],.franchise-inquiry-form input[type="tel"],.franchise-inquiry-form textarea{padding:16px;font-size:16px}
+.franchise-inquiry-form textarea{min-height:140px}
+.franchise-consent{font-size:14px}
+.franchise-form-note{font-size:12px}
+@media(max-width:1000px){
+  .franchise-inner,
+  .franchise-section>.franchise-section-heading,
+  .franchise-section>.franchise-card-grid,
+  .franchise-section>.franchise-flow-list,
+  .franchise-section>.franchise-gallery-grid,
+  .franchise-section>.franchise-opening-list,
+  .franchise-section>.franchise-cost-panel,
+  .franchise-section>.franchise-faq-list,
+  .franchise-section>.franchise-disclaimer,
+  .franchise-inquiry-section{width:calc(100% - 64px)}
+  .franchise-hero-image{height:400px;min-height:400px}
+  .franchise-card-image{height:230px}
+  .franchise-card-grid-four .franchise-card-image{height:220px}
+  .franchise-gallery-grid figure{height:290px}
+}
+@media(max-width:680px){
+  .franchise-inner,
+  .franchise-section>.franchise-section-heading,
+  .franchise-section>.franchise-card-grid,
+  .franchise-section>.franchise-flow-list,
+  .franchise-section>.franchise-gallery-grid,
+  .franchise-section>.franchise-opening-list,
+  .franchise-section>.franchise-cost-panel,
+  .franchise-section>.franchise-faq-list,
+  .franchise-section>.franchise-disclaimer,
+  .franchise-inquiry-section{width:calc(100% - 40px)}
+  .franchise-hero{padding:48px 0}
+  .franchise-hero .franchise-inner>h1{font-size:36px}
+  .franchise-hero-desc{font-size:15px}
+  .franchise-hero-grid{grid-template-columns:1fr;gap:18px}
+  .franchise-hero-cta{padding:24px}
+  .franchise-hero-cta h2{font-size:25px}
+  .franchise-hero-cta p{font-size:15px}
+  .franchise-hero-image{height:280px;min-height:280px}
+  .franchise-section{padding:60px 0}
+  .franchise-section-heading h2{font-size:30px}
+  .franchise-section-heading>p:last-child{font-size:15px}
+  .franchise-card-grid-three,.franchise-card-grid-four{grid-template-columns:1fr}
+  .franchise-card-image,.franchise-card-grid-four .franchise-card-image{height:240px}
+  .franchise-card-copy h3,.franchise-card-grid-four .franchise-card-copy h3{font-size:22px}
+  .franchise-card-copy p{font-size:15px}
+  .franchise-flow-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .franchise-flow-list li{min-height:205px}
+  .franchise-flow-list h3,.franchise-opening-list h3{font-size:18px}
+  .franchise-flow-list p,.franchise-opening-list p{font-size:14px}
+  .franchise-gallery-grid{grid-template-columns:1fr}
+  .franchise-gallery-grid figure{height:260px}
+  .franchise-opening-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .franchise-opening-list li{min-height:180px}
+  .franchise-cost-panel{grid-template-columns:1fr;gap:24px}
+  .franchise-cost-panel h3{font-size:25px}
+  .franchise-cost-panel p{font-size:15px}
+  .franchise-faq-list summary{font-size:15px}
+  .franchise-faq-list details p{font-size:14px}
+  .franchise-inquiry-section{grid-template-columns:1fr;gap:32px;margin-bottom:64px}
+  .franchise-inquiry-heading h2{font-size:32px}
+  .franchise-inquiry-heading>p:not(.franchise-eyebrow){font-size:15px}
+}

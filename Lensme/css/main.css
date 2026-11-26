@@ -2247,7 +2247,7 @@ body {
 }
 
 
-/* BEST/NEW — seamless keyframe flow; preserve the original product-card proportions */
+/* BEST/NEW — continuous autoplay ticker; preserve existing card/image sizing */
 .best-new-swiper{
   width:100%;
   overflow:hidden !important;
@@ -2255,36 +2255,44 @@ body {
 }
 .best-new-swiper .swiper-wrapper{
   display:flex;
+  flex-wrap:nowrap;
   align-items:stretch;
   width:max-content;
   gap:20px;
   transform:translate3d(0,0,0);
   transition:none !important;
-  animation:bestNewContinuousFlow 48s linear infinite;
+  animation:bestNewContinuousFlow 38s linear infinite !important;
   will-change:transform;
 }
 .best-new-swiper .swiper-slide{
   flex:0 0 calc((min(92vw,1480px) - 60px) / 4);
   width:calc((min(92vw,1480px) - 60px) / 4);
   max-width:355px;
+  min-width:0;
   height:auto;
 }
 .best-new-swiper:hover .swiper-wrapper{
-  animation-play-state:paused;
+  animation-play-state:paused !important;
 }
 @keyframes bestNewContinuousFlow{
   from{transform:translate3d(0,0,0)}
-  to{transform:translate3d(-50%,0,0)}
+  to{transform:translate3d(calc(-50% - 10px),0,0)}
 }
 @media(max-width:767px){
-  .best-new-swiper .swiper-wrapper{gap:14px;animation-duration:40s}
+  .best-new-swiper .swiper-wrapper{
+    gap:14px;
+    animation-duration:34s !important;
+  }
   .best-new-swiper .swiper-slide{
-    flex-basis:72vw;
+    flex:0 0 72vw;
     width:72vw;
     max-width:none;
   }
 }
 @media(prefers-reduced-motion:reduce){
-  .best-new-swiper .swiper-wrapper{animation:none;transform:none}
+  .best-new-swiper .swiper-wrapper{
+    animation:none !important;
+    transform:none !important;
+  }
   .best-new-swiper{overflow-x:auto !important}
 }

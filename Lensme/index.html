@@ -36,8 +36,8 @@
                     <div class="nav-item">
                         <a href="#" aria-expanded="false">렌즈</a>
                         <ul class="nav-submenu">
+                            <li><a href="#">BEST/NEW</a></li>
                             <li><a href="all.html">전체</a></li>
-                            <li><a href="#best-new-title">BEST/NEW</a></li>
                             <li><a href="#">직경별</a></li>
                             <li><a href="#">기능별</a></li>
                         </ul>
@@ -792,53 +792,7 @@
             navigation.classList.toggle('is-open', !isExpanded);
         });
 
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach((item) => {
-            const link = item.querySelector(':scope > a');
-            const submenu = item.querySelector('.nav-submenu');
-            if (!submenu) return;
-
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                const isExpanded = link.getAttribute('aria-expanded') === 'true';
-
-                navItems.forEach((otherItem) => {
-                    const otherLink = otherItem.querySelector(':scope > a');
-                    if (otherLink && otherItem.querySelector('.nav-submenu')) {
-                        otherLink.setAttribute('aria-expanded', 'false');
-                        otherItem.classList.remove('is-expanded');
-                    }
-                });
-
-                if (!isExpanded) {
-                    link.setAttribute('aria-expanded', 'true');
-                    item.classList.add('is-expanded');
-                    navigation.classList.add('nav-menu-open');
-                } else {
-                    navigation.classList.remove('nav-menu-open');
-                }
-            });
-        });
-
-        document.addEventListener('click', (event) => {
-            if (!navigation.contains(event.target)) {
-                navItems.forEach((item) => {
-                    item.classList.remove('is-expanded');
-                    const link = item.querySelector(':scope > a');
-                    if (link) link.setAttribute('aria-expanded', 'false');
-                });
-                navigation.classList.remove('nav-menu-open');
-            }
-        });
-
-        window.addEventListener('resize', () => {
-            navItems.forEach((item) => {
-                item.classList.remove('is-expanded');
-                const link = item.querySelector(':scope > a');
-                if (link) link.setAttribute('aria-expanded', 'false');
-            });
-            navigation.classList.remove('nav-menu-open');
-        });
+        /* GNB 서브메뉴는 CSS hover/focus 상태로 표시합니다. */
     </script>
 </body>
 </html>

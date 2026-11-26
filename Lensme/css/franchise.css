@@ -687,3 +687,27 @@
   }
   .franchise-business-model .franchise-flow-list li{transition:none}
 }
+
+
+/* FRANCHISE PAGE — reveal each section on scroll, matching the brand story */
+.franchise-page.is-page-reveal-ready > section,
+.franchise-page.is-page-reveal-ready > .franchise-content > section{
+  opacity:0;
+  transform:translate3d(0,32px,0);
+  transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  will-change:opacity,transform;
+}
+.franchise-page.is-page-reveal-ready > section.is-page-revealed,
+.franchise-page.is-page-reveal-ready > .franchise-content > section.is-page-revealed{
+  opacity:1;
+  transform:translate3d(0,0,0);
+}
+@media(prefers-reduced-motion:reduce){
+  .franchise-page.is-page-reveal-ready > section,
+  .franchise-page.is-page-reveal-ready > .franchise-content > section{
+    opacity:1;
+    transform:none;
+    transition:none;
+    will-change:auto;
+  }
+}

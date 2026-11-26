@@ -2287,16 +2287,41 @@ body {
 }
 
 
-/* GNB: restore the original hover-open / pointer-leave-close behavior */
+/* GNB dropdown visibility fix: keep submenu text above the purple panel */
 @media (min-width: 1025px){
   .primary-navigation{position:relative; z-index:30}
-  .primary-navigation .nav-item{position:relative}
-  .primary-navigation .nav-item > .nav-submenu{display:none}
+  .primary-navigation .nav-item{
+    position:relative;
+    z-index:2;
+  }
+  .primary-navigation .nav-item:hover,
+  .primary-navigation .nav-item:focus-within{
+    z-index:5;
+  }
+  .primary-navigation .nav-item > .nav-submenu{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    z-index:10;
+    visibility:hidden;
+    opacity:0;
+  }
   .primary-navigation .nav-item:hover > .nav-submenu,
-  .primary-navigation .nav-item:focus-within > .nav-submenu{display:block}
-  .primary-navigation .nav-item.is-expanded > .nav-submenu{display:none}
+  .primary-navigation .nav-item:focus-within > .nav-submenu{
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+  .primary-navigation .nav-item.is-expanded > .nav-submenu{
+    display:none;
+  }
   .primary-navigation:hover::after,
-  .primary-navigation:focus-within::after{display:block}
+  .primary-navigation:focus-within::after{
+    display:block;
+    z-index:1;
+    pointer-events:none;
+  }
 }
 @media (max-width: 1024px){
   .primary-navigation .nav-item.is-expanded > .nav-submenu{display:block}

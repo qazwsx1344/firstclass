@@ -711,3 +711,72 @@
     will-change:auto;
   }
 }
+
+
+/* FINAL REFINEMENTS — opening steps, contact CTA, and reliable section reveal */
+.franchise-opening{
+  background:#fff !important;
+}
+.franchise-opening .franchise-opening-list li{
+  background:#fff !important;
+  border:1px solid rgba(120,99,168,.28) !important;
+  border-radius:20px !important;
+  box-shadow:0 6px 20px rgba(120,99,168,.045);
+}
+.franchise-opening .franchise-opening-list li:last-child{
+  background:#f1eafb !important;
+  border:1px solid rgba(120,99,168,.48) !important;
+}
+.franchise-opening .franchise-opening-list li:last-child > span,
+.franchise-opening .franchise-opening-list li:last-child h3{
+  color:#6f579f;
+}
+.franchise-inquiry-form .franchise-button,
+.franchise-inquiry-form .franchise-button-dark{
+  min-height:56px;
+  padding:0 30px;
+  border:0;
+  border-radius:999px !important;
+  background:#7863a8;
+  color:#fff;
+  font-size:15px;
+  font-weight:650;
+  cursor:pointer;
+  transition:background .2s ease, transform .2s ease;
+}
+.franchise-inquiry-form .franchise-button:hover,
+.franchise-inquiry-form .franchise-button-dark:hover{
+  background:#625087;
+  transform:translateY(-2px);
+}
+.franchise-inquiry-form .franchise-button:focus-visible{
+  outline:3px solid rgba(120,99,168,.3);
+  outline-offset:3px;
+}
+
+/* Every major section starts transparent and fades in once it enters the viewport */
+.franchise-page.is-page-reveal-ready > .franchise-hero,
+.franchise-page.is-page-reveal-ready > .franchise-content > .franchise-section,
+.franchise-page.is-page-reveal-ready > .franchise-content > .franchise-inquiry-section{
+  opacity:0;
+  transform:translate3d(0,24px,0);
+  transition:opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1);
+  will-change:opacity,transform;
+}
+.franchise-page.is-page-reveal-ready > .franchise-hero.is-page-revealed,
+.franchise-page.is-page-reveal-ready > .franchise-content > .franchise-section.is-page-revealed,
+.franchise-page.is-page-reveal-ready > .franchise-content > .franchise-inquiry-section.is-page-revealed{
+  opacity:1;
+  transform:translate3d(0,0,0);
+}
+@media(prefers-reduced-motion:reduce){
+  .franchise-page.is-page-reveal-ready > .franchise-hero,
+  .franchise-page.is-page-reveal-ready > .franchise-content > .franchise-section,
+  .franchise-page.is-page-reveal-ready > .franchise-content > .franchise-inquiry-section{
+    opacity:1;
+    transform:none;
+    transition:none;
+    will-change:auto;
+  }
+  .franchise-inquiry-form .franchise-button{transition:none}
+}

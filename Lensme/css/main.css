@@ -2287,22 +2287,17 @@ body {
 }
 
 
-/* GNB: restore hover navigation; submenu stays open while pointer is over its links */
+/* GNB: restore the original hover-open / pointer-leave-close behavior */
 @media (min-width: 1025px){
+  .primary-navigation{position:relative; z-index:30}
+  .primary-navigation .nav-item{position:relative}
+  .primary-navigation .nav-item > .nav-submenu{display:none}
+  .primary-navigation .nav-item:hover > .nav-submenu,
+  .primary-navigation .nav-item:focus-within > .nav-submenu{display:block}
+  .primary-navigation .nav-item.is-expanded > .nav-submenu{display:none}
   .primary-navigation:hover::after,
-  .primary-navigation:focus-within::after{
-    display:block;
-  }
-  .primary-navigation .nav-item:hover .nav-submenu,
-  .primary-navigation .nav-item:focus-within .nav-submenu{
-    display:block;
-  }
-  .primary-navigation .nav-item.is-expanded .nav-submenu{
-    display:none;
-  }
+  .primary-navigation:focus-within::after{display:block}
 }
 @media (max-width: 1024px){
-  .primary-navigation .nav-item.is-expanded .nav-submenu{
-    display:block;
-  }
+  .primary-navigation .nav-item.is-expanded > .nav-submenu{display:block}
 }

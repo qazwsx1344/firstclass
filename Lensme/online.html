@@ -21,7 +21,12 @@
 .online-lens-tab:focus-visible{outline:2px solid #292536;outline-offset:3px}
 .online-lens-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 20px}
 .online-lens-card{min-width:0}
-.online-lens-card img{display:block;width:100%;aspect-ratio:1/1.25;border-radius:20px;object-fit:cover}
+.online-lens-image{overflow:hidden;aspect-ratio:1/1.25;border:1px solid transparent;border-radius:20px;background:#f5f3f5;transition:border-color .25s ease,box-shadow .25s ease}
+.online-lens-image img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+@media(hover:hover) and (pointer:fine){
+  .online-lens-card:hover .online-lens-image{border-color:#b9a7d8;box-shadow:0 8px 22px rgba(120,99,168,.13)}
+  .online-lens-card:hover .online-lens-image img{transform:scale(1.035)}
+}
 .online-lens-card h3{overflow:hidden;margin:10px 0 3px;color:#292536;font-size:16px;font-weight:500;line-height:1.4;text-overflow:ellipsis;white-space:nowrap}
 .online-lens-card p{margin:0;color:#625e6a;font-size:14px;font-weight:300;line-height:1.5}
 .online-lens-card .online-lens-price{color:#292536}
@@ -33,8 +38,10 @@
 .online-lens-pagination .page-arrow{font-size:22px}
 @media(max-width:900px){.online-lens-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}}
 @media(max-width:768px){.online-lens-hero{height:300px;min-height:300px}}
-@media(max-width:480px){.online-lens-hero{height:260px;min-height:260px;background-image:linear-gradient(90deg,rgba(245,241,250,.98) 0%,rgba(245,241,250,.9) 48%,rgba(245,241,250,.45) 100%),url("img/lensme-store-ai-03.png");background-position:center,right center;background-size:cover,auto 82%}.online-lens-tabs{gap:8px}.online-lens-tab{min-width:calc(25% - 6px);height:38px;padding:0 8px;font-size:13px}.online-lens-grid{gap:20px 12px}.online-lens-card img{border-radius:16px}.online-lens-card h3{font-size:13px}.online-lens-card p{font-size:12px}.online-lens-pagination{gap:10px;margin-top:28px}}
-@media(prefers-reduced-motion:reduce){.online-lens-tab{transition:none}}
+@media(max-width:480px){.online-lens-hero{height:260px;min-height:260px;background-image:linear-gradient(90deg,rgba(245,241,250,.98) 0%,rgba(245,241,250,.9) 48%,rgba(245,241,250,.45) 100%),url("img/lensme-store-ai-03.png");background-position:center,right center;background-size:cover,auto 82%}.online-lens-tabs{gap:8px}.online-lens-tab{min-width:calc(25% - 6px);height:38px;padding:0 8px;font-size:13px}.online-lens-grid{gap:20px 12px}.online-lens-image{border-radius:16px}
+.online-lens-card:active .online-lens-image{border-color:#b9a7d8}
+.online-lens-card:active .online-lens-image img{transform:scale(1.02)}.online-lens-card h3{font-size:13px}.online-lens-card p{font-size:12px}.online-lens-pagination{gap:10px;margin-top:28px}}
+@media(prefers-reduced-motion:reduce){.online-lens-tab,.online-lens-image,.online-lens-image img{transition:none}}
 </style>
 </head>
 <body>
@@ -242,10 +249,13 @@
   function makeCard(color,index){
     var card=document.createElement('article');
     card.className='online-lens-card';
+    var imageWrap=document.createElement('div');
+    imageWrap.className='online-lens-image';
     var image=document.createElement('img');
     image.src='img/'+imageSets[color][index%imageSets[color].length];
     image.alt='온라인 전용 '+labels[color]+' 컬러 렌즈';
     image.loading='lazy';
+    imageWrap.appendChild(image);
     var title=document.createElement('h3');
     title.textContent='온라인 전용 '+labels[color]+' 렌즈';
     var price=document.createElement('p');
@@ -253,7 +263,7 @@
     price.textContent='렌즈 상품';
     var info=document.createElement('p');
     info.textContent='컬러별 상품 정보';
-    card.append(image,title,price,info);
+    card.append(imageWrap,title,price,info);
     return card;
   }
   function drawPagination(totalPages){

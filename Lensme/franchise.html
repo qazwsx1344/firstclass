@@ -237,6 +237,38 @@
 </main>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+  var page = document.querySelector(".franchise-page");
+  if (!page) return;
+
+  var sections = Array.from(page.querySelectorAll(":scope > section, :scope > .franchise-content > section"));
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    sections.forEach(function (section) {
+      section.classList.add("is-page-revealed");
+    });
+    return;
+  }
+
+  page.classList.add("is-page-reveal-ready");
+  var pageObserver = new IntersectionObserver(function (entries, observer) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-page-revealed");
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0,
+    rootMargin: "0px 0px -10% 0px"
+  });
+
+  sections.forEach(function (section) {
+    section.classList.remove("is-page-revealed");
+    pageObserver.observe(section);
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
   var section = document.querySelector(".franchise-business-model");
   var flow = section ? section.querySelector(".franchise-flow-list") : null;
 

@@ -1,42 +1,94 @@
-/* Franchise page — temporary layout draft */
-.franchise-page{overflow:hidden}
-.franchise-hero{min-height:390px;padding:0;background:linear-gradient(112deg,#f5f1fa 0%,#eee6fa 52%,#e3d5f5 100%)}
-.franchise-hero-inner{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);align-items:center;gap:48px;min-height:390px}
-.franchise-hero-copy{position:relative;z-index:2;padding:48px 0}
-.franchise-hero h1{font-size:clamp(36px,4.4vw,58px);line-height:1.2;letter-spacing:-.045em}
-.franchise-hero .subpage-intro{margin-top:20px}
-.franchise-primary-link{display:inline-flex;align-items:center;gap:24px;margin-top:30px;padding:15px 22px;border-radius:999px;background:#7863a8;color:#fff;text-decoration:none;font-size:14px;font-weight:600;transition:transform .2s ease,background .2s ease}
-.franchise-primary-link:hover,.franchise-primary-link:focus-visible{transform:translateY(-3px);background:#625087}
-.franchise-hero-visual{position:relative;display:flex;min-height:300px;align-items:center;justify-content:center;overflow:hidden;border-radius:32px;background:radial-gradient(circle at 48% 42%,rgba(255,255,255,.95),rgba(255,255,255,.24) 34%,transparent 35%),linear-gradient(145deg,rgba(255,255,255,.52),rgba(180,148,229,.22))}
-.franchise-visual-orbit{position:absolute;display:block;width:260px;height:260px;border:1px solid rgba(120,99,168,.35);border-radius:50%;transform:rotate(-28deg) scaleX(1.45)}
-.franchise-orbit-one{width:330px;height:180px}
-.franchise-orbit-two{width:210px;height:300px;transform:rotate(42deg) scaleX(1.2)}
-.franchise-visual-word{position:relative;color:#7863a8;font-size:clamp(46px,6vw,76px);font-weight:800;line-height:.86;letter-spacing:-.08em;text-align:center}
-.franchise-visual-caption{position:absolute;right:26px;bottom:24px;color:#7863a8;font-size:10px;font-weight:700;line-height:1.5;letter-spacing:.16em;text-align:right}
-.franchise-page .subpage-body{padding-top:28px}
-.franchise-intro-section{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:20px 0 100px}
-.franchise-section-heading h2{margin:0;color:#292536;font-size:clamp(28px,3.2vw,42px);font-weight:650;line-height:1.3;letter-spacing:-.04em}
-.franchise-intro-copy{max-width:540px;padding-left:30px;border-left:1px solid #ded3ef;color:#625e6a;font-size:16px;line-height:1.8}
-.franchise-intro-copy p{margin:0}
-.franchise-intro-copy p+p{margin-top:10px}
-.franchise-process-section{padding:76px clamp(20px,4vw,56px) 70px;border-radius:28px;background:#f7f4fb}
-.franchise-centered-heading{text-align:center}
-.franchise-centered-heading h2{font-size:clamp(28px,3vw,38px)}
-.franchise-centered-heading>p:last-child{margin:12px 0 0;color:#746d7e;font-size:15px}
-.franchise-process-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:42px 0 0;padding:0;list-style:none}
-.franchise-process-card{position:relative;display:flex;min-height:190px;flex-direction:column;justify-content:space-between;padding:26px;border:1px solid #e4d9f1;border-radius:20px;background:#fff}
-.franchise-step-number{color:#9b83c4;font-size:13px;font-weight:700;letter-spacing:.12em}
-.franchise-process-card h3{margin:0 0 8px;color:#292536;font-size:21px;font-weight:650}
-.franchise-process-card p{margin:0;color:#746d7e;font-size:14px;line-height:1.6}
-.franchise-step-arrow{position:absolute;right:24px;bottom:22px;color:#9b83c4;font-size:20px}
-.franchise-note{margin:18px 0 0;color:#8b849b;font-size:12px;line-height:1.6}
-.franchise-contact-section{display:flex;align-items:center;justify-content:space-between;gap:32px;margin-top:90px;padding:clamp(28px,4vw,52px);border-radius:24px;background:#292536;color:#fff}
-.franchise-contact-section .subpage-eyebrow{color:#c9b5ec}
-.franchise-contact-section h2{max-width:620px;margin:0;color:#fff;font-size:clamp(24px,2.8vw,34px);line-height:1.3;letter-spacing:-.035em}
-.franchise-contact-section>div:first-child>p:last-child{margin:12px 0 0;color:#d6d0df;font-size:14px;line-height:1.6}
-.franchise-contact-actions{display:flex;flex:0 0 auto;flex-direction:column;gap:10px}
-.franchise-contact-actions a{display:inline-flex;min-width:205px;justify-content:space-between;gap:16px;padding:13px 16px;border:1px solid rgba(255,255,255,.35);border-radius:999px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;transition:background .2s ease,border-color .2s ease}
-.franchise-contact-actions a:hover,.franchise-contact-actions a:focus-visible{border-color:#c9b5ec;background:rgba(255,255,255,.12)}
-@media(max-width:900px){.franchise-hero-inner{grid-template-columns:1fr .8fr;gap:24px}.franchise-hero-visual{min-height:260px}.franchise-intro-section{gap:30px}.franchise-process-list{gap:12px}.franchise-process-card{padding:20px}.franchise-contact-section{align-items:flex-start;flex-direction:column}.franchise-contact-actions{width:100%;flex-direction:row;flex-wrap:wrap}.franchise-contact-actions a{flex:1}}
-@media(max-width:640px){.franchise-hero{min-height:0}.franchise-hero-inner{grid-template-columns:1fr;gap:4px;padding-top:30px;padding-bottom:28px}.franchise-hero-copy{padding:24px 0 10px}.franchise-hero h1{font-size:clamp(32px,9vw,42px)}.franchise-hero-visual{min-height:190px;border-radius:22px}.franchise-visual-word{font-size:54px}.franchise-intro-section{grid-template-columns:1fr;gap:22px;padding:8px 0 64px}.franchise-intro-copy{padding:0 0 0 18px;font-size:14px}.franchise-process-section{padding:44px 18px 36px;border-radius:20px}.franchise-process-list{grid-template-columns:1fr;margin-top:28px}.franchise-process-card{min-height:150px}.franchise-contact-section{margin-top:60px;padding:26px 20px;border-radius:20px}.franchise-contact-actions{flex-direction:column}.franchise-contact-actions a{width:100%;box-sizing:border-box}}
-@media(prefers-reduced-motion:reduce){.franchise-primary-link,.franchise-contact-actions a{transition:none}}
+/* LENS-ME Franchise page — Figma frame 17:1321 */
+.franchise-page{overflow:hidden;color:#282536}
+.franchise-inner{width:min(92%,1280px);margin:0 auto}
+.franchise-content{padding-top:0}
+.franchise-hero{padding:66px 0 72px;background:#f4f0f9}
+.franchise-hero .franchise-inner>h1{margin:26px 0 0;color:#292536;font-size:clamp(38px,4.5vw,60px);font-weight:700;line-height:1.18;letter-spacing:-.055em}
+.franchise-eyebrow{margin:0 0 16px;color:#8068b3;font-size:12px;font-weight:750;letter-spacing:.13em}
+.franchise-hero-desc{margin:18px 0 0;color:#777180;font-size:16px;line-height:1.8}
+.franchise-hero-grid{display:grid;grid-template-columns:430px minmax(0,1fr);gap:30px;align-items:stretch;margin-top:42px}
+.franchise-hero-cta{display:flex;min-height:390px;flex-direction:column;align-items:flex-start;justify-content:center;padding:42px;border-radius:22px;background:#fff}
+.franchise-mini-label{color:#927dbb;font-size:10px;font-weight:750;letter-spacing:.13em}
+.franchise-hero-cta h2{margin:16px 0 0;font-size:26px;letter-spacing:-.04em}
+.franchise-hero-cta p{margin:12px 0 24px;color:#777180;font-size:14px}
+.franchise-button{display:inline-flex;min-height:52px;align-items:center;justify-content:space-between;gap:26px;padding:0 22px;border:0;border-radius:999px;text-decoration:none;font:inherit;font-size:14px;font-weight:650;cursor:pointer;transition:transform .2s ease,background .2s ease}
+.franchise-button:hover,.franchise-button:focus-visible{transform:translateY(-3px)}
+.franchise-button-dark{background:#7863a8;color:#fff}
+.franchise-button-dark:hover,.franchise-button-dark:focus-visible{background:#5f4a91}
+.franchise-hero-image{position:relative;min-height:390px;overflow:hidden;border-radius:22px;background:#ded2f1}
+.franchise-hero-image:after{position:absolute;inset:0;content:"";background:linear-gradient(90deg,rgba(34,25,51,.08),transparent 45%),linear-gradient(0deg,rgba(34,25,51,.3),transparent 40%);pointer-events:none}
+.franchise-hero-image img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center}
+.franchise-image-caption{position:absolute;z-index:1;right:28px;bottom:24px;color:#fff;font-size:10px;font-weight:750;line-height:1.55;letter-spacing:.15em;text-align:right}
+.franchise-content .subpage-breadcrumb{padding-top:30px}
+.franchise-section{padding:88px 0}
+.franchise-section-heading{margin-bottom:36px}
+.franchise-section-heading .franchise-eyebrow{margin-bottom:16px}
+.franchise-section-heading h2{margin:0;color:#292536;font-size:clamp(28px,3vw,40px);font-weight:700;line-height:1.28;letter-spacing:-.045em}
+.franchise-section-heading>p:last-child{margin:14px 0 0;color:#777180;font-size:15px;line-height:1.7}
+.franchise-card-grid{display:grid;gap:20px}
+.franchise-card-grid-three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.franchise-card-grid-four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.franchise-info-card{overflow:hidden;border:1px solid #e9e2f1;border-radius:18px;background:#fff;transition:transform .25s ease,box-shadow .25s ease}
+.franchise-info-card:hover{transform:translateY(-5px);box-shadow:0 16px 36px rgba(52,38,78,.1)}
+.franchise-card-image{height:205px;overflow:hidden;background:#f0ebf6}
+.franchise-card-image img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.franchise-info-card:hover .franchise-card-image img{transform:scale(1.045)}
+.franchise-card-copy{padding:22px 22px 25px}
+.franchise-card-copy>span{color:#927dbb;font-size:10px;font-weight:750;letter-spacing:.1em}
+.franchise-card-copy h3{margin:12px 0 8px;color:#292536;font-size:20px;letter-spacing:-.035em}
+.franchise-card-copy p{margin:0;color:#777180;font-size:13px;line-height:1.7}
+.franchise-disclaimer{margin:18px 0 0;color:#928c9a;font-size:12px;line-height:1.65}
+.franchise-business-model{padding:82px 0;background:#f8f6fa}
+.franchise-flow-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none}
+.franchise-flow-list li{position:relative;min-height:190px;padding:20px;border:1px solid #e8e1f0;border-radius:16px;background:#fff}
+.franchise-flow-list li>span,.franchise-opening-list li>span{display:block;color:#927dbb;font-size:11px;font-weight:750;letter-spacing:.12em}
+.franchise-flow-list li i{display:grid;width:48px;height:48px;margin:18px 0 14px;place-items:center;border-radius:14px;background:#f1ebf8;color:#7863a8;font-size:26px;font-style:normal}
+.franchise-flow-list h3,.franchise-opening-list h3{margin:0;color:#292536;font-size:17px;letter-spacing:-.03em}
+.franchise-flow-list p,.franchise-opening-list p{margin:8px 0 0;color:#777180;font-size:12px;line-height:1.6}
+.franchise-support{padding-bottom:96px}
+.franchise-card-grid-four .franchise-card-image{height:178px}
+.franchise-card-grid-four .franchise-card-copy{padding:20px 18px 22px}
+.franchise-card-grid-four .franchise-card-copy h3{font-size:18px}
+.franchise-store-gallery{padding-top:80px;border-top:1px solid #eee9f3}
+.franchise-gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.franchise-gallery-grid figure{position:relative;height:280px;margin:0;overflow:hidden;border-radius:18px;background:#eee8f5}
+.franchise-gallery-grid img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.franchise-gallery-grid figure:hover img{transform:scale(1.04)}
+.franchise-gallery-grid figcaption{position:absolute;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;background:linear-gradient(0deg,rgba(30,24,42,.72),transparent);color:#fff;font-size:10px;font-weight:750;letter-spacing:.12em}
+.franchise-gallery-grid figcaption span{font-size:13px;font-weight:500;letter-spacing:0}
+.franchise-opening{padding:84px 0;background:#f8f6fa}
+.franchise-opening-list{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none}
+.franchise-opening-list li{min-height:174px;padding:20px 16px;border:1px solid #e9e2f1;border-radius:16px;background:#fff}
+.franchise-opening-list h3{margin-top:34px;font-size:16px}
+.franchise-cost-faq{padding-bottom:100px}
+.franchise-cost-panel{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;padding:32px 0 42px;border-bottom:1px solid #e9e2f1}
+.franchise-cost-panel h3{margin:12px 0;font-size:22px}
+.franchise-cost-panel p{margin:0;color:#777180;font-size:14px;line-height:1.8}
+.franchise-cost-placeholder{display:flex;min-height:190px;flex-direction:column;align-items:center;justify-content:center;gap:12px;border-radius:18px;background:#f3eff8;text-align:center}
+.franchise-cost-placeholder span{color:#927dbb;font-size:10px;font-weight:750;letter-spacing:.13em}
+.franchise-cost-placeholder strong{color:#403651;font-size:20px}
+.franchise-cost-placeholder small{color:#888091;font-size:12px}
+.franchise-faq-list{margin-top:22px;border-top:1px solid #e9e2f1}
+.franchise-faq-list details{border-bottom:1px solid #e9e2f1}
+.franchise-faq-list summary{position:relative;padding:22px 44px 22px 6px;color:#302b3a;font-size:15px;font-weight:600;cursor:pointer;list-style:none}
+.franchise-faq-list summary::-webkit-details-marker{display:none}
+.franchise-faq-list summary:after{position:absolute;top:50%;right:8px;content:"+";color:#8068b3;font-size:22px;font-weight:400;transform:translateY(-50%)}
+.franchise-faq-list details[open] summary:after{content:"−"}
+.franchise-faq-list details p{margin:0;padding:0 44px 22px 6px;color:#777180;font-size:14px;line-height:1.8}
+.franchise-inquiry-section{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;margin:0 0 100px;padding:58px;border-radius:24px;background:#f3eff8}
+.franchise-inquiry-heading h2{margin:0;color:#292536;font-size:clamp(30px,3.2vw,42px);line-height:1.25;letter-spacing:-.045em}
+.franchise-inquiry-heading>p:not(.franchise-eyebrow){margin:16px 0 0;color:#777180;font-size:14px;line-height:1.7}
+.franchise-contact-info{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:30px}
+.franchise-contact-info a{color:#6e579f;font-size:14px;font-weight:650;text-decoration:none}
+.franchise-inquiry-form{display:flex;flex-direction:column;gap:18px}
+.franchise-inquiry-form>label:not(.franchise-consent){display:flex;flex-direction:column;gap:9px;color:#494354;font-size:13px;font-weight:650}
+.franchise-inquiry-form input[type="text"],.franchise-inquiry-form input[type="tel"],.franchise-inquiry-form textarea{width:100%;box-sizing:border-box;padding:14px 16px;border:1px solid #e2d9ed;border-radius:10px;outline:none;background:#fff;color:#302b3a;font:inherit;font-size:14px}
+.franchise-inquiry-form input:focus,.franchise-inquiry-form textarea:focus{border-color:#927dbb;box-shadow:0 0 0 3px rgba(146,125,187,.13)}
+.franchise-inquiry-form textarea{resize:vertical;min-height:130px}
+.franchise-consent{display:flex;align-items:center;gap:9px;color:#716b7b;font-size:12px}
+.franchise-consent input{width:16px;height:16px;accent-color:#7863a8}
+.franchise-inquiry-form .franchise-button{align-self:flex-start}
+.franchise-form-note{margin:-6px 0 0;color:#8c8596;font-size:11px;line-height:1.6}
+@media(max-width:1000px){.franchise-hero-grid{grid-template-columns:340px minmax(0,1fr)}.franchise-hero-cta{padding:30px}.franchise-card-grid-four{grid-template-columns:repeat(2,minmax(0,1fr))}.franchise-opening-list{grid-template-columns:repeat(3,minmax(0,1fr))}.franchise-inquiry-section{gap:36px;padding:40px}}
+@media(max-width:680px){.franchise-hero{padding:42px 0 44px}.franchise-hero .franchise-inner>h1{font-size:36px}.franchise-hero-desc{font-size:14px}.franchise-hero-grid{grid-template-columns:1fr;gap:14px;margin-top:28px}.franchise-hero-cta{min-height:0;padding:26px}.franchise-hero-image{min-height:240px}.franchise-section{padding:62px 0}.franchise-section-heading{margin-bottom:26px}.franchise-section-heading h2{font-size:29px}.franchise-section-heading>p:last-child{font-size:13px}.franchise-card-grid-three,.franchise-card-grid-four{grid-template-columns:1fr}.franchise-card-image,.franchise-card-grid-four .franchise-card-image{height:220px}.franchise-business-model,.franchise-opening{padding:62px 0}.franchise-flow-list{grid-template-columns:repeat(2,minmax(0,1fr))}.franchise-flow-list li:last-child{grid-column:1/-1}.franchise-gallery-grid{grid-template-columns:1fr;gap:14px}.franchise-gallery-grid figure{height:230px}.franchise-opening-list{grid-template-columns:repeat(2,minmax(0,1fr))}.franchise-opening-list li{min-height:150px}.franchise-cost-panel{grid-template-columns:1fr;gap:22px}.franchise-inquiry-section{grid-template-columns:1fr;gap:30px;margin-bottom:64px;padding:30px 22px;border-radius:18px}.franchise-inquiry-heading h2{font-size:32px}.franchise-inquiry-form .franchise-button{width:100%}}
+@media(prefers-reduced-motion:reduce){.franchise-button,.franchise-info-card,.franchise-card-image img,.franchise-gallery-grid img{transition:none}}

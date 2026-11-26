@@ -2272,7 +2272,7 @@ body {
   min-width:0;
   height:auto;
 }
-.best-new-swiper:hover .swiper-wrapper{animation-play-state:paused !important}
+/* Hover 시에도 BEST/NEW 자동 흐름 유지 */
 @keyframes bestNewContinuousFlow{
   from{transform:translate3d(0,0,0)}
   to{transform:translate3d(-50%,0,0)}

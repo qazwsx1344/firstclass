@@ -375,3 +375,120 @@
   .franchise-cost-panel h3{font-size:24px}
   .franchise-inquiry-heading h2{font-size:30px}
 }
+
+
+/* Lensme brand color + rounded visual system */
+.franchise-page{
+  color:var(--color-text-primary,#292536);
+  background:var(--color-background-default,#FEFEFC);
+}
+.franchise-hero{
+  background:var(--color-lavender-mist,#f5f1fa);
+}
+.franchise-hero-cta{
+  border:1px solid rgba(172,151,220,.28);
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 12px 34px rgba(120,99,168,.08);
+}
+.franchise-hero-cta h2,
+.franchise-section-heading h2,
+.franchise-card-copy h3,
+.franchise-flow-list h3,
+.franchise-opening-list h3,
+.franchise-cost-panel h3,
+.franchise-inquiry-heading h2{
+  color:var(--color-text-primary,#292536);
+}
+.franchise-eyebrow,
+.franchise-card-copy>span,
+.franchise-flow-list li>span,
+.franchise-opening-list li>span,
+.franchise-mini-label{
+  color:var(--color-action-primary,#7863a8);
+}
+.franchise-hero-desc,
+.franchise-hero-cta p,
+.franchise-section-heading>p:last-child,
+.franchise-card-copy p,
+.franchise-flow-list p,
+.franchise-opening-list p,
+.franchise-cost-panel p,
+.franchise-faq-list details p,
+.franchise-inquiry-heading>p:not(.franchise-eyebrow){
+  color:#625a70;
+}
+.franchise-advantages,
+.franchise-support,
+.franchise-opening{
+  background:#f5f1fa;
+}
+.franchise-info-card,
+.franchise-flow-list li,
+.franchise-opening-list li{
+  border:1px solid rgba(172,151,220,.25);
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 8px 24px rgba(120,99,168,.055);
+}
+.franchise-card-image,
+.franchise-card-grid-four .franchise-card-image,
+.franchise-hero-image,
+.franchise-gallery-grid figure{
+  overflow:hidden;
+  border-radius:18px;
+  background:#eee8f8;
+}
+.franchise-hero-image{border-radius:26px}
+.franchise-card-image img,
+.franchise-gallery-grid img{
+  border-radius:inherit;
+}
+.franchise-flow-list li i{
+  border-radius:18px;
+  background:#eee7f9;
+  color:var(--color-action-primary,#7863a8);
+}
+.franchise-cost-placeholder{
+  border:1px solid rgba(172,151,220,.22);
+  border-radius:22px;
+  background:linear-gradient(135deg,#f5f1fa 0%,#e9e0f7 100%);
+}
+.franchise-cost-placeholder span{color:var(--color-action-primary,#7863a8)}
+.franchise-cost-placeholder strong{color:var(--color-text-primary,#292536)}
+.franchise-faq-list{border-color:rgba(120,99,168,.22)}
+.franchise-faq-list details{border-color:rgba(120,99,168,.22)}
+.franchise-faq-list summary{color:var(--color-text-primary,#292536)}
+.franchise-faq-list summary:after{color:var(--color-action-primary,#7863a8)}
+.franchise-inquiry-form input[type="text"],
+.franchise-inquiry-form input[type="tel"],
+.franchise-inquiry-form textarea{
+  border:1px solid rgba(172,151,220,.28);
+  border-radius:12px;
+  background:#faf8fd;
+}
+.franchise-inquiry-form input:focus,
+.franchise-inquiry-form textarea:focus{
+  outline:2px solid rgba(120,99,168,.35);
+  border-color:var(--color-action-primary,#7863a8);
+}
+.franchise-contact-info a{color:var(--color-action-primary,#7863a8)}
+.franchise-consent input{accent-color:var(--color-action-primary,#7863a8)}
+.franchise-button{
+  border-radius:999px;
+  background:var(--color-action-primary,#7863a8);
+  color:#fff;
+}
+.franchise-button:hover,
+.franchise-button:focus-visible{
+  background:#625087;
+}
+.franchise-inquiry-section{border-radius:24px}
+@media(max-width:680px){
+  .franchise-hero-cta,
+  .franchise-info-card,
+  .franchise-flow-list li,
+  .franchise-opening-list li,
+  .franchise-cost-placeholder{border-radius:18px}
+  .franchise-hero-image{border-radius:20px}
+}

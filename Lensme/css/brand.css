@@ -1493,3 +1493,22 @@
     padding-bottom: 28px;
   }
 }
+
+
+/* History cards need extra vertical room for longer copy */
+.brand-history-section .brand-history-item {
+  min-height: 1000px !important;
+}
+.brand-history-section .brand-history-viewport {
+  padding-top: 42px;
+  padding-bottom: 42px;
+}
+@media (max-width: 640px) {
+  .brand-history-section .brand-history-item {
+    min-height: 920px !important;
+  }
+  .brand-history-section .brand-history-viewport {
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+}

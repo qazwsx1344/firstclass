@@ -134,7 +134,7 @@
         <li><span>04</span><i aria-hidden="true">⌂</i><h3>매장 방문</h3><p>예약 매장 방문</p></li>
         <li><span>05</span><i aria-hidden="true">＋</i><h3>결제·수령</h3><p>매장에서 결제 후 수령</p></li>
       </ol>
-      <p class="franchise-flow-drag-hint">카드를 마우스로 잡고 좌우로 움직여 다음 순서를 확인해 보세요 <span aria-hidden="true">↔</span></p>
+      <p class="franchise-flow-drag-hint">순서대로 나타나는 이용 과정을 확인한 뒤, 카드를 마우스로 잡고 좌우로 움직여 보세요 <span aria-hidden="true">↔</span></p>
       <p class="franchise-disclaimer">※ 콘택트렌즈는 온라인 예약 후 오프라인 예약 매장에서 결제 및 수령할 수 있습니다.</p>
     </section>
 
@@ -237,46 +237,66 @@
 </main>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  var flow = document.querySelector(".franchise-flow-list");
-  if (flow) {
+  var section = document.querySelector(".franchise-business-model");
+  var flow = section ? section.querySelector(".franchise-flow-list") : null;
+
+  if (section && flow) {
+    /* 카드가 화면에 들어오면 왼쪽부터 순서대로 등장 */
+    section.classList.add("is-flow-reveal-ready");
+
+    if ("IntersectionObserver" in window) {
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          section.classList.add("is-flow-revealed");
+          revealObserver.unobserve(section);
+        });
+      }, { threshold: 0.2 });
+      revealObserver.observe(section);
+    } else {
+      section.classList.add("is-flow-revealed");
+    }
+
+    /* 마우스를 누른 채 좌우로 움직이는 드래그 */
     var isDragging = false;
     var startX = 0;
     var startScrollLeft = 0;
     var moved = false;
 
-    flow.addEventListener("pointerdown", function (event) {
-      if (event.pointerType !== "mouse" || event.button !== 0) return;
+    flow.addEventListener("mousedown", function (event) {
+      if (event.button !== 0) return;
       isDragging = true;
       moved = false;
       startX = event.clientX;
       startScrollLeft = flow.scrollLeft;
       flow.classList.add("is-dragging");
-      flow.setPointerCapture(event.pointerId);
     });
 
-    flow.addEventListener("pointermove", function (event) {
+    document.addEventListener("mousemove", function (event) {
       if (!isDragging) return;
       var distance = event.clientX - startX;
       if (Math.abs(distance) > 4) moved = true;
       flow.scrollLeft = startScrollLeft - distance;
+      if (moved) event.preventDefault();
     });
 
-    function stopFlowDrag() {
+    document.addEventListener("mouseup", function () {
       if (!isDragging) return;
       isDragging = false;
       flow.classList.remove("is-dragging");
-    }
+    });
 
-    flow.addEventListener("pointerup", stopFlowDrag);
-    flow.addEventListener("pointercancel", stopFlowDrag);
-    flow.addEventListener("lostpointercapture", stopFlowDrag);
     flow.addEventListener("click", function (event) {
-      if (moved) {
-        event.preventDefault();
-        event.stopPropagation();
-        moved = false;
-      }
+      if (!moved) return;
+      event.preventDefault();
+      event.stopPropagation();
+      moved = false;
     }, true);
+
+    window.addEventListener("blur", function () {
+      isDragging = false;
+      flow.classList.remove("is-dragging");
+    });
   }
 });
 

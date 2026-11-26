@@ -2287,21 +2287,22 @@ body {
 }
 
 
-/* GNB: desktop and mobile submenus open only after the parent menu is clicked */
+/* GNB: restore hover navigation; submenu stays open while pointer is over its links */
 @media (min-width: 1025px){
   .primary-navigation:hover::after,
-  .primary-navigation:focus-within::after{display:none}
-  .primary-navigation.nav-menu-open::after{
-    content:"";display:block;position:absolute;z-index:1;top:100%;left:50%;
-    width:100vw;height:148px;transform:translateX(-50%);
-    background:#A78FD2;border-radius:0 0 18px 18px;
+  .primary-navigation:focus-within::after{
+    display:block;
   }
   .primary-navigation .nav-item:hover .nav-submenu,
-  .primary-navigation .nav-item:focus-within .nav-submenu{display:none}
-  .primary-navigation .nav-item.is-expanded .nav-submenu{display:block}
+  .primary-navigation .nav-item:focus-within .nav-submenu{
+    display:block;
+  }
+  .primary-navigation .nav-item.is-expanded .nav-submenu{
+    display:none;
+  }
 }
 @media (max-width: 1024px){
-  .primary-navigation .nav-item:hover .nav-submenu,
-  .primary-navigation .nav-item:focus-within .nav-submenu{display:none}
-  .primary-navigation .nav-item.is-expanded .nav-submenu{display:block}
+  .primary-navigation .nav-item.is-expanded .nav-submenu{
+    display:block;
+  }
 }

@@ -131,6 +131,37 @@ document.addEventListener("DOMContentLoaded",function(){
   applyCouponFilter("all");
 });
 </script>
+
+<style>
+/* Coupon hero banner image */
+.coupon-page-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(270px, 22vw, 360px);
+  overflow: hidden;
+  background-color: #eee7f8;
+  background-image:
+    linear-gradient(90deg, rgba(248,245,252,.96) 0%, rgba(248,245,252,.88) 30%, rgba(248,245,252,.28) 62%, rgba(248,245,252,0) 100%),
+    url("img/lensme-coupon.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.coupon-page-hero .subpage-inner {
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 640px) {
+  .coupon-page-hero {
+    min-height: 250px;
+    background-position: 58% center;
+    background-image:
+      linear-gradient(90deg, rgba(248,245,252,.94) 0%, rgba(248,245,252,.78) 48%, rgba(248,245,252,.22) 100%),
+      url("img/lensme-coupon.png");
+  }
+}
+</style>
+
 </head>
 <body>
 <div id="wrap">
@@ -200,7 +231,7 @@ document.addEventListener("DOMContentLoaded",function(){
                             </div>
                         </header>
 <main class="subpage">
-  <section class="subpage-hero" aria-labelledby="page-title"><div class="subpage-inner">
+  <section class="subpage-hero coupon-page-hero" aria-labelledby="page-title"><div class="subpage-inner">
     <p class="subpage-eyebrow">LENS ME COUPON</p><h1 id="page-title">쿠폰</h1><p class="subpage-intro">렌즈미에서 제공하는 쿠폰과 사용 혜택을 확인해 보세요.</p>
   </div></section>
   <div class="subpage-inner subpage-body">

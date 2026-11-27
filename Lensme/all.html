@@ -350,6 +350,9 @@ document.addEventListener('DOMContentLoaded',function(){
   cursor:pointer;
 }
 .all-lens-view-toggle img{display:block;width:94px;height:42px;max-width:100%;object-fit:contain}
+/* 마우스 클릭 후 남는 브라우저 기본 검정 포커스 테두리 제거 */
+.all-lens-view-toggle:focus{outline:none;box-shadow:none}
+.all-lens-view-toggle:focus-visible{outline:2px solid #AC97DC;outline-offset:3px;border-radius:24px}
 .all-lens-results-tools{display:flex;align-items:center;gap:14px}
 .all-lens-category button.is-active{
   border-color:#7863A8;

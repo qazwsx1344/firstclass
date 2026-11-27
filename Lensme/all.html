@@ -1652,13 +1652,22 @@ document.addEventListener('DOMContentLoaded',function(){
     best:'[data-category-bestnew]',
     period:'[data-category-period]',
     function:'[data-category-function]',
-    series:'[data-category-series]'
+    series:'[data-category-series]',
+    other:'[data-category-other]'
   };
   var requestedTabButton=requestedTabSelector[requestedTab]
     ?document.querySelector(requestedTabSelector[requestedTab])
     :null;
   if(requestedTabButton){
     requestedTabButton.click();
+    if(requestedTab==='series'){
+      var requestedSeries=new URLSearchParams(window.location.search).get('series');
+      if(requestedSeries){
+        var requestedSeriesButton=Array.from(document.querySelectorAll('#all-lens-series-tabs button'))
+          .find(function(button){return button.textContent.trim()===requestedSeries;});
+        requestedSeriesButton?.click();
+      }
+    }
   }else{
     render();
   }

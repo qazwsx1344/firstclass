@@ -1646,6 +1646,7 @@ document.addEventListener('DOMContentLoaded',function(){
   sortSelect?.addEventListener('change',function(){currentPage=0;render();});
   /* URL의 tab 값에 맞춰 서브메뉴에서 선택한 카테고리를 초기 활성화 */
   var requestedTab=new URLSearchParams(window.location.search).get('tab');
+  var isHeroReservationEntry=new URLSearchParams(window.location.search).get('from')==='hero';
   var requestedTabSelector={
     all:'[data-category-reset]',
     pick:'[data-category-pick]',

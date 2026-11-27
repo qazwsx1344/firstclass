@@ -1661,7 +1661,7 @@ document.addEventListener('DOMContentLoaded',function(){
     :null;
   if(requestedTabButton){
     requestedTabButton.click();
-    if(requestedTab==='series'){
+    if(requestedTab==='series' && isHeroReservationEntry){
       var requestedSeries=new URLSearchParams(window.location.search).get('series');
       if(requestedSeries){
         var requestedSeriesButton=Array.from(document.querySelectorAll('#all-lens-series-tabs button'))

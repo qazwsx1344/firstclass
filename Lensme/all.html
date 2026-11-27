@@ -83,6 +83,24 @@ document.addEventListener('DOMContentLoaded',function(){
 .all-lens-hero .subpage-intro{max-width:680px}
 @media(max-width:768px){.all-lens-hero{height:300px;min-height:300px;background-image:linear-gradient(90deg,rgba(245,241,250,.98) 0%,rgba(245,241,250,.9) 48%,rgba(245,241,250,.45) 100%),url("img/lens_hero.png");background-position:center,right center;background-size:cover,auto 100%}}
 @media(max-width:480px){.all-lens-hero{height:260px;min-height:260px;background-position:center,right center;background-size:cover,auto 82%}.all-lens-hero .subpage-intro{max-width:90%}}
+/* Figma 73:1248 시리즈별 탭 전용 필터 레이아웃 */
+.all-lens-collection.is-series-mode .all-lens-filter-panel{gap:18px;padding:20px 24px;background:#F7F3FB;border-color:#E7DFF3}
+.all-lens-collection.is-series-mode .all-lens-filter-heading,
+.all-lens-collection.is-series-mode .all-lens-filter-layout{display:none}
+.all-lens-collection.is-series-mode .all-lens-series-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;border:0;border-radius:0;background:transparent}
+.all-lens-collection.is-series-mode .all-lens-series-tabs button{min-height:36px;padding:0 16px;border:1px solid #DED4ED;border-radius:22px;background:#fff;color:#625875;font:500 13px "Pretendard Variable",Pretendard,sans-serif;white-space:nowrap}
+.all-lens-collection.is-series-mode .all-lens-series-tabs button:hover{border-color:#AC97DC;color:#7863A8}
+.all-lens-collection.is-series-mode .all-lens-series-tabs button.is-active{border-color:#7863A8;background:#7863A8;color:#fff;font-weight:600}
+.all-lens-collection.is-series-mode .all-lens-filter-actions{display:flex;margin-top:0}
+.all-lens-collection.is-series-mode .all-lens-reset-button{min-height:38px;padding:0 18px;border-color:#AC97DC;border-radius:24px;color:#7863A8;font-size:13px}
+.all-lens-collection.is-series-mode .all-lens-page-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:900px){.all-lens-collection.is-series-mode .all-lens-page-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:640px){
+ .all-lens-collection.is-series-mode .all-lens-filter-panel{gap:16px;padding:18px 16px}
+ .all-lens-collection.is-series-mode .all-lens-series-tabs{gap:7px}
+ .all-lens-collection.is-series-mode .all-lens-series-tabs button{min-height:34px;padding:0 12px;font-size:12px}
+ .all-lens-collection.is-series-mode .all-lens-page-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 </style>
 <!-- lens-submenu-sync-20261106 -->
 <style>
@@ -518,12 +536,11 @@ document.addEventListener('DOMContentLoaded',function(){
         <button type="button" data-category-feature="난시">난시&투명</button>
         <button type="button" data-category-feature="기타">기타</button>
       </nav>
-      <div class="all-lens-series-tabs" id="all-lens-series-tabs" aria-label="시리즈 선택"></div>
-
-      <section class="all-lens-filter-panel" aria-label="상세 필터">
+      <section class="all-lens-filter-panel" aria-label="시리즈 선택 및 상세 필터">
         <div class="all-lens-filter-heading">
           <h3>상세 필터</h3>
         </div>
+        <div class="all-lens-series-tabs" id="all-lens-series-tabs" aria-label="시리즈 선택"></div>
 
         <div class="all-lens-filter-layout">
           <fieldset class="all-lens-filter-group" data-filter-group="wear">
@@ -1286,20 +1303,35 @@ document.addEventListener('DOMContentLoaded',function(){
   var activeSeries='';
   function getSeriesName(card){
     var name=(card.querySelector('h3')?.textContent||'').trim();
-    return name.startsWith('악마 컨택트')?'악마 컨택트':(name.split(/\s+/)[0]||'기타');
+    if(/^(포그베일)/.test(name)) return '포그베일';
+    if(/^(유스|유스핏|유스온)/.test(name)) return '유스 / 유스핏 / 유스온';
+    if(/^(루미문|글림엣지)/.test(name)) return '루미문 & 글림엣지';
+    if(/^클로아/.test(name)) return '클로아';
+    if(/^클로링/.test(name)) return '클로링';
+    if(/^미니블/.test(name)) return '미니블';
+    if(/^크림앤스윗/.test(name)) return '크림앤스윗';
+    if(/^피스핏/.test(name)) return '피스핏';
+    if(/^토리카/.test(name)) return '토리카';
+    if(/^악마 컨택트/.test(name)) return '악마 컨택트';
+    return '기타';
   }
   function buildSeriesTabs(){
     var holder=document.getElementById('all-lens-series-tabs');
     if(!holder) return;
-    var seriesNames=Array.from(new Set(uniqueCards.map(getSeriesName)));
+    var seriesNames=['포그베일','유스 / 유스핏 / 유스온','루미문 & 글림엣지','클로아','클로링','미니블','크림앤스윗','피스핏','토리카','악마 컨택트'];
     holder.innerHTML='';
-    [['전체 시리즈','']].concat(seriesNames.map(function(name){return [name,name];})).forEach(function(item){
+    [['전체','']].concat(seriesNames.map(function(name){return [name,name];})).forEach(function(item){
       var button=document.createElement('button');
       button.type='button';button.textContent=item[0];
+      button.setAttribute('aria-pressed',activeSeries===item[1]?'true':'false');
       button.classList.toggle('is-active',activeSeries===item[1]);
       button.addEventListener('click',function(){
         activeSeries=item[1];
-        holder.querySelectorAll('button').forEach(function(tab){tab.classList.toggle('is-active',tab===button);});
+        holder.querySelectorAll('button').forEach(function(tab){
+          var selected=tab===button;
+          tab.classList.toggle('is-active',selected);
+          tab.setAttribute('aria-pressed',selected?'true':'false');
+        });
         currentPage=0;render();
       });
       holder.appendChild(button);
@@ -1310,6 +1342,7 @@ document.addEventListener('DOMContentLoaded',function(){
     var visible=sourceCards.filter(function(card){
       var name=card.querySelector('h3')?.textContent||'';
       if(categoryMode==='series'&&activeSeries&&getSeriesName(card)!==activeSeries) return false;
+      if(categoryMode==='series'&&!activeSeries&&getSeriesName(card)==='기타') return false;
       var diameter=card.querySelector('.pick-size')?.textContent||'';
       var wear=card.querySelector('.pick-date')?.textContent||'';
       var price=getPrice(card);
@@ -1355,7 +1388,8 @@ document.addEventListener('DOMContentLoaded',function(){
     swiperElement.classList.toggle('is-bestnew-view',categoryMode==='bestnew');
     var visible=getVisibleCards();
     var total=visible.length;
-    var pageCount=Math.ceil(total/pageSize);
+    var activePageSize=categoryMode==='series'?8:pageSize;
+    var pageCount=Math.ceil(total/activePageSize);
     if(currentPage>=pageCount) currentPage=Math.max(0,pageCount-1);
     if(countNode) countNode.textContent=total+'개';
     if(resultLabel) resultLabel.innerHTML='전체 <span class="all-lens-count">'+total+'개</span> 상품';
@@ -1371,7 +1405,7 @@ document.addEventListener('DOMContentLoaded',function(){
       slide.className='swiper-slide is-active';
       var grid=document.createElement('div');
       grid.className='all-lens-page-grid';
-      visible.slice(currentPage*pageSize,(currentPage+1)*pageSize).forEach(function(card){grid.appendChild(card);});
+      visible.slice(currentPage*activePageSize,(currentPage+1)*activePageSize).forEach(function(card){grid.appendChild(card);});
       slide.appendChild(grid);
       wrapper.appendChild(slide);
     }
@@ -1417,6 +1451,7 @@ document.addEventListener('DOMContentLoaded',function(){
   document.querySelector('[data-category-reset]')?.addEventListener('click',function(){
     categoryMode='all';
     activeSeries='';
+    document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode');
     document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
     resetFilters();
     setActiveCategory(this);
@@ -1424,6 +1459,7 @@ document.addEventListener('DOMContentLoaded',function(){
   document.querySelector('[data-category-bestnew]')?.addEventListener('click',function(){
     resetFilters();
     categoryMode='bestnew';
+    document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode');
     setActiveCategory(this);
     render();
   });
@@ -1431,6 +1467,7 @@ document.addEventListener('DOMContentLoaded',function(){
     resetFilters();
     categoryMode='series';
     activeSeries='';
+    document.querySelector('.all-lens-collection')?.classList.add('is-series-mode');
     setActiveCategory(this);
     buildSeriesTabs();
     document.getElementById('all-lens-series-tabs')?.classList.add('is-visible');

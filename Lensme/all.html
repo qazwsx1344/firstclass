@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </script>
 
 <style>
-/* 전체 렌즈: 한 페이지에 4열 x 5행, 좌우 슬라이드 */
+/* 전체 렌즈: 한 페이지에 4열 x 2행(8개 상품) */
 .all-lens-swiper{width:100%;overflow:hidden}
 .all-lens-swiper .swiper-slide{height:auto}
 .all-lens-page-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:20px;row-gap:24px}
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded',function(){
     </div>
   </section>
   <div class="subpage-inner subpage-body">
-    <nav class="subpage-breadcrumb" aria-label="현재 위치"><a href="index.html">HOME</a><span aria-hidden="true">/</span><span>전체 렌즈</span><span aria-hidden="true">/</span><span class="all-lens-count">426개</span></nav>
+    <nav class="subpage-breadcrumb" aria-label="현재 위치"><a href="index.html">HOME</a><span aria-hidden="true">/</span><span>전체 렌즈</span><span aria-hidden="true">/</span><span class="all-lens-count">상품 수 확인 중</span></nav>
     
     <section class="subpage-section" aria-labelledby="all-products-title">
       <div class="subpage-section-heading">
@@ -850,6 +850,7 @@ document.addEventListener('DOMContentLoaded',function(){
     sort:document.getElementById('filter-sort')
   };
   var countNode=document.querySelector('.all-lens-count');
+  if(countNode) countNode.textContent=originalCards.length+'개';
   var resultNode=document.createElement('p');
   resultNode.className='all-lens-result-count';
   resultNode.setAttribute('aria-live','polite');
@@ -890,12 +891,12 @@ document.addEventListener('DOMContentLoaded',function(){
     if(controls.sort.value==='high') visible.sort(function(a,b){return getPrice(b)-getPrice(a);});
 
     wrapper.innerHTML='';
-    for(var i=0;i<visible.length;i+=20){
+    for(var i=0;i<visible.length;i+=8){
       var slide=document.createElement('div');
       slide.className='swiper-slide';
       var grid=document.createElement('div');
       grid.className='all-lens-page-grid';
-      visible.slice(i,i+20).forEach(function(card){grid.appendChild(card);});
+      visible.slice(i,i+8).forEach(function(card){grid.appendChild(card);});
       slide.appendChild(grid);
       wrapper.appendChild(slide);
     }

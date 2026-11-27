@@ -7,7 +7,7 @@
     <title>매장찾기 | LENS ME</title>
     <link rel="stylesheet" href="../css/default.css">
     <link rel="stylesheet" href="../font/css/pretendardvariable.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main.css?v=20261127-bestnew">
     <link rel="stylesheet" href="css/subpage.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
@@ -50,6 +50,25 @@
 @media(max-width:800px){.store-map-layout{grid-template-columns:1fr}#lensme-store-map{height:390px}.store-map-list{max-height:340px}}
 @media(max-width:640px){.store-map-tools{align-items:stretch}.store-region-select{width:100%}#lensme-store-map{height:340px;border-radius:14px}.store-map-list{border-radius:14px}}
 .store-hero{background-image:linear-gradient(90deg,rgba(250,248,253,.98) 0%,rgba(250,248,253,.9) 38%,rgba(250,248,253,.48) 68%,rgba(250,248,253,.16) 100%),url("img/HERO_Lensme.png");background-position:center;background-repeat:no-repeat;background-size:cover;}
+
+/* 매장찾기 페이지 렌즈 GNB: BEST/NEW 첫 항목 표시 보정 */
+@media (min-width: 1025px) {
+  .primary-navigation > .nav-item:first-child > .nav-submenu {
+    display: none;
+  }
+  .primary-navigation > .nav-item:first-child:hover > .nav-submenu,
+  .primary-navigation > .nav-item:first-child:focus-within > .nav-submenu {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .primary-navigation > .nav-item:first-child > .nav-submenu > li:first-child,
+  .primary-navigation > .nav-item:first-child > .nav-submenu > li:first-child > a {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
 </style>
     <script src="js/subpage.js" defer></script>
 <!-- lens-submenu-sync-20261106 -->

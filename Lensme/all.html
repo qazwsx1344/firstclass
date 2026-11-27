@@ -102,6 +102,26 @@ document.addEventListener('DOMContentLoaded',function(){
 .all-lens-page-grid .pick-card[hidden]{display:none!important}
 @media(max-width:640px){.all-lens-filterbar{gap:10px;padding:14px}.all-lens-filter-field{flex:1 1 calc(50% - 10px);min-width:0}.all-lens-filter-field select{width:100%;min-width:0}.all-lens-filter-reset{flex:1 1 100%}}
 </style>
+<style>
+/* 전체 렌즈 페이지 렌즈 GNB: BEST/NEW 표시 보정 */
+@media (min-width: 1025px) {
+  .primary-navigation > .nav-item:first-child:hover > .nav-submenu,
+  .primary-navigation > .nav-item:first-child:focus-within > .nav-submenu {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .primary-navigation > .nav-item:first-child > .nav-submenu > li:first-child,
+  .primary-navigation > .nav-item:first-child > .nav-submenu > li:first-child > a {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative;
+    z-index: 12;
+    color: #fff !important;
+  }
+}
+</style>
 </head>
 <body>
 <div id="wrap">

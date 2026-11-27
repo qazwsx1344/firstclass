@@ -1283,7 +1283,7 @@ document.addEventListener('DOMContentLoaded',function(){
   var activeSeries='';
   function getSeriesName(card){
     var name=(card.querySelector('h3')?.textContent||'').trim();
-    return name.startsWith('악마 컨택트')?'악마 컨택트':(name.split(/\\s+/)[0]||'기타');
+    return name.startsWith('악마 컨택트')?'악마 컨택트':(name.split(/\s+/)[0]||'기타');
   }
   function buildSeriesTabs(){
     var holder=document.getElementById('all-lens-series-tabs');

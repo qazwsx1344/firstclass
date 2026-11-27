@@ -490,11 +490,11 @@ document.addEventListener('DOMContentLoaded',function(){
                     <div class="nav-item">
                         <a href="#" aria-expanded="false">렌즈</a>
                         <ul class="nav-submenu">
-                            <li><a href="all.html">전체</a></li>
-                            <li><a href="all.html">BEST/NEW</a></li>
-                            <li><a href="all.html">주기별</a></li>
-                            <li><a href="all.html">기능별</a></li>
-                            <li><a href="all.html">시리즈별</a></li>
+                            <li><a href="all.html?tab=all">전체</a></li>
+                            <li><a href="all.html?tab=best">BEST/NEW</a></li>
+                            <li><a href="all.html?tab=period">주기별</a></li>
+                            <li><a href="all.html?tab=function">기능별</a></li>
+                            <li><a href="all.html?tab=series">시리즈별</a></li>
                         </ul>
                     </div>
                     <div class="nav-item nav-highlight">
@@ -1582,7 +1582,23 @@ document.addEventListener('DOMContentLoaded',function(){
     });
   });
   sortSelect?.addEventListener('change',function(){currentPage=0;render();});
-  render();
+  /* URL의 tab 값에 맞춰 서브메뉴에서 선택한 카테고리를 초기 활성화 */
+  var requestedTab=new URLSearchParams(window.location.search).get('tab');
+  var requestedTabSelector={
+    all:'[data-category-reset]',
+    best:'[data-category-bestnew]',
+    period:'[data-category-period]',
+    function:'[data-category-feature="난시"]',
+    series:'[data-category-series]'
+  };
+  var requestedTabButton=requestedTabSelector[requestedTab]
+    ?document.querySelector(requestedTabSelector[requestedTab])
+    :null;
+  if(requestedTabButton){
+    requestedTabButton.click();
+  }else{
+    render();
+  }
 });
 </script>
 </body>

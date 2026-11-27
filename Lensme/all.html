@@ -69,7 +69,10 @@ document.addEventListener('DOMContentLoaded',function(){
 <style>
 /* 상품 이미지는 기본으로 유지하고, 우측 눈 버튼을 눌렀을 때만 렌즈 그래픽 표시 */
 .all-lens-page-grid .pick-image-wrap{position:relative;overflow:hidden;border-radius:20px;}
-.all-lens-page-grid .pick-image-wrap .pick-image{transition:none;}
+/* 모든 카테고리의 상품 이미지에 렌즈 찾기 페이지와 같은 부드러운 확대 모션 적용 */
+.all-lens-page-grid .pick-image-wrap .pick-image{transition:transform .55s cubic-bezier(.2,.7,.25,1),opacity .25s ease;transform:scale(1);}
+.all-lens-page-grid .pick-card:hover .pick-image-wrap .pick-image,
+.all-lens-page-grid .pick-card:focus-within .pick-image-wrap .pick-image{transform:scale(1.055);}
 .all-lens-page-grid .pick-image-wrap .pick-image-main{position:relative;z-index:1;opacity:1!important;}
 .all-lens-page-grid .pick-image-wrap .pick-image-hover{display:block!important;position:absolute;inset:0;z-index:2;width:100%;height:100%;object-fit:cover;opacity:0!important;pointer-events:none;}
 .all-lens-swiper.is-lens-view .pick-image-wrap .pick-image-hover{opacity:1!important;}
@@ -1319,6 +1322,8 @@ document.addEventListener('DOMContentLoaded',function(){
     var name=(card.querySelector('h3')?.textContent||'').trim();
     if(name&&!seenProducts.has(name)){seenProducts.add(name);uniqueCards.push(card);}
   });
+  /* PICK 탭은 등록된 상품 중 앞에서부터 10개만 보여줍니다. */
+  var pickTabCards=originalCards.slice(0,10);
   /* 현재 등록된 8개 고유 상품에 BEST/NEW를 새로고침할 때마다 무작위 배정 */
   var shuffledUnique=uniqueCards.slice().sort(function(){return Math.random()-.5;});
   var badgeByName=new Map();
@@ -1380,10 +1385,7 @@ document.addEventListener('DOMContentLoaded',function(){
       var name=card.querySelector('h3')?.textContent||'';
       if(categoryMode==='series'&&activeSeries&&getSeriesName(card)!==activeSeries) return false;
       if(categoryMode==='other'&&getSeriesName(card)!=='기타') return false;
-      if(categoryMode==='pick'){
-        var productImage=card.querySelector('.pick-image-main')?.getAttribute('src')||'';
-        if(!/PICK_img/i.test(productImage)) return false;
-      }
+      if(categoryMode==='pick'&&!pickTabCards.includes(card)) return false;
       if(categoryMode==='period'&&filterValues.wear&&!((card.querySelector('.pick-date')?.textContent||'').includes(filterValues.wear))) return false;
       if(categoryMode==='series'&&!activeSeries&&getSeriesName(card)==='기타') return false;
       var diameter=card.querySelector('.pick-size')?.textContent||'';

@@ -452,6 +452,18 @@ document.addEventListener('DOMContentLoaded',function(){
 .all-lens-period-tabs button.is-active{border-color:#7863A8;background:#7863A8;color:#fff;font-weight:600}
 @media(max-width:640px){.all-lens-period-tabs{gap:7px;margin:12px 0 18px;padding:8px 10px}.all-lens-period-tabs button{min-height:36px;padding:0 16px;font-size:12px}}
 </style>
+<style>
+/* GNB 서브메뉴 5개 항목이 잘리지 않도록 드롭다운 배경 높이 확장 */
+@media (min-width: 1025px) {
+  .primary-navigation:hover::after,
+  .primary-navigation:focus-within::after {
+    height: 200px;
+  }
+  .primary-navigation .nav-submenu {
+    padding-bottom: 30px;
+  }
+}
+</style>
 </head>
 <body>
 <div id="wrap">

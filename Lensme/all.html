@@ -62,14 +62,11 @@ document.addEventListener('DOMContentLoaded',function(){
 
 
 <style>
-/* 상품 이미지에 마우스를 올리면 렌즈 상세 이미지로 전환 */
+/* 상품 이미지 hover 시 렌즈 상세 이미지가 나타나는 효과 제거 */
 .all-lens-page-grid .pick-image-wrap{position:relative;overflow:hidden;border-radius:20px;}
-.all-lens-page-grid .pick-image-wrap .pick-image{transition:opacity .25s ease;}
-.all-lens-page-grid .pick-image-wrap .pick-image-main{position:relative;z-index:1;}
-.all-lens-page-grid .pick-image-wrap .pick-image-hover{position:absolute;inset:0;z-index:2;width:100%;height:100%;object-fit:cover;opacity:0;pointer-events:none;}
-@media (hover:hover) and (pointer:fine){.all-lens-page-grid .pick-card:hover .pick-image-hover{opacity:1;}}
+.all-lens-page-grid .pick-image-wrap .pick-image{transition:none;}
+.all-lens-page-grid .pick-image-wrap .pick-image-hover{display:none!important;}
 @media (max-width:640px){.all-lens-page-grid .pick-image-wrap{border-radius:16px;}}
-@media (prefers-reduced-motion:reduce){.all-lens-page-grid .pick-image-wrap .pick-image{transition:none;}}
 </style>
 <style>
 /* 전체 렌즈 HERO 상품 이미지 */
@@ -489,7 +486,6 @@ document.addEventListener('DOMContentLoaded',function(){
       <section class="all-lens-filter-panel" aria-label="상세 필터">
         <div class="all-lens-filter-heading">
           <h3>상세 필터</h3>
-          <button type="button" id="filter-reset-top">선택 초기화 <span aria-hidden="true">×</span></button>
         </div>
 
         <div class="all-lens-filter-layout">
@@ -550,7 +546,6 @@ document.addEventListener('DOMContentLoaded',function(){
 
         <div class="all-lens-filter-actions">
           <button type="button" class="all-lens-reset-button" id="filter-reset">선택 초기화</button>
-          <button type="button" class="all-lens-apply-button" id="filter-apply">상품 보기</button>
         </div>
       </section>
 
@@ -1325,10 +1320,6 @@ document.addEventListener('DOMContentLoaded',function(){
     render();
   }
   document.getElementById('filter-reset')?.addEventListener('click',resetFilters);
-  document.getElementById('filter-reset-top')?.addEventListener('click',resetFilters);
-  document.getElementById('filter-apply')?.addEventListener('click',function(){
-    document.getElementById('all-products-title')?.scrollIntoView({behavior:'smooth',block:'start'});
-  });
   var categoryTabs=document.querySelectorAll('.all-lens-category button');
   function setActiveCategory(activeButton){
     categoryTabs.forEach(function(tab){

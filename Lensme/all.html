@@ -58,18 +58,7 @@ document.addEventListener('DOMContentLoaded',function(){
 @media(max-width:640px){.all-lens-page-grid{column-gap:10px;row-gap:18px}.all-lens-pagination{gap:7px;margin-top:32px}.all-lens-pagination button{min-width:25px;height:30px;font-size:13px}.all-lens-pagination button.page-arrow{font-size:20px}}
 @media(prefers-reduced-motion:reduce){.all-lens-swiper .swiper-wrapper{transition-duration:0ms!important}}
 </style>
-<script>
-document.addEventListener('DOMContentLoaded',function(){
-  if(typeof Swiper==='undefined') return;
-  new Swiper('.all-lens-swiper',{
-    slidesPerView:1,
-    slidesPerGroup:1,
-    spaceBetween:24,
-    speed:600,
-    pagination:{el:'.all-lens-pagination',clickable:true,renderBullet:function(index,className){return '<button type="button" class="'+className+'" aria-label="'+(index+1)+'페이지">'+(index+1)+'</button>';}}
-  });
-});
-</script>
+
 
 
 <style>
@@ -123,6 +112,57 @@ document.addEventListener('DOMContentLoaded',function(){
 }
 </style>
 
+<style>
+/* Figma 73:1248 전체 렌즈 와이어프레임 레이아웃 - 상단 배너 제외 */
+.all-lens-collection{width:100%;max-width:1200px;margin:0 auto;padding:0 0 80px}
+.all-lens-heading{margin:42px 0 28px}
+.all-lens-heading .subpage-eyebrow{margin:0 0 12px;color:#666;font-size:14px;font-weight:700;letter-spacing:.08em}
+.all-lens-heading h2{margin:0;color:#222;font-size:36px;line-height:1.2;font-weight:700}
+.all-lens-category{display:flex;align-items:center;gap:0;width:100%;min-height:58px;margin-bottom:24px;padding:0 8px;border:1px solid #d8d8d8;border-radius:30px;background:#fff;overflow-x:auto;scrollbar-width:none}
+.all-lens-category::-webkit-scrollbar{display:none}
+.all-lens-category a,.all-lens-category button{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;min-height:42px;padding:0 18px;border:0;border-radius:24px;background:transparent;color:#666;text-decoration:none;font:500 14px "Pretendard Variable",Pretendard,sans-serif;white-space:nowrap;cursor:pointer}
+.all-lens-category a.is-active,.all-lens-category button.is-active{border:1.5px solid #222;background:#f0f0f0;color:#222;font-weight:700}
+.all-lens-category a:hover,.all-lens-category button:hover{color:#7863A8}
+.all-lens-filter-panel{display:flex;flex-direction:column;gap:22px;width:100%;padding:22px 24px;border:1px solid #d8d8d8;border-radius:30px;background:#fafafa;box-sizing:border-box}
+.all-lens-filter-heading{display:flex;align-items:center;justify-content:space-between}
+.all-lens-filter-heading h3{margin:0;color:#222;font-size:18px;font-weight:700}
+.all-lens-filter-heading button{padding:4px 0;border:0;background:none;color:#666;font:500 12px "Pretendard Variable",Pretendard,sans-serif;cursor:pointer}
+.all-lens-filter-layout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 24px}
+.all-lens-filter-group{min-width:0;margin:0;padding:0;border:0}
+.all-lens-filter-group legend{margin-bottom:10px;color:#222;font-size:14px;font-weight:700}
+.all-lens-chip-list{display:flex;flex-wrap:wrap;gap:8px}
+.all-lens-chip-list button{min-height:34px;padding:0 14px;border:1px solid #d8d8d8;border-radius:20px;background:#fff;color:#666;font:500 12px "Pretendard Variable",Pretendard,sans-serif;white-space:nowrap;cursor:pointer;transition:background .18s ease,border-color .18s ease,color .18s ease}
+.all-lens-chip-list button:hover{border-color:#aaa;color:#222}
+.all-lens-chip-list button.is-selected{border-color:#222;background:#222;color:#fff}
+.all-lens-filter-actions{display:flex;align-items:center;gap:12px}
+.all-lens-reset-button,.all-lens-apply-button{min-height:40px;padding:0 20px;border:1px solid #d8d8d8;border-radius:30px;background:#fff;color:#222;font:600 13px "Pretendard Variable",Pretendard,sans-serif;cursor:pointer}
+.all-lens-apply-button{padding:0 28px;border-color:#222;background:#222;color:#fff}
+.all-lens-reset-button:hover{border-color:#222}
+.all-lens-apply-button:hover{background:#7863A8;border-color:#7863A8}
+.all-lens-results-heading{display:flex;align-items:center;justify-content:space-between;width:100%;margin:24px 0 18px;color:#222;font-size:14px}
+.all-lens-results-heading p{margin:0}
+.all-lens-sort{display:flex;align-items:center;gap:8px;color:#666;font-size:13px}
+.all-lens-sort select{border:0;background:transparent;color:#222;font:500 13px "Pretendard Variable",Pretendard,sans-serif;cursor:pointer}
+.all-lens-swiper{width:100%;overflow:visible}
+.all-lens-swiper .swiper-wrapper{display:block;transform:none!important}
+.all-lens-swiper .swiper-slide{display:block;height:auto}
+.all-lens-page-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:32px;row-gap:26px}
+.all-lens-page-grid .pick-card{min-width:0}
+.all-lens-page-grid .pick-image-wrap{width:100%;aspect-ratio:270/300;overflow:hidden;border-radius:4px}
+.all-lens-page-grid .pick-image-wrap .pick-image{width:100%;height:100%;object-fit:cover}
+.all-lens-page-grid .pick-product h3{margin:0;color:#222;font-size:15px;font-weight:600}
+.all-lens-page-grid .pick-product .pick-price{margin:5px 0 0;color:#222;font-size:14px}
+.all-lens-page-grid .pick-product .pick-size,.all-lens-page-grid .pick-product .pick-date{margin:3px 0 0;color:#666;font-size:12px}
+.all-lens-pagination{display:flex;align-items:center;justify-content:center;gap:18px;width:100%;margin:28px 0 0;padding:10px 4px}
+.all-lens-pagination button{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:30px;padding:0;border:0;border-bottom:1px solid transparent;background:transparent;color:#666;font:400 14px "Pretendard Variable",Pretendard,sans-serif;cursor:pointer}
+.all-lens-pagination button.is-active{border-bottom-color:#7863A8;color:#222;font-weight:700}
+.all-lens-pagination button.page-arrow{font-size:18px}
+.all-lens-pagination button:disabled{opacity:.35;cursor:default}
+.all-lens-empty{grid-column:1/-1;padding:60px 0;text-align:center;color:#666}
+@media(max-width:1280px){.all-lens-collection{width:calc(100% - 64px)}.all-lens-page-grid{column-gap:24px}}
+@media(max-width:900px){.all-lens-filter-layout{grid-template-columns:repeat(2,minmax(0,1fr))}.all-lens-page-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 16px}}
+@media(max-width:640px){.all-lens-collection{width:calc(100% - 36px);padding-bottom:56px}.all-lens-heading{margin:30px 0 22px}.all-lens-heading h2{font-size:28px}.all-lens-category{min-height:52px;margin-bottom:18px;padding:0 4px}.all-lens-category a,.all-lens-category button{padding:0 13px;font-size:13px}.all-lens-filter-panel{gap:18px;padding:18px 16px;border-radius:20px}.all-lens-filter-layout{grid-template-columns:1fr;gap:18px}.all-lens-results-heading{margin:20px 0 14px}.all-lens-page-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}.all-lens-page-grid .pick-product h3{font-size:13px}.all-lens-page-grid .pick-product .pick-price{font-size:13px}.all-lens-pagination{gap:12px;margin-top:24px}}
+</style>
 </head>
 <body>
 <div id="wrap">
@@ -201,23 +241,107 @@ document.addEventListener('DOMContentLoaded',function(){
     </div>
   </section>
   <div class="subpage-inner subpage-body">
-    <nav class="subpage-breadcrumb" aria-label="현재 위치"><a href="index.html">HOME</a><span aria-hidden="true">/</span><span>전체 렌즈</span><span aria-hidden="true">/</span><span class="all-lens-count">426개</span></nav>
-    
-    <section class="subpage-section" aria-labelledby="all-products-title">
-      <div class="subpage-section-heading">
-        <div>
-          <p class="subpage-eyebrow">LENS ME COLLECTION</p>
-          <h2 id="all-products-title">렌즈 전체보기</h2>
-          <div class="all-lens-filterbar" aria-label="상품 필터">
-            <label class="all-lens-filter-field"><span>컬러</span><select id="filter-color"><option value="">전체 컬러</option><option value="brown">브라운</option><option value="gray">그레이</option><option value="choco">쵸코</option><option value="black">블랙</option><option value="blue">블루</option><option value="green">그린</option><option value="pink">핑크</option><option value="violet">바이올렛</option><option value="other">기타</option></select></label>
-            <label class="all-lens-filter-field"><span>직경</span><select id="filter-diameter"><option value="">전체 직경</option><option value="13.0">13.0mm</option><option value="13.2">13.2mm</option><option value="13.4">13.4mm</option><option value="13.5">13.5mm</option></select></label>
-            <label class="all-lens-filter-field"><span>착용 주기</span><select id="filter-wear"><option value="">전체 착용 주기</option><option value="하루 착용">하루 착용</option><option value="한 달 착용">한 달 착용</option></select></label>
-            <label class="all-lens-filter-field"><span>정렬</span><select id="filter-sort"><option value="default">기본순</option><option value="low">낮은 가격순</option><option value="high">높은 가격순</option></select></label>
-            <button class="all-lens-filter-reset" id="filter-reset" type="button">초기화</button>
-          </div>
-        </div>
+    <nav class="subpage-breadcrumb" aria-label="현재 위치">
+      <a href="index.html">HOME</a><span aria-hidden="true">/</span><a href="index.html">렌즈</a><span aria-hidden="true">/</span><span>전체 렌즈</span>
+    </nav>
+
+    <section class="subpage-section all-lens-collection" aria-labelledby="all-products-title">
+      <div class="all-lens-heading">
+        <p class="subpage-eyebrow">LENS ME COLLECTION</p>
+        <h2 id="all-products-title">렌즈 전체보기</h2>
       </div>
-      <div class="swiper all-lens-swiper">
+
+      <nav class="all-lens-category" aria-label="렌즈 카테고리">
+        <a class="is-active" href="all.html" aria-current="page">전체</a>
+        <a href="index.html#pick-title">PICK</a>
+        <a href="index.html#best-new-title">BEST/NEW</a>
+        <button type="button" data-category-wear="하루 착용">원데이</button>
+        <button type="button" data-category-series="시리즈별">시리즈별</button>
+        <button type="button" data-category-feature="난시">난시&투명</button>
+        <button type="button" data-category-feature="기타">기타</button>
+      </nav>
+
+      <section class="all-lens-filter-panel" aria-label="상세 필터">
+        <div class="all-lens-filter-heading">
+          <h3>상세 필터</h3>
+          <button type="button" id="filter-reset-top">선택 초기화 <span aria-hidden="true">×</span></button>
+        </div>
+
+        <div class="all-lens-filter-layout">
+          <fieldset class="all-lens-filter-group" data-filter-group="wear">
+            <legend>착용 주기</legend>
+            <div class="all-lens-chip-list">
+              <button type="button" class="is-selected" data-value="">전체</button>
+              <button type="button" data-value="하루 착용">원데이</button>
+              <button type="button" data-value="한 달 착용">한 달 착용</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="all-lens-filter-group" data-filter-group="color">
+            <legend>컬러</legend>
+            <div class="all-lens-chip-list">
+              <button type="button" class="is-selected" data-value="">전체</button>
+              <button type="button" data-value="brown">브라운</button>
+              <button type="button" data-value="gray">그레이</button>
+              <button type="button" data-value="choco">초코</button>
+              <button type="button" data-value="blue">블루</button>
+              <button type="button" data-value="green">그린</button>
+              <button type="button" data-value="pink">핑크</button>
+              <button type="button" data-value="violet">바이올렛</button>
+              <button type="button" data-value="other">기타</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="all-lens-filter-group" data-filter-group="diameter">
+            <legend>직경</legend>
+            <div class="all-lens-chip-list">
+              <button type="button" class="is-selected" data-value="">전체</button>
+              <button type="button" data-value="13.0">13.0mm</button>
+              <button type="button" data-value="13.1-13.5">13.1~13.5mm</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="all-lens-filter-group" data-filter-group="feature">
+            <legend>기능</legend>
+            <div class="all-lens-chip-list">
+              <button type="button" class="is-selected" data-value="">전체</button>
+              <button type="button" data-value="난시">난시</button>
+              <button type="button" data-value="축고정">축고정</button>
+              <button type="button" data-value="투명">투명</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="all-lens-filter-group" data-filter-group="price">
+            <legend>가격대</legend>
+            <div class="all-lens-chip-list">
+              <button type="button" class="is-selected" data-value="">전체</button>
+              <button type="button" data-value="under10000">1만원대 미만</button>
+              <button type="button" data-value="10000">1만원대</button>
+              <button type="button" data-value="20000">2만원대</button>
+              <button type="button" data-value="30000">3만원 이상</button>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="all-lens-filter-actions">
+          <button type="button" class="all-lens-reset-button" id="filter-reset">선택 초기화</button>
+          <button type="button" class="all-lens-apply-button" id="filter-apply">상품 보기</button>
+        </div>
+      </section>
+
+      <div class="all-lens-results-heading">
+        <p id="all-lens-results-count" aria-live="polite">전체 <span class="all-lens-count">426개</span> 상품</p>
+        <label class="all-lens-sort"> 
+          <span>정렬</span>
+          <select id="filter-sort" aria-label="상품 정렬">
+            <option value="default">추천순</option>
+            <option value="low">낮은 가격순</option>
+            <option value="high">높은 가격순</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="all-lens-swiper">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="all-lens-page-grid">
@@ -835,7 +959,7 @@ document.addEventListener('DOMContentLoaded',function(){
         </aside>
 </div>
 <script>
-/* 전체 렌즈 필터 및 갤러리 페이지 재구성 */
+/* 전체 렌즈: 카테고리 필터, 상세 필터, 정렬 및 페이지네이션 */
 document.addEventListener('DOMContentLoaded',function(){
   var swiperElement=document.querySelector('.all-lens-swiper');
   var wrapper=swiperElement&&swiperElement.querySelector('.swiper-wrapper');
@@ -843,21 +967,12 @@ document.addEventListener('DOMContentLoaded',function(){
   if(!wrapper||!pagination) return;
 
   var originalCards=Array.from(wrapper.querySelectorAll('.pick-card'));
-  var controls={
-    color:document.getElementById('filter-color'),
-    diameter:document.getElementById('filter-diameter'),
-    wear:document.getElementById('filter-wear'),
-    sort:document.getElementById('filter-sort')
-  };
+  var filterValues={wear:'',color:'',diameter:'',feature:'',price:''};
   var countNode=document.querySelector('.all-lens-count');
-  var resultNode=document.createElement('p');
-  resultNode.className='all-lens-result-count';
-  resultNode.setAttribute('aria-live','polite');
-  var filterbar=document.querySelector('.all-lens-filterbar');
-  if(filterbar) filterbar.insertAdjacentElement('afterend',resultNode);
-
-  var swiper=swiperElement.swiper;
-  if(swiper) swiper.destroy(true,true);
+  var resultLabel=document.getElementById('all-lens-results-count');
+  var sortSelect=document.getElementById('filter-sort');
+  var pageSize=8;
+  var currentPage=0;
 
   function getColor(name){
     var text=name.toLowerCase();
@@ -874,76 +989,143 @@ document.addEventListener('DOMContentLoaded',function(){
   function getPrice(card){
     return Number((card.querySelector('.pick-price')?.textContent||'').replace(/[^0-9]/g,''))||0;
   }
-  function render(){
-    var selectedColor=controls.color.value;
-    var selectedDiameter=controls.diameter.value;
-    var selectedWear=controls.wear.value;
+  function matchesPrice(price,range){
+    if(!range) return true;
+    if(range==='under10000') return price<10000;
+    if(range==='10000') return price>=10000&&price<20000;
+    if(range==='20000') return price>=20000&&price<30000;
+    if(range==='30000') return price>=30000;
+    return true;
+  }
+  function getVisibleCards(){
     var visible=originalCards.filter(function(card){
       var name=card.querySelector('h3')?.textContent||'';
       var diameter=card.querySelector('.pick-size')?.textContent||'';
       var wear=card.querySelector('.pick-date')?.textContent||'';
-      return (!selectedColor||getColor(name)===selectedColor)
-        &&(!selectedDiameter||diameter.includes(selectedDiameter))
-        &&(!selectedWear||wear.includes(selectedWear));
+      var price=getPrice(card);
+      var featureMatch=!filterValues.feature
+        ||(filterValues.feature==='기타'&&!/난시|축고정|투명/.test(name))
+        ||name.includes(filterValues.feature);
+      var diameterMatch=!filterValues.diameter
+        ||(filterValues.diameter==='13.0'?parseFloat(diameter)<=13.0:
+          parseFloat(diameter)>=13.1&&parseFloat(diameter)<=13.5);
+      return (!filterValues.color||getColor(name)===filterValues.color)
+        &&(!filterValues.wear||wear.includes(filterValues.wear))
+        &&diameterMatch&&featureMatch&&matchesPrice(price,filterValues.price);
     });
-    if(controls.sort.value==='low') visible.sort(function(a,b){return getPrice(a)-getPrice(b);});
-    if(controls.sort.value==='high') visible.sort(function(a,b){return getPrice(b)-getPrice(a);});
+    if(sortSelect.value==='low') visible.sort(function(a,b){return getPrice(a)-getPrice(b);});
+    if(sortSelect.value==='high') visible.sort(function(a,b){return getPrice(b)-getPrice(a);});
+    return visible;
+  }
+  function updatePagination(pageCount){
+    pagination.innerHTML='';
+    if(pageCount<=1) return;
+    function addButton(label,target,extraClass,disabled){
+      var button=document.createElement('button');
+      button.type='button';
+      button.textContent=label;
+      button.className=extraClass||'';
+      button.disabled=!!disabled;
+      button.addEventListener('click',function(){currentPage=target;render();});
+      pagination.appendChild(button);
+    }
+    addButton('‹',Math.max(0,currentPage-1),'page-arrow',currentPage===0);
+    for(var i=0;i<pageCount;i++){
+      var button=document.createElement('button');
+      button.type='button';
+      button.textContent=String(i+1);
+      button.setAttribute('aria-label',(i+1)+'페이지');
+      if(i===currentPage){button.className='is-active';button.setAttribute('aria-current','page');}
+      button.addEventListener('click',function(target){return function(){currentPage=target;render();};}(i));
+      pagination.appendChild(button);
+    }
+    addButton('›',Math.min(pageCount-1,currentPage+1),'page-arrow',currentPage===pageCount-1);
+  }
+  function render(){
+    var visible=getVisibleCards();
+    var total=visible.length;
+    var pageCount=Math.ceil(total/pageSize);
+    if(currentPage>=pageCount) currentPage=Math.max(0,pageCount-1);
+    if(countNode) countNode.textContent=total+'개';
+    if(resultLabel) resultLabel.innerHTML='전체 <span class="all-lens-count">'+total+'개</span> 상품';
 
     wrapper.innerHTML='';
-    for(var i=0;i<visible.length;i+=20){
-      var slide=document.createElement('div');
-      slide.className='swiper-slide';
-      var grid=document.createElement('div');
-      grid.className='all-lens-page-grid';
-      visible.slice(i,i+20).forEach(function(card){grid.appendChild(card);});
-      slide.appendChild(grid);
-      wrapper.appendChild(slide);
-    }
-    var total=visible.length;
-    if(countNode) countNode.textContent=total+'개';
-    resultNode.textContent='총 '+total+'개 상품';
-    pagination.innerHTML='';
     if(total===0){
       var empty=document.createElement('p');
       empty.className='all-lens-empty';
       empty.textContent='선택한 조건에 맞는 상품이 없습니다.';
       wrapper.appendChild(empty);
+    }else{
+      var slide=document.createElement('div');
+      slide.className='swiper-slide is-active';
+      var grid=document.createElement('div');
+      grid.className='all-lens-page-grid';
+      visible.slice(currentPage*pageSize,(currentPage+1)*pageSize).forEach(function(card){grid.appendChild(card);});
+      slide.appendChild(grid);
+      wrapper.appendChild(slide);
     }
-    if(typeof Swiper!=='undefined'){
-      var activeSwiper=new Swiper('.all-lens-swiper',{
-        slidesPerView:1,slidesPerGroup:1,spaceBetween:24,speed:600
-      });
-      function drawPagination(){
-        var pageCount=activeSwiper.slides.length;
-        var current=activeSwiper.activeIndex;
-        pagination.innerHTML='';
-        if(pageCount<=1) return;
-        var prev=document.createElement('button');
-        prev.type='button';prev.className='page-arrow';prev.textContent='‹';prev.setAttribute('aria-label','이전 페이지');prev.disabled=current===0;
-        prev.addEventListener('click',function(){activeSwiper.slidePrev();});
-        pagination.appendChild(prev);
-        for(var page=0;page<pageCount;page++){
-          var pageButton=document.createElement('button');
-          pageButton.type='button';pageButton.textContent=String(page+1);
-          pageButton.setAttribute('aria-label',(page+1)+'페이지');
-          if(page===current){pageButton.className='is-active';pageButton.setAttribute('aria-current','page');}
-          pageButton.addEventListener('click',function(target){return function(){activeSwiper.slideTo(target);};}(page));
-          pagination.appendChild(pageButton);
-        }
-        var next=document.createElement('button');
-        next.type='button';next.className='page-arrow';next.textContent='›';next.setAttribute('aria-label','다음 페이지');next.disabled=current===pageCount-1;
-        next.addEventListener('click',function(){activeSwiper.slideNext();});
-        pagination.appendChild(next);
-      }
-      activeSwiper.on('slideChange',drawPagination);
-      drawPagination();
-    }
+    updatePagination(pageCount);
   }
-  Object.keys(controls).forEach(function(key){controls[key].addEventListener('change',render);});
-  document.getElementById('filter-reset')?.addEventListener('click',function(){
-    Object.keys(controls).forEach(function(key){controls[key].value=key==='sort'?'default':'';});
-    render();
+  document.querySelectorAll('.all-lens-filter-group').forEach(function(group){
+    var key=group.getAttribute('data-filter-group');
+    group.querySelectorAll('button[data-value]').forEach(function(button){
+      button.addEventListener('click',function(){
+        filterValues[key]=button.getAttribute('data-value');
+        group.querySelectorAll('button[data-value]').forEach(function(item){
+          var selected=item===button;
+          item.classList.toggle('is-selected',selected);
+          item.setAttribute('aria-pressed',selected?'true':'false');
+        });
+        currentPage=0;
+        render();
+      });
+    });
   });
+  function resetFilters(){
+    Object.keys(filterValues).forEach(function(key){filterValues[key]='';});
+    document.querySelectorAll('.all-lens-filter-group').forEach(function(group){
+      group.querySelectorAll('button[data-value]').forEach(function(button,index){
+        var selected=index===0;
+        button.classList.toggle('is-selected',selected);
+        button.setAttribute('aria-pressed',selected?'true':'false');
+      });
+    });
+    if(sortSelect) sortSelect.value='default';
+    currentPage=0;
+    render();
+  }
+  document.getElementById('filter-reset')?.addEventListener('click',resetFilters);
+  document.getElementById('filter-reset-top')?.addEventListener('click',resetFilters);
+  document.getElementById('filter-apply')?.addEventListener('click',function(){
+    document.getElementById('all-products-title')?.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  document.querySelectorAll('[data-category-wear]').forEach(function(button){
+    button.addEventListener('click',function(){
+      resetFilters();
+      filterValues.wear=button.getAttribute('data-category-wear');
+      var target=document.querySelector('.all-lens-filter-group[data-filter-group="wear"]');
+      target?.querySelectorAll('button[data-value]').forEach(function(item){
+        var selected=item.getAttribute('data-value')===filterValues.wear;
+        item.classList.toggle('is-selected',selected);
+        item.setAttribute('aria-pressed',selected?'true':'false');
+      });
+      render();
+    });
+  });
+  document.querySelectorAll('[data-category-feature]').forEach(function(button){
+    button.addEventListener('click',function(){
+      resetFilters();
+      filterValues.feature=button.getAttribute('data-category-feature');
+      var target=document.querySelector('.all-lens-filter-group[data-filter-group="feature"]');
+      target?.querySelectorAll('button[data-value]').forEach(function(item){
+        var selected=item.getAttribute('data-value')===filterValues.feature;
+        item.classList.toggle('is-selected',selected);
+        item.setAttribute('aria-pressed',selected?'true':'false');
+      });
+      render();
+    });
+  });
+  sortSelect?.addEventListener('change',function(){currentPage=0;render();});
   render();
 });
 </script>

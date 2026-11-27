@@ -1487,6 +1487,7 @@ document.addEventListener('DOMContentLoaded',function(){
     document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode','is-filter-hidden');
     document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
     document.getElementById('all-lens-period-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-period-tabs')?.setAttribute('hidden','');
     resetFilters();
     setActiveCategory(this);
   });
@@ -1505,6 +1506,7 @@ document.addEventListener('DOMContentLoaded',function(){
     document.querySelector('.all-lens-collection')?.classList.add('is-filter-hidden');
     document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode');
     document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-period-tabs')?.removeAttribute('hidden');
     document.getElementById('all-lens-period-tabs')?.classList.add('is-visible');
     document.querySelectorAll('[data-period-value]').forEach(function(tab){tab.classList.remove('is-active');tab.setAttribute('aria-pressed','false');});
     setActiveCategory(this);

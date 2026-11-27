@@ -295,6 +295,100 @@ document.addEventListener('DOMContentLoaded',function(){
 }
 </style>
 
+<style>
+/* 전체 렌즈: 상품 영역 폭, 4열 x 5행, 반응형 보기 전환 */
+.subpage-inner.subpage-body{
+  width:min(92%,1480px);
+  max-width:1480px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.all-lens-collection{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding-bottom:80px;
+}
+.all-lens-swiper{width:100%;max-width:none;overflow:hidden}
+.all-lens-swiper .swiper-wrapper{width:100%}
+.all-lens-swiper .swiper-slide{width:100%;height:auto}
+.all-lens-page-grid{
+  display:grid;
+  width:100%;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  column-gap:28px;
+  row-gap:34px;
+}
+.all-lens-page-grid .pick-card{min-width:0;width:100%}
+.all-lens-page-grid .pick-image-wrap{
+  width:100%;
+  aspect-ratio:4 / 5;
+  overflow:hidden;
+  border-radius:20px;
+}
+.all-lens-page-grid .pick-image-wrap .pick-image{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.all-lens-page-grid .pick-product h3{font-size:18px;line-height:1.45}
+.all-lens-page-grid .pick-product .pick-price{font-size:16px}
+.all-lens-page-grid .pick-product .pick-size,
+.all-lens-page-grid .pick-product .pick-date{font-size:14px}
+.all-lens-view-toggle{
+  display:inline-flex;
+  flex:0 0 auto;
+  align-items:center;
+  justify-content:center;
+  width:94px;
+  height:42px;
+  padding:0;
+  border:0;
+  border-radius:22px;
+  background:transparent;
+  cursor:pointer;
+}
+.all-lens-view-toggle img{display:block;width:94px;height:42px;max-width:100%;object-fit:contain}
+.all-lens-results-tools{display:flex;align-items:center;gap:14px}
+.all-lens-category button.is-active{
+  border-color:#7863A8;
+  background:#7863A8;
+  color:#fff;
+}
+.all-lens-category button{transition:background .2s ease,color .2s ease,border-color .2s ease}
+.all-lens-swiper.is-lens-view .pick-image-hover{
+  opacity:1!important;
+}
+.all-lens-swiper.is-lens-view .pick-image-main{
+  opacity:0!important;
+}
+.all-lens-pagination{flex-wrap:wrap;gap:12px}
+@media(max-width:1100px){
+  .subpage-inner.subpage-body{width:94%}
+  .all-lens-page-grid{column-gap:20px;row-gap:28px}
+}
+@media(max-width:800px){
+  .all-lens-page-grid{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:16px;row-gap:24px}
+  .all-lens-page-grid .pick-product h3{font-size:15px}
+  .all-lens-page-grid .pick-product .pick-price{font-size:14px}
+  .all-lens-page-grid .pick-product .pick-size,
+  .all-lens-page-grid .pick-product .pick-date{font-size:12px}
+}
+@media(max-width:560px){
+  .subpage-inner.subpage-body{width:calc(100% - 32px)}
+  .all-lens-page-grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:12px;row-gap:22px}
+  .all-lens-page-grid .pick-image-wrap{border-radius:14px}
+  .all-lens-page-grid .pick-product h3{font-size:13px}
+  .all-lens-page-grid .pick-product .pick-price{font-size:13px}
+  .all-lens-page-grid .pick-product .pick-size,
+  .all-lens-page-grid .pick-product .pick-date{font-size:11px}
+  .all-lens-results-tools{gap:8px}
+  .all-lens-view-toggle{width:82px;height:37px}
+  .all-lens-view-toggle img{width:82px;height:37px}
+}
+</style>
+
 </head>
 <body>
 <div id="wrap">
@@ -384,8 +478,8 @@ document.addEventListener('DOMContentLoaded',function(){
       </div>
 
       <nav class="all-lens-category" aria-label="렌즈 카테고리">
-        <a class="is-active" href="all.html" aria-current="page">전체</a>
-        <a href="index.html#best-new-title">BEST/NEW</a>
+        <button type="button" class="is-active" data-category-reset aria-pressed="true">전체</button>
+        <button type="button" data-category-bestnew aria-pressed="false">BEST/NEW</button>
         <button type="button" data-category-wear="하루 착용">원데이</button>
         <button type="button" data-category-series="시리즈별">시리즈별</button>
         <button type="button" data-category-feature="난시">난시&투명</button>
@@ -471,10 +565,9 @@ document.addEventListener('DOMContentLoaded',function(){
               <option value="high">높은 가격순</option>
             </select>
           </label>
-          <div class="all-lens-view-icons" aria-label="상품 보기 아이콘">
-            <img src="img/eye__icon.svg" alt="착용 이미지 보기">
-            <img src="img/eye_2_icon.svg" alt="렌즈 이미지 보기">
-          </div>
+          <button type="button" class="all-lens-view-toggle" id="all-lens-view-toggle" aria-label="렌즈 이미지로 보기" aria-pressed="false">
+            <img src="img/eye__icon.svg" alt="">
+          </button>
         </div>
       </div>
 
@@ -1108,7 +1201,7 @@ document.addEventListener('DOMContentLoaded',function(){
   var countNode=document.querySelector('.all-lens-count');
   var resultLabel=document.getElementById('all-lens-results-count');
   var sortSelect=document.getElementById('filter-sort');
-  var pageSize=8;
+  var pageSize=20;
   var currentPage=0;
 
   function getColor(name){
@@ -1235,6 +1328,30 @@ document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('filter-reset-top')?.addEventListener('click',resetFilters);
   document.getElementById('filter-apply')?.addEventListener('click',function(){
     document.getElementById('all-products-title')?.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  var categoryTabs=document.querySelectorAll('.all-lens-category button');
+  function setActiveCategory(activeButton){
+    categoryTabs.forEach(function(tab){
+      var active=tab===activeButton;
+      tab.classList.toggle('is-active',active);
+      tab.setAttribute('aria-pressed',active?'true':'false');
+    });
+  }
+  document.querySelector('[data-category-reset]')?.addEventListener('click',function(){
+    resetFilters();
+    setActiveCategory(this);
+  });
+  document.querySelector('[data-category-bestnew]')?.addEventListener('click',function(){
+    resetFilters();
+    setActiveCategory(this);
+  });
+  document.getElementById('all-lens-view-toggle')?.addEventListener('click',function(){
+    var showingLens=this.getAttribute('aria-pressed')==='true';
+    var next= !showingLens;
+    this.setAttribute('aria-pressed',next?'true':'false');
+    this.setAttribute('aria-label',next?'착용 이미지로 보기':'렌즈 이미지로 보기');
+    this.querySelector('img').src=next?'img/eye_2_icon.svg':'img/eye__icon.svg';
+    document.querySelector('.all-lens-swiper')?.classList.toggle('is-lens-view',next);
   });
   document.querySelectorAll('[data-category-wear]').forEach(function(button){
     button.addEventListener('click',function(){

@@ -62,10 +62,13 @@ document.addEventListener('DOMContentLoaded',function(){
 
 
 <style>
-/* 상품 이미지 hover 시 렌즈 상세 이미지가 나타나는 효과 제거 */
+/* 상품 이미지는 기본으로 유지하고, 우측 눈 버튼을 눌렀을 때만 렌즈 그래픽 표시 */
 .all-lens-page-grid .pick-image-wrap{position:relative;overflow:hidden;border-radius:20px;}
 .all-lens-page-grid .pick-image-wrap .pick-image{transition:none;}
-.all-lens-page-grid .pick-image-wrap .pick-image-hover{display:none!important;}
+.all-lens-page-grid .pick-image-wrap .pick-image-main{position:relative;z-index:1;opacity:1!important;}
+.all-lens-page-grid .pick-image-wrap .pick-image-hover{display:block!important;position:absolute;inset:0;z-index:2;width:100%;height:100%;object-fit:cover;opacity:0!important;pointer-events:none;}
+.all-lens-swiper.is-lens-view .pick-image-wrap .pick-image-hover{opacity:1!important;}
+.all-lens-swiper.is-lens-view .pick-image-wrap .pick-image-main{opacity:0!important;}
 @media (max-width:640px){.all-lens-page-grid .pick-image-wrap{border-radius:16px;}}
 </style>
 <style>

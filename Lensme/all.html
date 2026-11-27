@@ -560,6 +560,8 @@ document.addEventListener('DOMContentLoaded',function(){
         <button type="button" data-category-period aria-pressed="false">주기별</button>
         <button type="button" data-category-function aria-pressed="false">기능별</button>
         <button type="button" data-category-series="시리즈별">시리즈별</button>
+        <button type="button" data-category-other aria-pressed="false">기타</button>
+        <button type="button" data-category-pick aria-pressed="false">PICK</button>
       </nav>
       <nav class="all-lens-period-tabs" id="all-lens-period-tabs" aria-label="착용 주기 선택" hidden>
         <button type="button" data-period-value="하루 착용" aria-pressed="false">원데이</button>
@@ -1377,6 +1379,11 @@ document.addEventListener('DOMContentLoaded',function(){
     var visible=sourceCards.filter(function(card){
       var name=card.querySelector('h3')?.textContent||'';
       if(categoryMode==='series'&&activeSeries&&getSeriesName(card)!==activeSeries) return false;
+      if(categoryMode==='other'&&getSeriesName(card)!=='기타') return false;
+      if(categoryMode==='pick'){
+        var productImage=card.querySelector('.pick-image-main')?.getAttribute('src')||'';
+        if(!/PICK_img/i.test(productImage)) return false;
+      }
       if(categoryMode==='period'&&filterValues.wear&&!((card.querySelector('.pick-date')?.textContent||'').includes(filterValues.wear))) return false;
       if(categoryMode==='series'&&!activeSeries&&getSeriesName(card)==='기타') return false;
       var diameter=card.querySelector('.pick-size')?.textContent||'';
@@ -1545,10 +1552,35 @@ document.addEventListener('DOMContentLoaded',function(){
     activeSeries='';
     document.querySelector('.all-lens-collection')?.classList.remove('is-filter-hidden');
     document.querySelector('.all-lens-collection')?.classList.add('is-series-mode');
+    document.getElementById('all-lens-period-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-period-tabs')?.setAttribute('hidden','');
+    document.getElementById('all-lens-function-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-function-tabs')?.setAttribute('hidden','');
+    document.getElementById('all-lens-series-tabs')?.classList.add('is-visible');
     setActiveCategory(this);
     buildSeriesTabs();
-    document.getElementById('all-lens-series-tabs')?.classList.add('is-visible');
     render();
+  });
+  function showSimpleCategory(button,mode){
+    resetFilters();
+    categoryMode=mode;
+    activeSeries='';
+    document.querySelector('.all-lens-collection')?.classList.add('is-filter-hidden');
+    document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode');
+    document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-period-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-period-tabs')?.setAttribute('hidden','');
+    document.getElementById('all-lens-function-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-function-tabs')?.setAttribute('hidden','');
+    setActiveCategory(button);
+    currentPage=0;
+    render();
+  }
+  document.querySelector('[data-category-other]')?.addEventListener('click',function(){
+    showSimpleCategory(this,'other');
+  });
+  document.querySelector('[data-category-pick]')?.addEventListener('click',function(){
+    showSimpleCategory(this,'pick');
   });
   document.getElementById('all-lens-view-toggle')?.addEventListener('click',function(){
     var showingLens=this.getAttribute('aria-pressed')==='true';

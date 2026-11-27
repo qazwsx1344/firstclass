@@ -84,7 +84,8 @@ document.addEventListener('DOMContentLoaded',function(){
 @media(max-width:768px){.all-lens-hero{height:300px;min-height:300px;background-image:linear-gradient(90deg,rgba(245,241,250,.98) 0%,rgba(245,241,250,.9) 48%,rgba(245,241,250,.45) 100%),url("img/lens_hero.png");background-position:center,right center;background-size:cover,auto 100%}}
 @media(max-width:480px){.all-lens-hero{height:260px;min-height:260px;background-position:center,right center;background-size:cover,auto 82%}.all-lens-hero .subpage-intro{max-width:90%}}
 /* Figma 73:1248 시리즈별 탭 전용 필터 레이아웃 */
-.all-lens-collection.is-series-mode .all-lens-filter-panel{gap:18px;padding:20px 24px;background:#F7F3FB;border-color:#E7DFF3}
+.all-lens-collection.is-filter-hidden .all-lens-filter-panel{display:none!important}
+.all-lens-collection.is-series-mode .all-lens-filter-panel{display:flex;gap:18px;padding:20px 24px;background:#F7F3FB;border-color:#E7DFF3}
 .all-lens-collection.is-series-mode .all-lens-filter-heading,
 .all-lens-collection.is-series-mode .all-lens-filter-layout{display:none}
 .all-lens-collection.is-series-mode .all-lens-series-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;border:0;border-radius:0;background:transparent}
@@ -1439,7 +1440,14 @@ document.addEventListener('DOMContentLoaded',function(){
     currentPage=0;
     render();
   }
-  document.getElementById('filter-reset')?.addEventListener('click',resetFilters);
+  document.getElementById('filter-reset')?.addEventListener('click',function(){
+    resetFilters();
+    if(categoryMode==='series'){
+      activeSeries='';
+      buildSeriesTabs();
+      render();
+    }
+  });
   var categoryTabs=document.querySelectorAll('.all-lens-category button');
   function setActiveCategory(activeButton){
     categoryTabs.forEach(function(tab){
@@ -1451,7 +1459,7 @@ document.addEventListener('DOMContentLoaded',function(){
   document.querySelector('[data-category-reset]')?.addEventListener('click',function(){
     categoryMode='all';
     activeSeries='';
-    document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode');
+    document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode','is-filter-hidden');
     document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
     resetFilters();
     setActiveCategory(this);
@@ -1460,6 +1468,7 @@ document.addEventListener('DOMContentLoaded',function(){
     resetFilters();
     categoryMode='bestnew';
     document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode');
+    document.querySelector('.all-lens-collection')?.classList.add('is-filter-hidden');
     setActiveCategory(this);
     render();
   });
@@ -1467,6 +1476,7 @@ document.addEventListener('DOMContentLoaded',function(){
     resetFilters();
     categoryMode='series';
     activeSeries='';
+    document.querySelector('.all-lens-collection')?.classList.remove('is-filter-hidden');
     document.querySelector('.all-lens-collection')?.classList.add('is-series-mode');
     setActiveCategory(this);
     buildSeriesTabs();
@@ -1486,6 +1496,8 @@ document.addEventListener('DOMContentLoaded',function(){
       resetFilters();
       categoryMode='all';
       activeSeries='';
+      document.querySelector('.all-lens-collection')?.classList.add('is-filter-hidden');
+      document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode');
       document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
       setActiveCategory(button);
       filterValues.wear=button.getAttribute('data-category-wear');
@@ -1503,6 +1515,8 @@ document.addEventListener('DOMContentLoaded',function(){
       resetFilters();
       categoryMode='all';
       activeSeries='';
+      document.querySelector('.all-lens-collection')?.classList.add('is-filter-hidden');
+      document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode');
       document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
       setActiveCategory(button);
       filterValues.feature=button.getAttribute('data-category-feature');

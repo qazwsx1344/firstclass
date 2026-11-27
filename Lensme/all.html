@@ -163,6 +163,138 @@ document.addEventListener('DOMContentLoaded',function(){
 @media(max-width:900px){.all-lens-filter-layout{grid-template-columns:repeat(2,minmax(0,1fr))}.all-lens-page-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 16px}}
 @media(max-width:640px){.all-lens-collection{width:calc(100% - 36px);padding-bottom:56px}.all-lens-heading{margin:30px 0 22px}.all-lens-heading h2{font-size:28px}.all-lens-category{min-height:52px;margin-bottom:18px;padding:0 4px}.all-lens-category a,.all-lens-category button{padding:0 13px;font-size:13px}.all-lens-filter-panel{gap:18px;padding:18px 16px;border-radius:20px}.all-lens-filter-layout{grid-template-columns:1fr;gap:18px}.all-lens-results-heading{margin:20px 0 14px}.all-lens-page-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}.all-lens-page-grid .pick-product h3{font-size:13px}.all-lens-page-grid .pick-product .pick-price{font-size:13px}.all-lens-pagination{gap:12px;margin-top:24px}}
 </style>
+<style>
+/* 상품 영역 크기와 렌즈미 브랜드 컬러 보정 */
+.all-lens-collection{
+  width:92%;
+  max-width:1480px;
+  margin:0 auto;
+  padding-bottom:80px;
+}
+.all-lens-heading{margin:42px 0 30px}
+.all-lens-heading .subpage-eyebrow{color:#7863A8}
+.all-lens-heading h2{color:#292536;font-size:40px}
+.all-lens-category{
+  border-color:#E7DFF3;
+  background:#FBF9FE;
+}
+.all-lens-category a.is-active,
+.all-lens-category button.is-active{
+  border-color:#7863A8;
+  background:#7863A8;
+  color:#fff;
+}
+.all-lens-category a:hover,
+.all-lens-category button:hover{color:#7863A8}
+.all-lens-filter-panel{
+  border-color:#E7DFF3;
+  background:#F7F3FB;
+}
+.all-lens-filter-heading h3,
+.all-lens-filter-group legend{color:#292536}
+.all-lens-chip-list button{
+  border-color:#DED4ED;
+  color:#625875;
+}
+.all-lens-chip-list button:hover{border-color:#AC97DC;color:#7863A8}
+.all-lens-chip-list button.is-selected{
+  border-color:#7863A8;
+  background:#7863A8;
+  color:#fff;
+}
+.all-lens-reset-button{
+  border-color:#AC97DC;
+  color:#7863A8;
+}
+.all-lens-apply-button{
+  border-color:#7863A8;
+  background:#7863A8;
+}
+.all-lens-apply-button:hover{border-color:#66518F;background:#66518F}
+.all-lens-results-heading{
+  margin-top:30px;
+  margin-bottom:20px;
+  color:#292536;
+  font-size:16px;
+}
+.all-lens-results-tools{display:flex;align-items:center;gap:18px}
+.all-lens-sort{font-size:14px}
+.all-lens-sort select{font-size:14px;color:#292536}
+.all-lens-view-icons{display:flex;align-items:center;gap:8px}
+.all-lens-view-icons img{
+  display:block;
+  width:94px;
+  height:42px;
+  object-fit:contain;
+}
+.all-lens-page-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  column-gap:28px;
+  row-gap:34px;
+}
+.all-lens-page-grid .pick-image-wrap{
+  width:100%;
+  aspect-ratio:4 / 5;
+  border-radius:18px;
+}
+.all-lens-page-grid .pick-image-wrap .pick-image{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.all-lens-page-grid .pick-product h3{
+  margin-top:12px;
+  color:#292536;
+  font-size:18px;
+  line-height:1.45;
+  font-weight:600;
+}
+.all-lens-page-grid .pick-product .pick-price{
+  margin-top:7px;
+  color:#292536;
+  font-size:16px;
+}
+.all-lens-page-grid .pick-product .pick-size,
+.all-lens-page-grid .pick-product .pick-date{
+  margin-top:5px;
+  color:#81798E;
+  font-size:14px;
+}
+.all-lens-pagination{gap:14px;margin-top:42px}
+.all-lens-pagination button{
+  min-width:32px;
+  height:36px;
+  color:#625875;
+  font-size:15px;
+}
+.all-lens-pagination button.is-active{
+  border-bottom-color:#7863A8;
+  color:#7863A8;
+}
+.all-lens-pagination button:hover{color:#7863A8}
+@media(max-width:1280px){
+  .all-lens-collection{width:92%}
+  .all-lens-page-grid{column-gap:22px;row-gap:28px}
+}
+@media(max-width:900px){
+  .all-lens-heading h2{font-size:34px}
+  .all-lens-page-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:640px){
+  .all-lens-collection{width:calc(100% - 36px);padding-bottom:56px}
+  .all-lens-heading{margin:30px 0 22px}
+  .all-lens-heading h2{font-size:28px}
+  .all-lens-results-tools{gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .all-lens-view-icons{gap:4px}
+  .all-lens-view-icons img{width:74px;height:auto}
+  .all-lens-page-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}
+  .all-lens-page-grid .pick-product h3{font-size:14px}
+  .all-lens-page-grid .pick-product .pick-price{font-size:14px}
+  .all-lens-page-grid .pick-product .pick-size,
+  .all-lens-page-grid .pick-product .pick-date{font-size:12px}
+}
+</style>
+
 </head>
 <body>
 <div id="wrap">
@@ -253,7 +385,6 @@ document.addEventListener('DOMContentLoaded',function(){
 
       <nav class="all-lens-category" aria-label="렌즈 카테고리">
         <a class="is-active" href="all.html" aria-current="page">전체</a>
-        <a href="index.html#pick-title">PICK</a>
         <a href="index.html#best-new-title">BEST/NEW</a>
         <button type="button" data-category-wear="하루 착용">원데이</button>
         <button type="button" data-category-series="시리즈별">시리즈별</button>
@@ -331,14 +462,20 @@ document.addEventListener('DOMContentLoaded',function(){
 
       <div class="all-lens-results-heading">
         <p id="all-lens-results-count" aria-live="polite">전체 <span class="all-lens-count">426개</span> 상품</p>
-        <label class="all-lens-sort"> 
-          <span>정렬</span>
-          <select id="filter-sort" aria-label="상품 정렬">
-            <option value="default">추천순</option>
-            <option value="low">낮은 가격순</option>
-            <option value="high">높은 가격순</option>
-          </select>
-        </label>
+        <div class="all-lens-results-tools">
+          <label class="all-lens-sort"> 
+            <span>정렬</span>
+            <select id="filter-sort" aria-label="상품 정렬">
+              <option value="default">추천순</option>
+              <option value="low">낮은 가격순</option>
+              <option value="high">높은 가격순</option>
+            </select>
+          </label>
+          <div class="all-lens-view-icons" aria-label="상품 보기 아이콘">
+            <img src="img/eye_icon.svg" alt="착용 이미지 보기">
+            <img src="img/eye_2_icon.svg" alt="렌즈 이미지 보기">
+          </div>
+        </div>
       </div>
 
       <div class="all-lens-swiper">

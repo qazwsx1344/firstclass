@@ -20,6 +20,13 @@
 .all-lens-filter:hover,.all-lens-filter:focus-visible{background:#fff;color:#7863A8}
 .all-lens-filter:focus-visible{outline:2px solid #292536;outline-offset:3px}
 @media(max-width:640px){.all-lens-filters{gap:8px}.all-lens-filter{width:100px;min-width:100px;height:40px;font-size:13px}}
+
+<style>
+.all-lens-series-tabs{display:none;flex-wrap:wrap;gap:8px;margin:-12px 0 20px;padding:12px 16px;border:1px solid #e7def4;border-radius:16px;background:#faf8fd}
+.all-lens-series-tabs.is-visible{display:flex}
+.all-lens-series-tabs button{min-height:36px;padding:0 14px;border:1px solid #ded2ef;border-radius:20px;background:#fff;color:#625477;font:500 13px "Pretendard Variable",Pretendard,sans-serif;cursor:pointer}
+.all-lens-series-tabs button.is-active{background:#8068ad;border-color:#8068ad;color:#fff}
+</style>
 </style>
 <style>
 .all-lens-round-scroll{display:flex;justify-content:flex-start;align-items:center;gap:18px;width:100%;max-width:100%;margin:36px auto 0;padding:8px 4px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;-webkit-overflow-scrolling:touch;white-space:nowrap}
@@ -510,6 +517,7 @@ document.addEventListener('DOMContentLoaded',function(){
         <button type="button" data-category-feature="난시">난시&투명</button>
         <button type="button" data-category-feature="기타">기타</button>
       </nav>
+      <div class="all-lens-series-tabs" id="all-lens-series-tabs" aria-label="시리즈 선택"></div>
 
       <section class="all-lens-filter-panel" aria-label="상세 필터">
         <div class="all-lens-filter-heading">
@@ -1274,10 +1282,33 @@ document.addEventListener('DOMContentLoaded',function(){
     badge.classList.toggle('is-new',type==='NEW');
   });
   var categoryMode='all';
+  var activeSeries='';
+  function getSeriesName(card){
+    var name=(card.querySelector('h3')?.textContent||'').trim();
+    return name.startsWith('악마 컨택트')?'악마 컨택트':(name.split(/\\s+/)[0]||'기타');
+  }
+  function buildSeriesTabs(){
+    var holder=document.getElementById('all-lens-series-tabs');
+    if(!holder) return;
+    var seriesNames=Array.from(new Set(uniqueCards.map(getSeriesName)));
+    holder.innerHTML='';
+    [['전체 시리즈','']].concat(seriesNames.map(function(name){return [name,name];})).forEach(function(item){
+      var button=document.createElement('button');
+      button.type='button';button.textContent=item[0];
+      button.classList.toggle('is-active',activeSeries===item[1]);
+      button.addEventListener('click',function(){
+        activeSeries=item[1];
+        holder.querySelectorAll('button').forEach(function(tab){tab.classList.toggle('is-active',tab===button);});
+        currentPage=0;render();
+      });
+      holder.appendChild(button);
+    });
+  }
   function getVisibleCards(){
     var sourceCards=categoryMode==='bestnew'?uniqueCards:(categoryMode==='series'?uniqueCards:originalCards);
     var visible=sourceCards.filter(function(card){
       var name=card.querySelector('h3')?.textContent||'';
+      if(categoryMode==='series'&&activeSeries&&getSeriesName(card)!==activeSeries) return false;
       var diameter=card.querySelector('.pick-size')?.textContent||'';
       var wear=card.querySelector('.pick-date')?.textContent||'';
       var price=getPrice(card);
@@ -1383,6 +1414,8 @@ document.addEventListener('DOMContentLoaded',function(){
   }
   document.querySelector('[data-category-reset]')?.addEventListener('click',function(){
     categoryMode='all';
+    activeSeries='';
+    document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
     resetFilters();
     setActiveCategory(this);
   });
@@ -1395,7 +1428,10 @@ document.addEventListener('DOMContentLoaded',function(){
   document.querySelector('[data-category-series]')?.addEventListener('click',function(){
     resetFilters();
     categoryMode='series';
+    activeSeries='';
     setActiveCategory(this);
+    buildSeriesTabs();
+    document.getElementById('all-lens-series-tabs')?.classList.add('is-visible');
     render();
   });
   document.getElementById('all-lens-view-toggle')?.addEventListener('click',function(){
@@ -1410,6 +1446,8 @@ document.addEventListener('DOMContentLoaded',function(){
     button.addEventListener('click',function(){
       resetFilters();
       categoryMode='all';
+      activeSeries='';
+      document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
       setActiveCategory(button);
       filterValues.wear=button.getAttribute('data-category-wear');
       var target=document.querySelector('.all-lens-filter-group[data-filter-group="wear"]');
@@ -1425,6 +1463,8 @@ document.addEventListener('DOMContentLoaded',function(){
     button.addEventListener('click',function(){
       resetFilters();
       categoryMode='all';
+      activeSeries='';
+      document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
       setActiveCategory(button);
       filterValues.feature=button.getAttribute('data-category-feature');
       var target=document.querySelector('.all-lens-filter-group[data-filter-group="feature"]');

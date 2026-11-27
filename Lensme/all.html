@@ -450,6 +450,11 @@ document.addEventListener('DOMContentLoaded',function(){
 .all-lens-period-tabs.is-visible{display:flex}
 .all-lens-period-tabs button{min-height:38px;padding:0 20px;border:1px solid #DED4ED;border-radius:22px;background:#fff;color:#625875;font:500 13px "Pretendard Variable",Pretendard,sans-serif;cursor:pointer}
 .all-lens-period-tabs button.is-active{border-color:#7863A8;background:#7863A8;color:#fff;font-weight:600}
+.all-lens-function-tabs{display:none;align-items:center;gap:8px;margin:14px 0 22px;padding:10px 14px;border:1px solid #E7DFF3;border-radius:28px;background:#FAF8FC}
+.all-lens-function-tabs.is-visible{display:flex}
+.all-lens-function-tabs button{min-height:38px;padding:0 20px;border:1px solid #DED4ED;border-radius:22px;background:#fff;color:#625875;font:500 13px "Pretendard Variable",Pretendard,sans-serif;cursor:pointer}
+.all-lens-function-tabs button.is-active{border-color:#7863A8;background:#7863A8;color:#fff;font-weight:600}
+@media(max-width:640px){.all-lens-function-tabs{gap:7px;margin:12px 0 18px;padding:8px 10px}.all-lens-function-tabs button{min-height:36px;padding:0 16px;font-size:12px}}
 @media(max-width:640px){.all-lens-period-tabs{gap:7px;margin:12px 0 18px;padding:8px 10px}.all-lens-period-tabs button{min-height:36px;padding:0 16px;font-size:12px}}
 </style>
 <style>
@@ -553,13 +558,18 @@ document.addEventListener('DOMContentLoaded',function(){
         <button type="button" class="is-active" data-category-reset aria-pressed="true">전체</button>
         <button type="button" data-category-bestnew aria-pressed="false">BEST/NEW</button>
         <button type="button" data-category-period aria-pressed="false">주기별</button>
+        <button type="button" data-category-function aria-pressed="false">기능별</button>
         <button type="button" data-category-series="시리즈별">시리즈별</button>
-        <button type="button" data-category-feature="난시">난시&투명</button>
-        <button type="button" data-category-feature="기타">기타</button>
       </nav>
       <nav class="all-lens-period-tabs" id="all-lens-period-tabs" aria-label="착용 주기 선택" hidden>
         <button type="button" data-period-value="하루 착용" aria-pressed="false">원데이</button>
         <button type="button" data-period-value="한 달 착용" aria-pressed="false">한 달용</button>
+      </nav>
+      <nav class="all-lens-function-tabs" id="all-lens-function-tabs" aria-label="기능 선택" hidden>
+        <button type="button" class="is-active" data-function-value="" aria-pressed="true">전체</button>
+        <button type="button" data-function-value="난시" aria-pressed="false">난시</button>
+        <button type="button" data-function-value="축고정" aria-pressed="false">축고정</button>
+        <button type="button" data-function-value="투명" aria-pressed="false">투명</button>
       </nav>
       <section class="all-lens-filter-panel" aria-label="시리즈 선택 및 상세 필터">
         <div class="all-lens-filter-heading">
@@ -1373,8 +1383,9 @@ document.addEventListener('DOMContentLoaded',function(){
       var wear=card.querySelector('.pick-date')?.textContent||'';
       var price=getPrice(card);
       var featureMatch=!filterValues.feature
-        ||(filterValues.feature==='기타'&&!/난시|축고정|투명/.test(name))
-        ||name.includes(filterValues.feature);
+        ?(categoryMode!=='function'||/난시|축고정|투명/.test(name))
+        :(filterValues.feature==='기타'&&!/난시|축고정|투명/.test(name))
+          ||name.includes(filterValues.feature);
       var diameterMatch=!filterValues.diameter
         ||(filterValues.diameter==='13.0'?parseFloat(diameter)<=13.0:
           parseFloat(diameter)>=13.1&&parseFloat(diameter)<=13.5);
@@ -1488,6 +1499,8 @@ document.addEventListener('DOMContentLoaded',function(){
     document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
     document.getElementById('all-lens-period-tabs')?.classList.remove('is-visible');
     document.getElementById('all-lens-period-tabs')?.setAttribute('hidden','');
+    document.getElementById('all-lens-function-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-function-tabs')?.setAttribute('hidden','');
     resetFilters();
     setActiveCategory(this);
   });
@@ -1506,6 +1519,8 @@ document.addEventListener('DOMContentLoaded',function(){
     document.querySelector('.all-lens-collection')?.classList.add('is-filter-hidden');
     document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode');
     document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-function-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-function-tabs')?.setAttribute('hidden','');
     document.getElementById('all-lens-period-tabs')?.removeAttribute('hidden');
     document.getElementById('all-lens-period-tabs')?.classList.add('is-visible');
     document.querySelectorAll('[data-period-value]').forEach(function(tab){tab.classList.remove('is-active');tab.setAttribute('aria-pressed','false');});
@@ -1562,22 +1577,35 @@ document.addEventListener('DOMContentLoaded',function(){
       render();
     });
   });
-  document.querySelectorAll('[data-category-feature]').forEach(function(button){
+  document.querySelector('[data-category-function]')?.addEventListener('click',function(){
+    resetFilters();
+    categoryMode='function';
+    activeSeries='';
+    document.querySelector('.all-lens-collection')?.classList.add('is-filter-hidden');
+    document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode');
+    document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-period-tabs')?.classList.remove('is-visible');
+    document.getElementById('all-lens-period-tabs')?.setAttribute('hidden','');
+    document.getElementById('all-lens-function-tabs')?.removeAttribute('hidden');
+    document.getElementById('all-lens-function-tabs')?.classList.add('is-visible');
+    filterValues.feature='';
+    document.querySelectorAll('[data-function-value]').forEach(function(tab){
+      var selected=tab.getAttribute('data-function-value')==='';
+      tab.classList.toggle('is-active',selected);
+      tab.setAttribute('aria-pressed',selected?'true':'false');
+    });
+    setActiveCategory(this);
+    render();
+  });
+  document.querySelectorAll('[data-function-value]').forEach(function(button){
     button.addEventListener('click',function(){
-      resetFilters();
-      categoryMode='all';
-      activeSeries='';
-      document.querySelector('.all-lens-collection')?.classList.add('is-filter-hidden');
-      document.querySelector('.all-lens-collection')?.classList.remove('is-series-mode');
-      document.getElementById('all-lens-series-tabs')?.classList.remove('is-visible');
-      setActiveCategory(button);
-      filterValues.feature=button.getAttribute('data-category-feature');
-      var target=document.querySelector('.all-lens-filter-group[data-filter-group="feature"]');
-      target?.querySelectorAll('button[data-value]').forEach(function(item){
-        var selected=item.getAttribute('data-value')===filterValues.feature;
-        item.classList.toggle('is-selected',selected);
-        item.setAttribute('aria-pressed',selected?'true':'false');
+      filterValues.feature=button.getAttribute('data-function-value');
+      document.querySelectorAll('[data-function-value]').forEach(function(tab){
+        var selected=tab===button;
+        tab.classList.toggle('is-active',selected);
+        tab.setAttribute('aria-pressed',selected?'true':'false');
       });
+      currentPage=0;
       render();
     });
   });
@@ -1588,7 +1616,7 @@ document.addEventListener('DOMContentLoaded',function(){
     all:'[data-category-reset]',
     best:'[data-category-bestnew]',
     period:'[data-category-period]',
-    function:'[data-category-feature="난시"]',
+    function:'[data-category-function]',
     series:'[data-category-series]'
   };
   var requestedTabButton=requestedTabSelector[requestedTab]
